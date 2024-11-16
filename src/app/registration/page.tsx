@@ -1,7 +1,7 @@
 import RegistrationForm from '@/components/registration-form/RegistrationForm';
 import React from 'react';
 
-function page() {
+function Page() {
   return (
     <div>
       <RegistrationForm />
@@ -9,4 +9,4 @@ function page() {
   );
 }
 
-export default page;
+export default Page;
