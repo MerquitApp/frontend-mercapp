@@ -2,35 +2,40 @@ export default function RecoverPassword() {
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="w-full max-w-md h-3/4 p-4 bg-white rounded-lg shadow-md flex flex-col gap-3">
-        <div className="flex flex-col items-center gap-2">
-          <h1 className="text-blackPalette text-3xl font-bold">
-            ¿Has olvidado tu contraseña?
-          </h1>
-          <p className="text-grayPalette text-lg">
-            Ingresa tu correo y te enviaremos un enlace para restablecer tu
-            contraseña.
-          </p>
-        </div>
+        <h1 className="text-blackPalette text-3xl font-bold">
+          Cambiar contraseña
+        </h1>
         <form className="flex flex-col gap-4">
           <div className="flex flex-col gap-2">
             <label
-              htmlFor="email"
+              htmlFor="password"
               className="text-grayPalette text-sm font-medium">
-              E-mail
+              Contraseña
             </label>
             <input
               type="text"
-              name="email"
-              id="email"
+              name="password"
               className="border-2 border-gray-500 rounded-lg p-2"
-              placeholder="ejemplo@gmail.com"
+              required
+            />
+          </div>
+          <div className="flex flex-col gap-2">
+            <label
+              htmlFor="password-repeat"
+              className="text-grayPalette text-sm font-medium">
+              Repetir contraseña
+            </label>
+            <input
+              type="text"
+              name="password-repeat"
+              className="border-2 border-gray-500 rounded-lg p-2"
               required
             />
           </div>
           <input
             type="submit"
             className="bg-primaryPalette text-white text-sm font-semibold py-2 px-4 rounded-lg uppercase cursor-pointer"
-            value="Enviar correo"
+            value="Cambiar contraseña"
           />
         </form>
         <div className="flex items-center justify-center w-full h-full gap-2 py-1">
