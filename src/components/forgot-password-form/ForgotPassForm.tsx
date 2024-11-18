@@ -1,12 +1,16 @@
 'use client';
 import { useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import { Button } from '@nextui-org/react';
 import { Input } from '@nextui-org/react';
 import { FaArrowLeft } from 'react-icons/fa';
 import { GoXCircle } from 'react-icons/go';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+
+type FormValues = {
+  email: string;
+};
 
 export default function ForgotPassForm() {
   const router = useRouter();
@@ -15,9 +19,9 @@ export default function ForgotPassForm() {
     register,
     handleSubmit,
     formState: { errors }
-  } = useForm();
+  } = useForm<FormValues>();
 
-  const onSubmit = (data) => {
+  const onSubmit: SubmitHandler<FormValues> = (data) => {
     setLoading(true);
 
     // Simular una acción de recuperación de contraseña
@@ -79,7 +83,7 @@ export default function ForgotPassForm() {
                 />
                 {errors.email && (
                   <p className="text-red-500 text-sm mt-1">
-                    {errors.email.message}
+                    {errors.email.message as string}
                   </p>
                 )}
               </div>
