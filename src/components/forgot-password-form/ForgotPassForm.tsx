@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { Button } from '@nextui-org/react';
 import { Input } from '@nextui-org/react';
+import { ArrowLeft, XCircle } from 'react-feather';
 
 export default function ForgotPassForm() {
   const router = useRouter();
@@ -30,55 +31,72 @@ export default function ForgotPassForm() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center w-full h-full bg-gray-100 min-h-screen">
-      <div className="w-full max-w-md p-6 bg-white rounded-lg shadow-md">
-        <div className="flex flex-col items-center justify-center">
-          <div
-            style={{
-              textAlign: 'center',
-              fontSize: '1.5rem',
-              fontWeight: 'bold',
-              marginBottom: '1rem'
-            }}>
-            Recuperar contraseña
+    <div className="relative flex flex-col items-center justify-center w-full h-full bg-gray-100 min-h-screen">
+      <div className="flex flex-col items-center justify-center w-full h-full bg-gray-100 min-h-screen">
+        <div className="w-full max-w-md p-6 bg-white rounded-lg shadow-md">
+          <div className="flex flex-row justify-between">
+            {/* Botones de navegación */}
+            <button
+              onClick={() => router.back()}
+              className=" left-4 text-gray-600 hover:text-gray-800"
+              aria-label="Volver">
+              <ArrowLeft size={24} />
+            </button>
+            <button
+              onClick={() => router.push('/')}
+              className="right-4 text-gray-600 hover:text-gray-800"
+              aria-label="Cerrar y volver a la home">
+              <XCircle size={24} />
+            </button>
           </div>
-          <div
-            style={{
-              textAlign: 'center',
-              fontSize: '1.2rem',
-              marginBottom: '1rem'
-            }}>
-            Introduce tu correo electrónico para recibir un enlace para
-            restablecer tu contraseña
-          </div>
-          <form onSubmit={handleSubmit(onSubmit)} className="w-full">
-            <div className="mb-4">
-              <Input
-                type="email"
-                placeholder="Correo electrónico"
-                fullWidth
-                {...register('email', {
-                  required: 'El correo es obligatorio',
-                  pattern: {
-                    value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-                    message: 'Introduce un correo válido'
-                  }
-                })}
-              />
-              {errors.email && (
-                <p className="text-red-500 text-sm mt-1">
-                  {errors.email.message}
-                </p>
-              )}
+          <div className="flex flex-col items-center justify-center">
+            <div
+              style={{
+                textAlign: 'center',
+                fontSize: '1.5rem',
+                fontWeight: 'bold',
+                marginBottom: '1rem'
+              }}>
+              Recuperar contraseña
             </div>
-            <Button
-              className="mt-4 w-full bg-primaryPalette text-white"
-              type="submit"
-              isLoading={loading}
-              disabled={loading}>
-              Enviar
-            </Button>
-          </form>
+            <div
+              style={{
+                textAlign: 'center',
+                fontSize: '1.2rem',
+                marginBottom: '1rem'
+              }}>
+              Introduce tu correo electrónico para recibir un enlace para
+              restablecer tu contraseña
+            </div>
+            <form onSubmit={handleSubmit(onSubmit)} className="w-full">
+              <div className="mb-4">
+                <Input
+                  type="email"
+                  placeholder="Correo electrónico"
+                  fullWidth
+                  {...register('email', {
+                    required: 'El correo es obligatorio',
+                    pattern: {
+                      value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                      message: 'Introduce un correo válido'
+                    }
+                  })}
+                />
+                {errors.email && (
+                  <p className="text-red-500 text-sm mt-1">
+                    {errors.email.message}
+                  </p>
+                )}
+              </div>
+              <Button
+                className="mt-4 w-full bg-primaryPalette text-white"
+                type="submit"
+                isLoading={loading}
+                disabled={loading}>
+                Enviar
+              </Button>
+            </form>
+          </div>
         </div>
       </div>
     </div>
