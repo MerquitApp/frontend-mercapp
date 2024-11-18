@@ -43,7 +43,7 @@ export default function ForgotPassForm() {
           <div className="flex flex-row justify-between">
             {/* Botones de navegación */}
             <Link
-              href="/Login"
+              href="/login"
               className=" left-4 text-gray-600 hover:text-gray-800"
               aria-label="Volver">
               <FaArrowLeft size={20} />
