@@ -4,7 +4,8 @@ import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { Button } from '@nextui-org/react';
 import { Input } from '@nextui-org/react';
-import { ArrowLeft, XCircle } from 'react-feather';
+import { FaArrowLeft } from 'react-icons/fa';
+import { GoXCircle } from 'react-icons/go';
 
 export default function ForgotPassForm() {
   const router = useRouter();
@@ -40,13 +41,13 @@ export default function ForgotPassForm() {
               onClick={() => router.back()}
               className=" left-4 text-gray-600 hover:text-gray-800"
               aria-label="Volver">
-              <ArrowLeft size={24} />
+              <FaArrowLeft size={20} />
             </button>
             <button
               onClick={() => router.push('/')}
               className="right-4 text-gray-600 hover:text-gray-800"
               aria-label="Cerrar y volver a la home">
-              <XCircle size={24} />
+              <GoXCircle size={24} />
             </button>
           </div>
           <div className="flex flex-col items-center justify-center gap-3">
