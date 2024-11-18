@@ -1,11 +1,12 @@
 'use client';
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { Button } from '@nextui-org/react';
 import { Input } from '@nextui-org/react';
 import { FaArrowLeft } from 'react-icons/fa';
 import { GoXCircle } from 'react-icons/go';
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 export default function ForgotPassForm() {
   const router = useRouter();
@@ -37,18 +38,18 @@ export default function ForgotPassForm() {
         <div className="w-full max-w-md p-6 bg-white rounded-lg shadow-md">
           <div className="flex flex-row justify-between">
             {/* Botones de navegación */}
-            <button
-              onClick={() => router.back()}
+            <Link
+              href="/Login"
               className=" left-4 text-gray-600 hover:text-gray-800"
               aria-label="Volver">
               <FaArrowLeft size={20} />
-            </button>
-            <button
-              onClick={() => router.push('/')}
+            </Link>
+            <Link
+              href="/"
               className="right-4 text-gray-600 hover:text-gray-800"
               aria-label="Cerrar y volver a la home">
               <GoXCircle size={24} />
-            </button>
+            </Link>
           </div>
           <div className="flex flex-col items-center justify-center gap-3">
             <div className="text-center">
