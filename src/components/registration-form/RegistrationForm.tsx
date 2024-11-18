@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { useState } from 'react';
+
 function RegistrationForm() {
   const [areaCode, setAreaCode] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
@@ -98,7 +99,9 @@ function RegistrationForm() {
             )}
           </div>
           <div className="mb-4 flex flex-col gap-2">
-            <label htmlFor="" className="text-grayPalette text-sm font-medium">
+            <label
+              htmlFor="email"
+              className="text-grayPalette text-sm font-medium">
               E-mail
             </label>
             <input
