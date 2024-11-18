@@ -49,24 +49,17 @@ export default function ForgotPassForm() {
               <XCircle size={24} />
             </button>
           </div>
-          <div className="flex flex-col items-center justify-center">
-            <div
-              style={{
-                textAlign: 'center',
-                fontSize: '1.5rem',
-                fontWeight: 'bold',
-                marginBottom: '1rem'
-              }}>
-              Recuperar contraseña
+          <div className="flex flex-col items-center justify-center gap-3">
+            <div className="text-center">
+              <h1 className="text-3xl font-bold tex-size">
+                Recuperar contraseña
+              </h1>
             </div>
-            <div
-              style={{
-                textAlign: 'center',
-                fontSize: '1.2rem',
-                marginBottom: '1rem'
-              }}>
-              Introduce tu correo electrónico para recibir un enlace para
-              restablecer tu contraseña
+            <div>
+              <h2 className="intem-center text-center">
+                Introduce tu correo electrónico para recibir un enlace para
+                restablecer tu contraseña
+              </h2>
             </div>
             <form onSubmit={handleSubmit(onSubmit)} className="w-full">
               <div className="mb-4">
