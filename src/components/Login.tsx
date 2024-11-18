@@ -1,9 +1,10 @@
 import { FaGoogle, FaFacebook } from 'react-icons/fa';
+import Link from 'next/link';
 
 export default function Login() {
   return (
-    <div className="flex h-screen items-center justify-center bg-gray-200">
-      <div className="w-full max-w-sm rounded-3xl bg-white p-6 shadow-md">
+    <div className="flex h-screen items-center justify-center bg-gray-100">
+      <div className="w-full max-w-sm rounded-3xl bg-whitePalette p-6 shadow-md">
         <div className="flex justify-center mb-4">
           <img src="/logo-mercapp.png" alt="logo" className="h-24" />
         </div>
@@ -14,9 +15,11 @@ export default function Login() {
           Consigue los mejores precios y vende lo que ya no usas.
         </p>
         <div className="space-y-4">
-          <button className="flex w-full items-center justify-center space-x-2 rounded-md bg-green-600 py-2 text-white shadow-sm hover:bg-green-700">
-            <p>Inicia sesión con email</p>
-          </button>
+          <Link href="/login/email">
+            <button className="flex w-full items-center justify-center space-x-2 rounded-md bg-primaryPalette py-2 text-white shadow-sm transition-opacity hover:opacity-90">
+              <p>Inicia sesión con email</p>
+            </button>
+          </Link>
           <button className="flex w-full items-center justify-center space-x-2 rounded-md border bg-white py-2 text-gray-600 shadow-sm hover:bg-gray-50">
             <FaGoogle />
             <p>Continua con Google</p>
@@ -28,11 +31,11 @@ export default function Login() {
         </div>
         <p className="mt-4 text-center text-sm text-gray-600">
           ¿No tienes cuenta?{' '}
-          <a
-            href="/singup"
-            className="font-medium text-green-600 hover:underline">
+          <Link
+            href="/register"
+            className="font-medium text-primaryPalette hover:underline">
             Resgistrarse
-          </a>
+          </Link>
         </p>
       </div>
     </div>
