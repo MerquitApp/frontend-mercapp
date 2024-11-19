@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Link from 'next/link';
 
 export default function LoginEmail() {
@@ -5,7 +6,7 @@ export default function LoginEmail() {
     <div className="flex h-screen items-center justify-center bg-gray-100">
       <div className="w-full max-w-sm rounded-3xl bg-whitePalette p-6 shadow-md">
         <div className="flex justify-center mb-4">
-          <img src="/logo-mercapp.png" alt="logo" className="h-24" />
+          <Image width={120} height={5} src="/logo-mercapp.png" alt="logo" />
         </div>
         <h1 className="text-center text-2xl font-semibold text-gray-800">
           Compra y vende en Mercapp
