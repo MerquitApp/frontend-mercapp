@@ -44,7 +44,7 @@ export default function LoginEmail() {
           <p className="text-center text-sm text-gray-600">
             ¿No tienes cuenta?{' '}
             <Link
-              href="/register"
+              href="/users/register"
               className="font-medium text-primaryPalette hover:underline">
               Resgistrarse
             </Link>
@@ -52,7 +52,7 @@ export default function LoginEmail() {
           <p className="text-center text-sm text-gray-600">
             ¿Quieres iniciar de otra forma?{' '}
             <Link
-              href="/login"
+              href="/users/login"
               className="font-medium text-primaryPalette hover:underline">
               Cambiar método
             </Link>
@@ -60,7 +60,7 @@ export default function LoginEmail() {
           <p className="text-center text-sm text-gray-600">
             ¿Has olvidado tu contraseña?{' '}
             <Link
-              href="/forgot-password"
+              href="/users/forgot-password"
               className="font-medium text-primaryPalette hover:underline">
               Cambiar contaseña
             </Link>

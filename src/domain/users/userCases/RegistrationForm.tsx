@@ -136,7 +136,7 @@ function RegistrationForm() {
           <h3 className="text-blackPalette text-l font-light">
             ¿Ya tienes una cuenta?
           </h3>
-          <Link href="/login">
+          <Link href="../users/login">
             <h3 className="text-primaryPalette text-l font-semibold">
               Inicia sesión
             </h3>

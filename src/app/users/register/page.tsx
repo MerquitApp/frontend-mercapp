@@ -1,4 +1,4 @@
-import RegistrationForm from '@/components/registration-form/RegistrationForm';
+import RegistrationForm from '@/domain/users/userCases/RegistrationForm';
 import React from 'react';
 
 function Page() {

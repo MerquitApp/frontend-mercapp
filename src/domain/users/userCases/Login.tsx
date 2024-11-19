@@ -16,7 +16,7 @@ export default function Login() {
           Consigue los mejores precios y vende lo que ya no usas.
         </p>
         <div className="space-y-4">
-          <Link href="/login/email">
+          <Link href="../users/login/email">
             <button className="flex w-full items-center justify-center space-x-2 rounded-md bg-primaryPalette py-2 text-white shadow-sm transition-opacity hover:opacity-90">
               <p>Inicia sesión con email</p>
             </button>
@@ -33,7 +33,7 @@ export default function Login() {
         <p className="mt-4 text-center text-sm text-gray-600">
           ¿No tienes cuenta?{' '}
           <Link
-            href="/register"
+            href="../users/register"
             className="font-medium text-primaryPalette hover:underline">
             Resgistrarse
           </Link>
