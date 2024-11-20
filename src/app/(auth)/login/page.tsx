@@ -1,4 +1,4 @@
-import Login from '@/domain/users/userCases/Login';
+import Login from '@/auth/components/Login';
 
 export default function Page() {
   return <Login />;

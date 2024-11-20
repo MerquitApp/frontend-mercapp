@@ -1,4 +1,4 @@
-import RecoverPassword from '@/domain/users/userCases/RecoverPassword';
+import RecoverPassword from '@/auth/components/RecoverPassword';
 
 function Page() {
   return <RecoverPassword />;
