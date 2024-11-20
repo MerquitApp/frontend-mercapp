@@ -1,30 +1,26 @@
 'use client';
-
 import Link from 'next/link';
-import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { userSchema } from '@/validations/userSchema';
 import AuthLayout from '../layouts/AuthLayout';
 
-function RegistrationForm() {
-  const [areaCode, setAreaCode] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
-  const [areaCodeError, setAreaCodeError] = useState('');
-  const [phoneNumberError, setPhoneNumberError] = useState('');
+type Inputs = {
+  name: string;
+  email: string;
+  password: string;
+  phoneNumber: string;
+  confirmPassword: string;
+};
 
-  const validatePhone = (type: 'areaCode' | 'phoneNumber', value: string) => {
-    if (type === 'areaCode') {
-      if (!/^\d{1,4}$/.test(value)) {
-        setAreaCodeError('Debe tener entre 1 y 4 dígitos');
-      } else {
-        setAreaCodeError('');
-      }
-    } else {
-      if (!/^\d{6,10}$/.test(value)) {
-        setPhoneNumberError('Debe tener entre 6 y 10 dígitos');
-      } else {
-        setPhoneNumberError('');
-      }
-    }
-  };
+function RegistrationForm() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors }
+  } = useForm<Inputs>({
+    resolver: zodResolver(userSchema)
+  });
 
   return (
     <AuthLayout>
@@ -38,42 +34,31 @@ function RegistrationForm() {
           </h4>
         </div>
       </div>
-      <form action="">
+      <form
+        onSubmit={handleSubmit((data) => {
+          // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+          data;
+          // TODO: Implement form submission logic
+        })}>
         <div className="mb-4 flex flex-col gap-2">
-          <label htmlFor="" className="text-grayPalette text-sm font-medium">
+          <label
+            htmlFor="name"
+            className="text-grayPalette text-sm font-medium">
             Nombre
           </label>
+          {errors.name?.message && (
+            <p className="text-redPalette font-medium text-xs">
+              {errors.name?.message}
+            </p>
+          )}
           <input
             type="text"
-            name="name"
             id="name"
             className="border-2 border-gray-500 rounded-lg p-2"
             placeholder="Juan"
             required
+            {...register('name')}
           />
-        </div>
-        <div className="mb-4 flex flex-col gap-2">
-          <label
-            htmlFor="areaCode"
-            className="text-grayPalette text-sm font-medium">
-            Código de área
-          </label>
-          <input
-            type="tel"
-            name="areaCode"
-            id="areaCode"
-            className="border-2 border-gray-500 rounded-lg p-2"
-            placeholder="Ej: 54"
-            required
-            value={areaCode}
-            onChange={(e) => {
-              setAreaCode(e.target.value);
-              validatePhone('areaCode', e.target.value);
-            }}
-          />
-          {areaCodeError && (
-            <p className="text-red-500 text-xs">{areaCodeError}</p>
-          )}
         </div>
         <div className="mb-4 flex flex-col gap-2">
           <label
@@ -81,22 +66,19 @@ function RegistrationForm() {
             className="text-grayPalette text-sm font-medium">
             Número de teléfono
           </label>
+          {errors.phoneNumber?.message && (
+            <p className="text-redPalette font-medium text-xs">
+              {errors.phoneNumber?.message}
+            </p>
+          )}
           <input
             type="tel"
-            name="phoneNumber"
             id="phoneNumber"
             className="border-2 border-gray-500 rounded-lg p-2"
             placeholder="Ej: 123456789"
             required
-            value={phoneNumber}
-            onChange={(e) => {
-              setPhoneNumber(e.target.value);
-              validatePhone('phoneNumber', e.target.value);
-            }}
+            {...register('phoneNumber')}
           />
-          {phoneNumberError && (
-            <p className="text-red-500 text-xs">{phoneNumberError}</p>
-          )}
         </div>
         <div className="mb-4 flex flex-col gap-2">
           <label
@@ -104,26 +86,58 @@ function RegistrationForm() {
             className="text-grayPalette text-sm font-medium">
             E-mail
           </label>
+          {errors.email?.message && (
+            <p className="text-redPalette font-medium text-xs">
+              {errors.email?.message}
+            </p>
+          )}
           <input
             type="text"
-            name="email"
             id="email"
             className="border-2 border-gray-500 rounded-lg p-2"
             placeholder="ejemplo@gmail.com"
             required
+            {...register('email')}
           />
         </div>
         <div className="mb-4 flex flex-col gap-2">
-          <label htmlFor="" className="text-grayPalette text-sm font-medium">
+          <label
+            htmlFor="password"
+            className="text-grayPalette text-sm font-medium">
             Contraseña
           </label>
+          {errors.password?.message && (
+            <p className="text-redPalette font-medium text-xs">
+              {errors.password?.message}
+            </p>
+          )}
           <input
             type="password"
-            name="password"
             id="password"
             className="border-2 border-gray-500 rounded-lg p-2"
             placeholder="******"
             required
+            {...register('password')}
+          />
+        </div>
+        <div className="mb-4 flex flex-col gap-2">
+          <label
+            htmlFor="confirmPassword"
+            className="text-grayPalette text-sm font-medium">
+            Confirmar Contraseña
+          </label>
+          {errors.confirmPassword?.message && (
+            <p className="text-redPalette font-medium text-xs">
+              {errors.confirmPassword?.message}
+            </p>
+          )}
+          <input
+            type="password"
+            id="confirmPassword"
+            className="border-2 border-gray-500 rounded-lg p-2"
+            placeholder="******"
+            required
+            {...register('confirmPassword')}
           />
         </div>
         <div className="mb-4 flex flex-col gap-2">

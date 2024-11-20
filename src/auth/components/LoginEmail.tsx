@@ -49,7 +49,7 @@ export default function LoginEmail() {
             Resgistrarse
           </Link>
         </p>
-        <p className="text-center text-sm text-gray-600">
+        <p className="text-center text-[14px] text-gray-600">
           ¿Quieres iniciar de otra forma?{' '}
           <Link
             href="/login"
