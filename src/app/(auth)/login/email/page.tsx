@@ -1,4 +1,4 @@
-import LoginEmail from '@/components/LoginEmail';
+import LoginEmail from '@/auth/components/LoginEmail';
 
 export default function Page() {
   return <LoginEmail />;
