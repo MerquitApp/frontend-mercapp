@@ -16,10 +16,10 @@ export default function Login() {
           Consigue los mejores precios y vende lo que ya no usas.
         </p>
         <div className="space-y-4">
-          <Link href="/login/email">
-            <button className="flex w-full items-center justify-center space-x-2 rounded-md bg-primaryPalette py-2 text-white shadow-sm transition-opacity hover:opacity-90">
-              <p>Inicia sesión con email</p>
-            </button>
+          <Link
+            href="/login/email"
+            className="flex w-full items-center justify-center space-x-2 rounded-md bg-primaryPalette py-2 text-white shadow-sm transition-opacity hover:opacity-90">
+            Inicia sesión con email
           </Link>
           <button className="flex w-full items-center justify-center space-x-2 rounded-md border bg-white py-2 text-gray-600 shadow-sm hover:bg-gray-50">
             <FaGoogle />
