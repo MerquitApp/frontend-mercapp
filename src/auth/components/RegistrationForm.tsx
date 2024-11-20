@@ -152,7 +152,7 @@ function RegistrationForm() {
         </h3>
         <Link href="/login">
           <h3 className="text-primaryPalette text-l font-semibold">
-            Inicia sesión
+            Iniciar Sesión
           </h3>
         </Link>
       </div>

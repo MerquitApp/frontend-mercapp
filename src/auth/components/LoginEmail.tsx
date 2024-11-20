@@ -46,7 +46,7 @@ export default function LoginEmail() {
           <Link
             href="/register"
             className="font-medium text-primaryPalette hover:underline">
-            Resgistrarse
+            Regístrate
           </Link>
         </p>
         <p className="text-center text-[14px] text-gray-600">
