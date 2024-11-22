@@ -2,10 +2,10 @@
 import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { Button } from '@nextui-org/react';
-import { Input } from '@nextui-org/react';
 import { FaArrowLeft } from 'react-icons/fa';
 import { GoXCircle } from 'react-icons/go';
 import { useRouter } from 'next/navigation';
+import Input from '@ui/Input';
 import Link from 'next/link';
 import AuthLayout from '../layouts/AuthLayout';
 
@@ -67,9 +67,9 @@ export default function ForgotPassForm() {
         <form onSubmit={handleSubmit(onSubmit)} className="w-full">
           <div className="mb-4">
             <Input
+              label="E-mail"
               type="email"
-              placeholder="Correo electrónico"
-              fullWidth
+              placeholder="example@mail.com"
               {...register('email', {
                 required: 'El correo es obligatorio',
                 pattern: {

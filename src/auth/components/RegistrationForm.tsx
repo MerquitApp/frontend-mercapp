@@ -4,6 +4,8 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { userSchema } from '@/validations/userSchema';
 import AuthLayout from '../layouts/AuthLayout';
+import PrimaryButton from '@/ui/components/PrimaryButton';
+import Input from '@ui/Input';
 
 type Inputs = {
   name: string;
@@ -29,7 +31,7 @@ function RegistrationForm() {
           Compra y vende en Mercapp
         </h3>
         <div className="w-3/4">
-          <h4 className="text-grayPalette text-xs text-center">
+          <h4 className="text-grayPalette text-center">
             Consigue los mejores precios y gana dinero con lo que no demandas
           </h4>
         </div>
@@ -40,113 +42,69 @@ function RegistrationForm() {
           data;
           // TODO: Implement form submission logic
         })}>
-        <div className="mb-4 flex flex-col gap-2">
-          <label
-            htmlFor="name"
-            className="text-grayPalette text-sm font-medium">
-            Nombre
-          </label>
+        <Input
+          label="Nombre"
+          type="text"
+          placeholder="Juan"
+          {...register('name')}
+          required>
           {errors.name?.message && (
             <p className="text-redPalette font-medium text-xs">
               {errors.name?.message}
             </p>
           )}
-          <input
-            type="text"
-            id="name"
-            className="border-2 border-gray-500 rounded-lg p-2"
-            placeholder="Juan"
-            required
-            {...register('name')}
-          />
-        </div>
-        <div className="mb-4 flex flex-col gap-2">
-          <label
-            htmlFor="phoneNumber"
-            className="text-grayPalette text-sm font-medium">
-            Número de teléfono
-          </label>
+        </Input>
+        <Input
+          label="Número de teléfono"
+          type="tel"
+          placeholder="Ej: 123456789"
+          {...register('phoneNumber')}
+          required>
           {errors.phoneNumber?.message && (
             <p className="text-redPalette font-medium text-xs">
               {errors.phoneNumber?.message}
             </p>
           )}
-          <input
-            type="tel"
-            id="phoneNumber"
-            className="border-2 border-gray-500 rounded-lg p-2"
-            placeholder="Ej: 123456789"
-            required
-            {...register('phoneNumber')}
-          />
-        </div>
-        <div className="mb-4 flex flex-col gap-2">
-          <label
-            htmlFor="email"
-            className="text-grayPalette text-sm font-medium">
-            E-mail
-          </label>
+        </Input>
+        <Input
+          label="E-mail"
+          type="text"
+          placeholder="example@mail.com"
+          {...register('email')}
+          required>
           {errors.email?.message && (
             <p className="text-redPalette font-medium text-xs">
               {errors.email?.message}
             </p>
           )}
-          <input
-            type="text"
-            id="email"
-            className="border-2 border-gray-500 rounded-lg p-2"
-            placeholder="ejemplo@gmail.com"
-            required
-            {...register('email')}
-          />
-        </div>
-        <div className="mb-4 flex flex-col gap-2">
-          <label
-            htmlFor="password"
-            className="text-grayPalette text-sm font-medium">
-            Contraseña
-          </label>
+        </Input>
+        <Input
+          label="Contraseña"
+          type="password"
+          placeholder="********"
+          {...register('password')}>
           {errors.password?.message && (
             <p className="text-redPalette font-medium text-xs">
               {errors.password?.message}
             </p>
           )}
-          <input
-            type="password"
-            id="password"
-            className="border-2 border-gray-500 rounded-lg p-2"
-            placeholder="******"
-            required
-            {...register('password')}
-          />
-        </div>
-        <div className="mb-4 flex flex-col gap-2">
-          <label
-            htmlFor="confirmPassword"
-            className="text-grayPalette text-sm font-medium">
-            Confirmar Contraseña
-          </label>
+        </Input>
+        <Input
+          label="Confirmar Contraseña"
+          type="password"
+          placeholder="********"
+          {...register('confirmPassword')}>
           {errors.confirmPassword?.message && (
             <p className="text-redPalette font-medium text-xs">
               {errors.confirmPassword?.message}
             </p>
           )}
-          <input
-            type="password"
-            id="confirmPassword"
-            className="border-2 border-gray-500 rounded-lg p-2"
-            placeholder="******"
-            required
-            {...register('confirmPassword')}
-          />
-        </div>
-        <div className="mb-4 flex flex-col gap-2">
-          <button className="bg-primaryPalette text-white text-sm font-semibold py-2 px-4 rounded-lg uppercase hover:font-bold">
-            Registrarme
-          </button>
-        </div>
+        </Input>
+        <PrimaryButton className="mt-4" type="submit">
+          Registrarme
+        </PrimaryButton>
       </form>
-      <div className="flex items-center justify-center w-full h-full gap-2 py-1">
+      <div className="flex items-center justify-center w-full h-full gap-2 py-1 mt-2">
         <h3 className="text-blackPalette text-l font-light">
           ¿Ya tienes una cuenta?
         </h3>
