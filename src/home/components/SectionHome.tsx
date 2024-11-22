@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import React from 'react';
 import sectionImage from '@/assets/section-image.svg';
+import PrimaryButton from '@/ui/components/PrimaryButton';
 
 function SectionHome() {
   return (
@@ -17,9 +18,7 @@ function SectionHome() {
             <span className="text-primaryPalette"> facilmente.</span>
           </h2>
           <div className="flex justify-center items-center mt-8">
-            <button className="bg-primaryPalette text-white text-sm font-bold py-2 px-4 rounded-lg uppercase">
-              Compra ahora
-            </button>
+            <PrimaryButton>Compra ahora</PrimaryButton>
           </div>
         </div>
         <div>
