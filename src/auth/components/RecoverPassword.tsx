@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import AuthLayout from '../layouts/AuthLayout';
 export default function RecoverPassword() {
   return (
@@ -40,9 +41,9 @@ export default function RecoverPassword() {
       </form>
       <div className="flex items-center justify-center w-full h-full gap-2 py-1">
         <p className="text-grayPalette text-balance">¿Ya tienes una cuenta?</p>
-        <a href="/login" className="text-primaryPalette text-balance">
-          Inicia sesión
-        </a>
+        <Link href="/login" className="text-primaryPalette text-balance">
+          Iniciar Sesión
+        </Link>
       </div>
     </AuthLayout>
   );
