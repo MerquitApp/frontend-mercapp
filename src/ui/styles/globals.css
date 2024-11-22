@@ -13,3 +13,18 @@
   src: url('/fonts/Montserrat-Italic-VariableFont_wght.woff2');
   font-style: italic;
 }
+
+.go-left {
+  transform: translateX(-150%) rotate(-45deg) !important;
+}
+
+.go-right {
+  transform: translateX(150%) rotate(45deg) !important;
+}
+
+.go-left,
+.go-right {
+  transition:
+    transform 0.3s ease,
+    rotate 0.3s ease;
+}
