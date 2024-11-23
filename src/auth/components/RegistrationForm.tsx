@@ -37,6 +37,7 @@ function RegistrationForm() {
         </div>
       </div>
       <form
+        className="flex flex-col gap-4"
         onSubmit={handleSubmit((data) => {
           // eslint-disable-next-line @typescript-eslint/no-unused-expressions
           data;
