@@ -6,16 +6,19 @@ export const metadata: Metadata = {
   title: 'Mercapp',
   description:
     'Mercapp es una plataforma digital diseñada para facilitar la compra y venta de productos entre usuarios de manera sencilla, segura y rápida. Inspirada en la economía colaborativa, Mercapp conecta directamente a compradores y vendedores, fomentando un comercio local, personalizado y eficiente.',
+  icons: {
+    icon: '/logo-mercapp.png'
+  },
   openGraph: {
     type: 'website',
     locale: 'es_ES',
     url: '/',
-    title: 'Mercapp',
+    title: 'MercApp',
     description:
-      'Mercapp es una plataforma digital diseñada para facilitar la compra y venta de productos entre usuarios de manera sencilla, segura y rápida. Inspirada en la economía colaborativa, Mercapp conecta directamente a compradores y vendedores, fomentando un comercio local, personalizado y eficiente.',
+      'MercApp es una plataforma digital diseñada para facilitar la compra y venta de productos entre usuarios de manera sencilla, segura y rápida. Inspirada en la economía colaborativa, Mercapp conecta directamente a compradores y vendedores, fomentando un comercio local, personalizado y eficiente.',
     images: [
       {
-        url: '/mercapp-og.png',
+        url: '/logo-mercapp.png',
         width: 1200,
         height: 630
       }
