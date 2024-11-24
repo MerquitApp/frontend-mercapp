@@ -1,13 +1,11 @@
 import Image from 'next/image';
 import React from 'react';
 import productImage from '@/assets/product-image.svg';
-import biShareIcon from '@/assets/bishare-icon.svg';
-import heartIcon from '@/assets/heart-icon.svg';
-import startIcon from '@/assets/star-icon.svg';
 import Link from 'next/link';
 import { Avatar } from '@nextui-org/react';
 import PrimaryButton from '@/ui/components/PrimaryButton';
 import SideBarProduct from './SideBarProduct';
+import { Icon } from '@iconify/react/dist/iconify.js';
 
 interface Props {
   userName: string;
@@ -22,20 +20,15 @@ function ProductSection({ userName, userReview, productCost }: Props) {
         <div className="flex flex-col justify-between w-3/4">
           <div className="mb-4">
             <Image
-              width={528}
+              width={628}
               height={128}
               src={productImage}
               alt="Imagen de producto"
               className="rounded-lg shadow-black shadow-md"
             />
             <div className="flex gap-3 mt-4">
-              <Image width={20} height={20} src={heartIcon} alt="Heart Icon" />
-              <Image
-                width={20}
-                height={20}
-                src={biShareIcon}
-                alt="BiShare Icono"
-              />
+              <Icon icon="mdi:heart" className="text-redPalette h-8 w-8" />
+              <Icon icon="mynaui:share" className=" h-8 w-8" />
             </div>
           </div>
           <div className="flex flex-col w-full">
@@ -60,12 +53,7 @@ function ProductSection({ userName, userReview, productCost }: Props) {
               <div className="flex flex-col gap-1">
                 <h4 className="text-s">{userName}</h4>
                 <div className="flex justify-around text-center items-center py-1  rounded-full bg-yellow-200">
-                  <Image
-                    width={20}
-                    height={20}
-                    src={startIcon}
-                    alt="Icono de Estrella"
-                  />
+                  <Icon icon="emojione:star" />
                   <h4 className="text-s text-yellow-400 font-bold">
                     {userReview}
                   </h4>
