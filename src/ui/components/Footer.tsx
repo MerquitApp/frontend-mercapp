@@ -7,7 +7,7 @@ import Link from 'next/link';
 
 function Footer() {
   return (
-    <div className="flex flex-col p-4 gap-4 h-screen">
+    <div className="flex flex-col p-4 gap-4">
       <span className="border-small border-greyPalette"></span>
       <div className="flex justify-between text-start gap-4 px-6">
         <div className="flex-col justify-between gap-2">
