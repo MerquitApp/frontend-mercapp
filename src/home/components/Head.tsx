@@ -49,7 +49,7 @@ export default function Head() {
           </Link>
         </NavbarItem>
         <NavbarItem>
-          <Link href="#">
+          <Link href="/upload-product">
             <Button
               className="bg-primaryPalette text-whitePalette"
               color="primary"
