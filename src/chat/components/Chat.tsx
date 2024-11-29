@@ -1,13 +1,22 @@
 'use client'; // Esta línea es clave
 import { useState, useEffect, useRef } from 'react';
+import { useSocketChat } from '../hooks/useSocketChat';
+import { useChatStore } from '@/store/chat';
+
+let isSocketConnected = false;
 
 function Chat() {
-  const [messages, setMessages] = useState([
-    { text: '¡Hola! ¿Cómo estás?', sender: 'user1' },
-    { text: '¡Hola! Todo bien, ¿y tú?', sender: 'user2' }
-  ]);
+  const { connectSocketChat, sendMessage } = useSocketChat();
+  const messages = useChatStore((state) => state.messages);
   const [input, setInput] = useState('');
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
+  const addMessage = useChatStore((state) => state.addMessage);
+
+  useEffect(() => {
+    if (isSocketConnected) return;
+    connectSocketChat();
+    isSocketConnected = true;
+  }, [connectSocketChat]);
 
   useEffect(() => {
     if (messagesEndRef.current) {
@@ -16,10 +25,12 @@ function Chat() {
   }, [messages]);
 
   const handleSendMessage = () => {
-    if (input.trim()) {
-      setMessages([...messages, { text: input, sender: 'user1' }]);
-      setInput('');
-    }
+    addMessage({
+      isLocal: true,
+      message: input
+    });
+    setInput('');
+    sendMessage(input);
   };
 
   return (
@@ -29,10 +40,10 @@ function Chat() {
           {messages.map((msg, index) => (
             <div
               key={index}
-              className={`mb-2 flex ${msg.sender === 'user1' ? 'justify-end' : 'justify-start'}`}>
+              className={`mb-2 flex ${msg.isLocal ? 'justify-end' : 'justify-start'}`}>
               <div
-                className={`p-2 rounded-lg text-white ${msg.sender === 'user1' ? 'bg-primaryPalette' : 'bg-greyPalette'}`}>
-                {msg.text}
+                className={`p-2 rounded-lg text-white ${msg.isLocal ? 'bg-primaryPalette' : 'bg-greyPalette'}`}>
+                {msg.message}
               </div>
             </div>
           ))}
