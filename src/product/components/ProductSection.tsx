@@ -82,14 +82,29 @@ function ProductSection({ userName, userReview, productCost }: Props) {
           </div>
           <span className="border-small border-greyPalette mb-4 w-full"></span>
           <div className="flex justify-between w-full">
-            <div className="flex gap-1 justify-start items-center">
-              <h4 className="text-4xl font-bold text-blackPalette">
-                {`${productCost}€`}
-              </h4>
-              {offerValue && (
-                <h4 className="text-3xl font-bold text-primaryPalette">
-                  {`${offerValue}€`}
+            <div className="flex gap-8 justify-start items-center">
+              <div className="flex items-center gap-1">
+                <h4 className="text-4xl font-bold text-blackPalette">
+                  {`${productCost}`}
                 </h4>
+                <h4 className="text-2xl font-bold text-blackPalette">€</h4>
+              </div>
+              {offerValue && (
+                <>
+                  <div className="flex items-center gap-2">
+                    <h3>
+                      <span className="text-sm font-bold uppercase text-primaryPalette">
+                        Nueva oferta
+                      </span>
+                    </h3>
+                    <div className="flex items-center gap-1">
+                      <h4 className="text-3xl font-bold text-redPalette">
+                        {`${offerValue}`}
+                      </h4>
+                      <h4 className="text-xl font-bold text-redPalette">€</h4>
+                    </div>
+                  </div>
+                </>
               )}
             </div>
             <div className="flex gap-2 w-2/4">

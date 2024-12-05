@@ -26,9 +26,10 @@ export const Modal = ({
   setOfferValue,
   children
 }: Props) => {
+  const [isModalOpen, setIsModalOpen] = useState(isOpen);
   const [inputValue, setInputValue] = useState('');
 
-  const { register, handleSubmit } = useForm<InputProps>({
+  const { register } = useForm<InputProps>({
     resolver: zodResolver(offerSchema)
   });
 
@@ -42,8 +43,13 @@ export const Modal = ({
       id="default-modal"
       tabIndex={-1}
       aria-hidden="true"
-      className={`${isOpen ? '' : 'hidden'} fixed inset-0 z-50 flex justify-center items-center bg-black/20 `}>
-      <div className="relative p-4 w-full max-w-lg max-h-full bg-white rounded-lg shadow-lg">
+      className={`fixed inset-0 z-50 flex justify-center items-center bg-black/20 transition-opacity duration-300 ${
+        isModalOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
+      }`}>
+      <div
+        className={`relative p-4 w-full max-w-lg max-h-full bg-white rounded-lg shadow-lg transform transition-transform duration-1000 ${
+          isModalOpen ? 'scale-100' : 'scale-90'
+        }`}>
         <div className="relative text-primaryPalette text-2xl font-bold mb-4 dark:bg-gray-700">
           {children}
           <button
@@ -55,15 +61,16 @@ export const Modal = ({
         </div>
         <div className="flex justify-center items-center">
           <form
-            onSubmit={handleSubmit((data) => {
-              console.log(data.offer);
-              setOfferValue(data.offer); // Actualiza la oferta
-              onClose(); // Cierra el modal
-            })}>
+            onSubmit={(e) => {
+              e.preventDefault();
+              setIsModalOpen(false);
+              setOfferValue(inputValue);
+              onClose();
+            }}>
             <InputOffer
               type="text"
               placeholder="Nuevo precio"
-              value={inputValue ? `${inputValue} €` : ''}
+              value={inputValue ? `${inputValue}€` : ''}
               {...register('offer')}
               required
             />
