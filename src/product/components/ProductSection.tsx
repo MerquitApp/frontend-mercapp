@@ -1,11 +1,14 @@
+'use client';
+
 import Image from 'next/image';
-import React from 'react';
+import React, { useState } from 'react';
 import productImage from '@/assets/product-image.svg';
 import Link from 'next/link';
 import { Avatar } from '@nextui-org/react';
 import PrimaryButton from '@/ui/components/PrimaryButton';
 import SideBarProduct from './SideBarProduct';
 import { Icon } from '@iconify/react/dist/iconify.js';
+import { Modal } from './Modal';
 
 interface Props {
   userName: string;
@@ -14,6 +17,15 @@ interface Props {
 }
 
 function ProductSection({ userName, userReview, productCost }: Props) {
+  const [offer, setOffer] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [offset, setOffset] = useState(0);
+  const [offerValue, setOfferValue] = useState<string | null>(null);
+
+  const handleOffer = () => {
+    setOffer(!offer);
+  };
+
   return (
     <div className="flex justify-between pt-5 px-4">
       <div className="flex items-start gap-10">
@@ -70,12 +82,20 @@ function ProductSection({ userName, userReview, productCost }: Props) {
           </div>
           <span className="border-small border-greyPalette mb-4 w-full"></span>
           <div className="flex justify-between w-full">
-            <div>
+            <div className="flex gap-1 justify-start items-center">
               <h4 className="text-4xl font-bold text-blackPalette">
                 {`${productCost}€`}
               </h4>
+              {offerValue && (
+                <h4 className="text-3xl font-bold text-primaryPalette">
+                  {`${offerValue}€`}
+                </h4>
+              )}
             </div>
-            <div>
+            <div className="flex gap-2 w-2/4">
+              <PrimaryButton onClick={handleOffer} className="p-2">
+                Realizar Oferta
+              </PrimaryButton>
               <PrimaryButton className="p-2">Compra Ahora</PrimaryButton>
             </div>
           </div>
@@ -85,6 +105,17 @@ function ProductSection({ userName, userReview, productCost }: Props) {
       <div className="flex flex-col">
         <h3>Aquí pondremos las recomendaciones de otros productos</h3>
       </div>
+      {offer && (
+        <Modal
+          isOpen={offer}
+          onClose={() => setOffer(false)}
+          setOffset={setOffset}
+          setOfferValue={setOfferValue}>
+          <div className="flex justify-center items-center">
+            <h2>¡Oferta un nuevo precio!</h2>
+          </div>
+        </Modal>
+      )}
     </div>
   );
 }
