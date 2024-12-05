@@ -34,13 +34,13 @@ export default function SwipeCard({
 
     let pulledX = 0;
 
-    cardRef.current.addEventListener('mousemove', onMouseMove);
-    cardRef.current.addEventListener('mouseup', onEnd);
+    document.addEventListener('mousemove', onMouseMove);
+    document.addEventListener('mouseup', onEnd);
 
-    cardRef.current.addEventListener('touchmove', onTouchMove, {
+    document.addEventListener('touchmove', onTouchMove, {
       passive: true
     });
-    cardRef.current.addEventListener('touchend', onEnd, { passive: true });
+    document.addEventListener('touchend', onEnd, { passive: true });
 
     function onMouseMove(ev: MouseEvent) {
       onMove(ev.pageX);
@@ -64,11 +64,11 @@ export default function SwipeCard({
     function onEnd() {
       if (!cardRef.current) return;
 
-      cardRef.current.removeEventListener('mousemove', onMouseMove);
-      cardRef.current.removeEventListener('mouseup', onEnd);
+      document.removeEventListener('mousemove', onMouseMove);
+      document.removeEventListener('mouseup', onEnd);
 
-      cardRef.current.removeEventListener('touchmove', onTouchMove);
-      cardRef.current.removeEventListener('touchend', onEnd);
+      document.removeEventListener('touchmove', onTouchMove);
+      document.removeEventListener('touchend', onEnd);
 
       const decisionMade = Math.abs(pulledX) >= DECISION_THRESHOLD;
       const goRight = pulledX >= 0;
@@ -89,7 +89,7 @@ export default function SwipeCard({
       ref={cardRef}
       onMouseDown={(ev) => startDrag(ev.pageX)}
       onTouchStart={(ev) => startDrag(ev.touches[0].pageX)}
-      className="p-3 bg-whitePalette shadow-md rounded-xl max-w-md cursor-grab z-20">
+      className="p-3 bg-whitePalette shadow-md rounded-xl max-w-md cursor-grab z-20 select-none">
       <img
         draggable={false}
         src={imageSrc}
