@@ -38,6 +38,7 @@ export const Modal = ({
     onClose();
   };
 
+
   return (
     <div
       id="default-modal"
