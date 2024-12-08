@@ -1,11 +1,14 @@
+'use client';
+
 import Image from 'next/image';
-import React from 'react';
+import React, { useState } from 'react';
 import productImage from '@/assets/product-image.svg';
 import Link from 'next/link';
 import { Avatar } from '@nextui-org/react';
 import PrimaryButton from '@/ui/components/PrimaryButton';
 import SideBarProduct from './SideBarProduct';
 import { Icon } from '@iconify/react/dist/iconify.js';
+import { Modal } from './Modal';
 
 interface Props {
   userName: string;
@@ -14,6 +17,12 @@ interface Props {
 }
 
 function ProductSection({ userName, userReview, productCost }: Props) {
+  const [offer, setOffer] = useState(false);
+
+  const handleOffer = () => {
+    setOffer(!offer);
+  };
+
   return (
     <div className="flex justify-between pt-5 px-4">
       <div className="flex items-start gap-10">
@@ -75,7 +84,10 @@ function ProductSection({ userName, userReview, productCost }: Props) {
                 {`${productCost}€`}
               </h4>
             </div>
-            <div>
+            <div className="flex gap-2 w-2/4">
+              <PrimaryButton onClick={handleOffer} className="p-2">
+                Realizar Oferta
+              </PrimaryButton>
               <PrimaryButton className="p-2">Compra Ahora</PrimaryButton>
             </div>
           </div>
@@ -85,6 +97,13 @@ function ProductSection({ userName, userReview, productCost }: Props) {
       <div className="flex flex-col">
         <h3>Aquí pondremos las recomendaciones de otros productos</h3>
       </div>
+      {offer && (
+        <Modal isOpen>
+          <div className="flex justify-center items-center">
+            <h2>¡Oferta un nuevo precio!</h2>
+          </div>
+        </Modal>
+      )}
     </div>
   );
 }
