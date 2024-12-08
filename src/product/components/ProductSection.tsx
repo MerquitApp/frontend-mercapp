@@ -18,6 +18,9 @@ interface Props {
 
 function ProductSection({ userName, userReview, productCost }: Props) {
   const [offer, setOffer] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [offset, setOffset] = useState(0);
+  const [offerValue, setOfferValue] = useState<string | null>(null);
 
   const handleOffer = () => {
     setOffer(!offer);
@@ -79,10 +82,30 @@ function ProductSection({ userName, userReview, productCost }: Props) {
           </div>
           <span className="border-small border-greyPalette mb-4 w-full"></span>
           <div className="flex justify-between w-full">
-            <div>
-              <h4 className="text-4xl font-bold text-blackPalette">
-                {`${productCost}€`}
-              </h4>
+            <div className="flex gap-8 justify-start items-center">
+              <div className="flex items-center gap-1">
+                <h4 className="text-4xl font-bold text-blackPalette">
+                  {`${productCost}`}
+                </h4>
+                <h4 className="text-2xl font-bold text-blackPalette">€</h4>
+              </div>
+              {offerValue && (
+                <>
+                  <div className="flex items-center gap-2">
+                    <h3>
+                      <span className="text-sm font-bold uppercase text-primaryPalette">
+                        Nueva oferta
+                      </span>
+                    </h3>
+                    <div className="flex items-center gap-1">
+                      <h4 className="text-3xl font-bold text-redPalette">
+                        {`${offerValue}`}
+                      </h4>
+                      <h4 className="text-xl font-bold text-redPalette">€</h4>
+                    </div>
+                  </div>
+                </>
+              )}
             </div>
             <div className="flex gap-2 w-2/4">
               <PrimaryButton onClick={handleOffer} className="p-2">
@@ -98,7 +121,11 @@ function ProductSection({ userName, userReview, productCost }: Props) {
         <h3>Aquí pondremos las recomendaciones de otros productos</h3>
       </div>
       {offer && (
-        <Modal isOpen>
+        <Modal
+          isOpen={offer}
+          onClose={() => setOffer(false)}
+          setOffset={setOffset}
+          setOfferValue={setOfferValue}>
           <div className="flex justify-center items-center">
             <h2>¡Oferta un nuevo precio!</h2>
           </div>

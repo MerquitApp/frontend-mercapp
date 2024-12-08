@@ -28,3 +28,10 @@ export const userSchema = z
     message: 'La contraseña no coincide',
     path: ['confirmPassword']
   });
+
+// validacion de nuevo precio
+export const offerSchema = z.object({
+  offer: z.string().min(1).max(6).refine(validator.isNumeric, {
+    message: 'El precio debe ser un número'
+  })
+});
