@@ -28,4 +28,5 @@ export const InputOffer = forwardRef<HTMLInputElement, Props>(
 
 InputOffer.displayName = 'InputOffer';
 
+
 export default InputOffer;
