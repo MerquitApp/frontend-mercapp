@@ -1,13 +1,13 @@
 import CalculatorButton from '@/ui/components/CalculatorButton';
 import { RiDeleteBack2Line } from 'react-icons/ri';
 
-type CalculatorOfferProps = {
-  onInputChange: (value: string) => void;
-};
+interface CalculatorOfferProps {
+  onInputChange: (update: (prev: string) => string) => void;
+}
 
 export const CalculatorOffer = ({ onInputChange }: CalculatorOfferProps) => {
   const handleButtonClick = (value: string) => {
-    onInputChange((prev) => prev + value);
+    onInputChange((prev: string) => prev + value);
   };
 
   const handleDeleteCliick = () => {
