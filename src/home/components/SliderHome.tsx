@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 
 const productos = Array(15).fill({
   titulo: 'Navaja multiusos',
@@ -64,7 +65,7 @@ const SliderHome = () => {
           className={`absolute top-1/2 -left-8 transform -translate-y-1/2 bg-white shadow-lg p-2 rounded-full text-gray-800 hover:bg-gray-100 ${
             currentIndex === 0 ? 'opacity-50 cursor-not-allowed' : ''
           }`}>
-          ❮
+          <IoIosArrowBack />
         </button>
         <button
           onClick={handleNext}
@@ -72,7 +73,7 @@ const SliderHome = () => {
           className={`absolute top-1/2 -right-8 transform -translate-y-1/2 bg-white shadow-lg p-2 rounded-full text-gray-800 hover:bg-gray-100 ${
             currentIndex === maxIndex ? 'opacity-50 cursor-not-allowed' : ''
           }`}>
-          ❯
+          <IoIosArrowForward />
         </button>
       </div>
     </div>
