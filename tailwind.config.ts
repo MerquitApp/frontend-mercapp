@@ -19,7 +19,8 @@ const config: Config = {
         redPalette: '#FF0000',
         whitePalette: '#FFFFFF',
         greyPalette: '#828282',
-        blackPalette: '#1E1E1E'
+        blackPalette: '#1E1E1E',
+        customgrey: '#1F2937'
       }
     }
   },
