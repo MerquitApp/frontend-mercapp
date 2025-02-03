@@ -27,14 +27,15 @@ export default function App() {
         </DropdownMenu>
       </Dropdown>
       {/* Contenido principal */}
-
-      <Tabs aria-label="Options" variant="underlined">
-        <Tab key="coches" title="Coches" />
-        <Tab key="motos" title="Motos" />
-        <Tab key="motor" title="Motor y accesorios" />
-        <Tab key="moda" title="Moda y accesorios" />
-        <Tab key="inmobiliaria" title="Inmobiliaria" />
-      </Tabs>
+      <div className="hidden md:flex">
+        <Tabs aria-label="Options" variant="underlined">
+          <Tab key="coches" title="Coches" />
+          <Tab key="motos" title="Motos" />
+          <Tab key="motor" title="Motor y accesorios" />
+          <Tab key="moda" title="Moda y accesorios" />
+          <Tab key="inmobiliaria" title="Inmobiliaria" />
+        </Tabs>
+      </div>
     </div>
   );
 }

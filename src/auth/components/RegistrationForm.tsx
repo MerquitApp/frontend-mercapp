@@ -27,7 +27,7 @@ function RegistrationForm() {
   return (
     <AuthLayout>
       <div className="flex flex-col items-center justify-center w-full h-full gap-2 py-2">
-        <h3 className="text-blackPalette text-2xl font-bold">
+        <h3 className="text-blackPalette md:text-2xl text-xl font-bold">
           Compra y vende en Mercapp
         </h3>
         <div className="w-3/4">
