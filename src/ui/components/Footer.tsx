@@ -9,9 +9,9 @@ function Footer() {
   return (
     <div className="flex flex-col p-4 gap-4">
       <span className="border-small border-greyPalette"></span>
-      <div className="flex justify-between text-start gap-4 px-6">
+      <div className="flex flex-col md:flex-row md:justify-between items-center text-center md:text-start gap-4 px-6">
         <div className="flex-col justify-between gap-2">
-          <Link href={'/'}>
+          <Link href={'/'} className="w-10 h-10">
             <Image
               width={45}
               height={3}
