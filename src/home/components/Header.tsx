@@ -10,7 +10,7 @@ import {
 import { PiMagnifyingGlassBold } from 'react-icons/pi';
 import { IoAddCircleOutline } from 'react-icons/io5';
 
-export default function Head() {
+export default function Header() {
   return (
     <Navbar isBordered className="flex flex-wrap px-4 sm:px-6 h-36 sm:h-20">
       {/* Contenedor principal que cambia en pantallas pequeñas */}

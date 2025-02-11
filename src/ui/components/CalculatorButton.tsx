@@ -12,7 +12,7 @@ export default function CalculatorButton({
 }: Props) {
   return (
     <button
-      className={`flex w-[100px] items-center justify-center space-x-2 rounded-full bg-greyPalette/40 py-2 text-blackPallete shadow-sm transition-opacity hover:opacity-90 ${className ?? ''}`}
+      className={`flex w-[100px] items-center justify-center space-x-2 rounded-full bg-greyPalette/40 py-2 text-blackPallete shadow-sm transition-opacity hover:opacity-90 ${className ?? ''} active:scale-[0.98] transition-transform`}
       {...props}>
       {children}
     </button>

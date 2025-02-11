@@ -1,22 +1,17 @@
-'use client'; // Esta línea es clave
-import { useState, useEffect, useRef } from 'react';
-import { useSocketChat } from '../hooks/useSocketChat';
-import { useChatStore } from '@/store/chat';
+'use client';
 
-let isSocketConnected = false;
+import { Message } from '@/types';
+import { useEffect, useRef, useState } from 'react';
 
-function Chat() {
-  const { connectSocketChat, sendMessage } = useSocketChat();
-  const messages = useChatStore((state) => state.messages);
-  const [input, setInput] = useState('');
+interface Props {
+  messages: Message[];
+  onSendMessage: (message: string) => void;
+}
+
+function Chat({ messages: messagesProp, onSendMessage }: Props) {
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
-  const addMessage = useChatStore((state) => state.addMessage);
-
-  useEffect(() => {
-    if (isSocketConnected) return;
-    connectSocketChat();
-    isSocketConnected = true;
-  }, [connectSocketChat]);
+  const [input, setInput] = useState('');
+  const [messages, setMessages] = useState(messagesProp);
 
   useEffect(() => {
     if (messagesEndRef.current) {
@@ -24,13 +19,14 @@ function Chat() {
     }
   }, [messages]);
 
+  useEffect(() => {
+    setMessages(messagesProp);
+  }, [messagesProp]);
+
   const handleSendMessage = () => {
-    addMessage({
-      isLocal: true,
-      message: input
-    });
+    onSendMessage(input);
     setInput('');
-    sendMessage(input);
+    setMessages([...messages, { message: input, isLocal: true }]);
   };
 
   return (
