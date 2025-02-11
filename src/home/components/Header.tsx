@@ -1,3 +1,5 @@
+'use client';
+
 import {
   Navbar,
   NavbarBrand,
@@ -9,8 +11,11 @@ import {
 } from '@nextui-org/react';
 import { PiMagnifyingGlassBold } from 'react-icons/pi';
 import { IoAddCircleOutline } from 'react-icons/io5';
+import { useAuthStore } from '@/store/auth';
 
-export default function Head() {
+export default function Header() {
+  const isLoggedIn = useAuthStore((state) => state.isLoggedIn);
+
   return (
     <Navbar isBordered className=" [&>header]:max-w-full justify-center">
       <Link href="/">
@@ -40,24 +45,36 @@ export default function Head() {
       </NavbarContent>
       <NavbarContent justify="end">
         <NavbarItem className="hidden lg:flex">
-          <Link href="/login">
-            <Button
-              className="text-primaryPalette bg-default-400/20 border-primaryPalette"
-              variant="bordered">
-              Registrate o inicia sesión
-            </Button>
-          </Link>
+          {isLoggedIn ? (
+            <Link href="/profile">
+              <Button
+                className="text-primaryPalette bg-default-400/20 border-primaryPalette"
+                variant="bordered">
+                Perfil
+              </Button>
+            </Link>
+          ) : (
+            <Link href="/login">
+              <Button
+                className="text-primaryPalette bg-default-400/20 border-primaryPalette"
+                variant="bordered">
+                Registrate o inicia sesión
+              </Button>
+            </Link>
+          )}
         </NavbarItem>
         <NavbarItem>
-          <Link href="/upload-product">
-            <Button
-              className="bg-primaryPalette text-whitePalette"
-              color="primary"
-              startContent={<IoAddCircleOutline size={30} />}
-              variant="flat">
-              Vender
-            </Button>
-          </Link>
+          {isLoggedIn && (
+            <Link href="/upload-product">
+              <Button
+                className="bg-primaryPalette text-whitePalette"
+                color="primary"
+                startContent={<IoAddCircleOutline size={30} />}
+                variant="flat">
+                Vender
+              </Button>
+            </Link>
+          )}
         </NavbarItem>
       </NavbarContent>
     </Navbar>
