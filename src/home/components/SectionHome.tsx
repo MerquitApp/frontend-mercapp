@@ -5,15 +5,15 @@ import PrimaryButton from '@/ui/components/PrimaryButton';
 
 function SectionHome() {
   return (
-    <div className="flex flex-col justify-center mt-8 p-4 gap-4">
-      <span className="border-small border-greyPalette"></span>
-      <div className="flex justify-center">
-        <div className="bg-gray-200 p-4 w-1/4">
-          <h2 className="font-bold text-5xl">
+    <div className="flex flex-col justify-center items-center mt-8 p-4 gap-4">
+      <span className="border-small border-greyPalette w-full"></span>
+      <div className="flex flex-col md:flex-row justify-center items-center w-full max-w-4xl">
+        <div className="bg-gray-200 p-4 w-full md:w-1/2">
+          <h2 className="font-bold text-3xl md:text-4xl">
             Aquí, lo antiguo es lo
             <span className="text-primaryPalette"> nuevo.</span>
           </h2>
-          <h2 className="font-bold text-5xl">
+          <h2 className="font-bold text-3xl md:text-4xl">
             Compra y vende
             <span className="text-primaryPalette"> facilmente.</span>
           </h2>
@@ -21,12 +21,12 @@ function SectionHome() {
             <PrimaryButton>Compra ahora</PrimaryButton>
           </div>
         </div>
-        <div>
+        <div className="mt-4 md:mt-0 w-full md:w-1/2 flex justify-center">
           <Image
             width={710}
             height={399}
             src={sectionImage}
-            className=""
+            className="w-full md:w-auto"
             alt="Imagen de E-commerce"
           />
         </div>

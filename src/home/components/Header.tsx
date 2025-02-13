@@ -44,7 +44,7 @@ export default function Header() {
         />
       </NavbarContent>
       <NavbarContent justify="end">
-        <NavbarItem className="hidden lg:flex">
+        <NavbarItem>
           {isLoggedIn ? (
             <Link href="/profile">
               <Button
