@@ -7,6 +7,7 @@ import Input from '@ui/Input';
 import PrimaryButton from '@/ui/components/PrimaryButton';
 import { useAuthStore } from '@/store/auth';
 import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
 
 export default function LoginEmail() {
   const setName = useAuthStore((state) => state.setName);
@@ -44,6 +45,7 @@ export default function LoginEmail() {
       }
     } catch (error) {
       console.log(error);
+      toast.error('Las credenciales no son válidas');
     }
   };
 

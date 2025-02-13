@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import '../ui/styles/globals.css';
 import { Providers } from '@/providers/Providers';
+import { Toaster } from 'sonner';
 
 export const metadata: Metadata = {
   title: 'Mercapp',
@@ -35,6 +36,7 @@ export default function RootLayout({
     <html lang="en">
       <body className="font-montserrat">
         <Providers>{children}</Providers>
+        <Toaster />
       </body>
     </html>
   );
