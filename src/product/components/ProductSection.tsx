@@ -11,12 +11,20 @@ import { Icon } from '@iconify/react/dist/iconify.js';
 import { Modal } from './Modal';
 
 interface Props {
+  productDescription: string;
+  productName: string;
   userName: string;
   userReview: number;
   productCost: number;
 }
 
-function ProductSection({ userName, userReview, productCost }: Props) {
+function ProductSection({
+  userName,
+  userReview,
+  productCost,
+  productName,
+  productDescription
+}: Props) {
   const [offer, setOffer] = useState(false);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [offset, setOffset] = useState(0);
@@ -27,7 +35,7 @@ function ProductSection({ userName, userReview, productCost }: Props) {
   };
 
   return (
-    <div className="flex justify-between pt-5 px-4">
+    <div className="flex justify-between pt-5 px-4 max-w-7xl mx-auto">
       <div className="flex items-start gap-10">
         <div className="flex flex-col justify-between w-3/4">
           <div className="mb-4">
@@ -43,21 +51,12 @@ function ProductSection({ userName, userReview, productCost }: Props) {
               <Icon icon="mynaui:share" className=" h-8 w-8" />
             </div>
           </div>
-          <div className="flex flex-col w-full">
-            <h3 className="font-bold text-xl text-primaryPalette">
-              Kit de herramienta multiuso
-            </h3>
-            <h3 className="font-normal text-xs text-greyPalette pl-2">
-              Como nuevo
-            </h3>
-            <h3 className="font-normal text-xs text-greyPalette pl-2">
-              Venta solo en persona
-            </h3>
-          </div>
-          <h4 className="font-semibold text-s text-greyPalette w-full">
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nulla quo
-            dolorum dolorem.
-          </h4>
+          <h3 className="font-bold text-xl text-primaryPalette">
+            {productName}
+          </h3>
+          <p className="font-semibold text-s text-greyPalette w-full">
+            {productDescription}
+          </p>
           <span className="border-small border-greyPalette mt-4 w-full"></span>
           <div className="flex justify-between items-center p-4 w-full">
             <div className="flex justify-center items-center gap-4">
