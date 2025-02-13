@@ -5,7 +5,7 @@ import { useChatStore } from '@/store/chat';
 import { useSocketChat } from '@/chat/hooks/useSocketChat';
 import Chat from '@/chat/components/Chat';
 
-export let isSocketConnected = false;
+let isSocketConnected = false;
 
 function Page() {
   const { connectSocketChat, sendMessage } = useSocketChat();
