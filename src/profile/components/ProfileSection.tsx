@@ -19,19 +19,29 @@ const ProfileSection = ({ userName, userEmail, userAvatar }: Props) => {
     <div className="flex flex-col justify-center items-center p-10 gap-8">
       <div className="flex flex-col items-center justify-center">
         <Avatar
-          className="w-20 h-20 rounded-full"
+          className="w-16 h-16 md:w-20 md:h-20 rounded-full"
           name="John Doe"
           src={userAvatar}
         />
-        <h2 className="font-semibold text-2xl">{userName}</h2>
+        <h2 className="font-semibold text-xl md:text-2xl">{userName}</h2>
         <h3 className="text-sm">{userEmail}</h3>
       </div>
-      <div className="bg-greyPalette/5 w-[1200px] flex flex-col gap-4 p-8 rounded-lg shadow-md">
-        <div className="flex flex-col gap-8 justify-start items-start">
+      <div className="bg-greyPalette/5 w-fit flex flex-col gap-4 p-8 rounded-lg shadow-md items-center">
+        <div className="flex flex-col gap-8 justify-center items-center max-w-sm">
           <AccountOption
             accountIcon={<IoSettingsOutline />}
             accountName="Configuración"
             accountSetting="setting"
+          />
+          <AccountOption
+            accountIcon={<IoSettingsOutline />}
+            accountName="Productos Subidos"
+            accountSetting="products"
+          />
+          <AccountOption
+            accountIcon={<IoSettingsOutline />}
+            accountName="Favoritos"
+            accountSetting="likes"
           />
           <AccountOption
             accountIcon={<MdOutlineNotificationsActive />}
