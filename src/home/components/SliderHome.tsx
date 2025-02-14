@@ -35,22 +35,26 @@ const SliderHome = () => {
           <div
             className="flex transition-transform duration-500 ease-in-out"
             style={{
-              transform: `translateX(-${currentIndex * 20}%)`
+              transform: `translateX(-${currentIndex * (100 / itemsPerView)}%)`
             }}>
             {productos.map((producto, index) => (
               <div
                 key={index}
-                className="w-1/5 flex-shrink-0 p-4"
-                style={{ flexBasis: '20%' }}>
+                className="w-1/3 md:w-1/5 flex-shrink-0 p-4"
+                style={{ flexBasis: `${100 / itemsPerView}%` }}>
                 <div className="p-4 border rounded-lg bg-white shadow-md">
                   <img
                     src={producto.imagenUrl}
                     alt={producto.titulo}
                     className="w-full object-cover rounded-lg"
                   />
-                  <div className="mt-4">
-                    <h3 className="font-semibold text-lg">{producto.titulo}</h3>
-                    <p className="text-xl font-bold mt-2">{producto.precio}</p>
+                  <div className="mt-4 text-center flex flex-col items-center">
+                    <h3 className="font-semibold text-xs md:text-lg">
+                      {producto.titulo}
+                    </h3>
+                    <p className="text-sm md:text-xl font-bold mt-2">
+                      {producto.precio}
+                    </p>
                   </div>
                 </div>
               </div>
@@ -62,7 +66,7 @@ const SliderHome = () => {
         <button
           onClick={handlePrev}
           disabled={currentIndex === 0}
-          className={`absolute top-1/2 -left-8 transform -translate-y-1/2 bg-white shadow-lg p-2 rounded-full text-gray-800 hover:bg-gray-100 ${
+          className={`absolute top-1/2 -left-4 md:-left-8 transform -translate-y-1/2 bg-white shadow-lg p-2 rounded-full text-gray-800 hover:bg-gray-100 ${
             currentIndex === 0 ? 'opacity-50 cursor-not-allowed' : ''
           }`}>
           <IoIosArrowBack />
@@ -70,7 +74,7 @@ const SliderHome = () => {
         <button
           onClick={handleNext}
           disabled={currentIndex === maxIndex}
-          className={`absolute top-1/2 -right-8 transform -translate-y-1/2 bg-white shadow-lg p-2 rounded-full text-gray-800 hover:bg-gray-100 ${
+          className={`absolute top-1/2 -right-4 md:-right-8 transform -translate-y-1/2 bg-white shadow-lg p-2 rounded-full text-gray-800 hover:bg-gray-100 ${
             currentIndex === maxIndex ? 'opacity-50 cursor-not-allowed' : ''
           }`}>
           <IoIosArrowForward />
