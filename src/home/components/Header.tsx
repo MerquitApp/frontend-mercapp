@@ -1,3 +1,5 @@
+'use client';
+
 import {
   Navbar,
   NavbarBrand,
@@ -9,8 +11,11 @@ import {
 } from '@nextui-org/react';
 import { PiMagnifyingGlassBold } from 'react-icons/pi';
 import { IoAddCircleOutline } from 'react-icons/io5';
+import { useAuthStore } from '@/store/auth';
 
-export default function Head() {
+export default function Header() {
+  const isLoggedIn = useAuthStore((state) => state.isLoggedIn);
+
   return (
     <Navbar isBordered className="flex flex-wrap px-4 sm:px-6 h-36 sm:h-20">
       {/* Contenedor principal que cambia en pantallas pequeñas */}
@@ -46,21 +51,57 @@ export default function Head() {
 
       {/* Buttons - con flex-column en pantallas pequeñas */}
       <NavbarContent
-        justify="center"
-        className="w-full sm:w-auto gap-2 sm:ml-4 flex flex-col sm:flex-row">
-        {/* Login Button */}
-        <NavbarItem>
-          <Link href="/login">
-            <Button
-              className="text-primaryPalette bg-default-400/20 border-primaryPalette text-xs sm:text-sm py-2 px-3 sm:py-3 sm:px-4"
-              variant="bordered">
-              Registrate o inicia sesión
-            </Button>
-          </Link>
+        as="div"
+        className="justify-items-center max-w-screen-lgw-full"
+        justify="end">
+        <Input
+          classNames={{
+            base: 'max-w-full sm:max-w-96 h-10',
+            mainWrapper: 'h-full w-full',
+            input: 'text-small',
+            inputWrapper:
+              'h-full font-normal text-default-500 bg-default-400/20 dark:bg-default-500/20'
+          }}
+          placeholder="Busca tu producto"
+          size="sm"
+          startContent={<PiMagnifyingGlassBold size={18} />}
+          type="search"
+        />
+      </NavbarContent>
+      <NavbarContent justify="end">
+        <NavbarItem className="hidden lg:flex">
+          {isLoggedIn ? (
+            <Link href="/profile">
+              <Button
+                className="text-primaryPalette bg-default-400/20 border-primaryPalette"
+                variant="bordered">
+                Perfil
+              </Button>
+            </Link>
+          ) : (
+            <Link href="/login">
+              <Button
+                className="text-primaryPalette bg-default-400/20 border-primaryPalette"
+                variant="bordered">
+                Registrate o inicia sesión
+              </Button>
+            </Link>
+          )}
         </NavbarItem>
 
         {/* Sell Button */}
         <NavbarItem>
+          {isLoggedIn && (
+            <Link href="/upload-product">
+              <Button
+                className="bg-primaryPalette text-whitePalette"
+                color="primary"
+                startContent={<IoAddCircleOutline size={30} />}
+                variant="flat">
+                Vender
+              </Button>
+            </Link>
+          )}
           <Link href="/upload-product">
             <Button
               className="bg-primaryPalette text-whitePalette text-xs sm:text-sm py-2 px-3 sm:py-3 sm:px-4"

@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
-import { NextUIProvider } from '@nextui-org/react';
 import '../ui/styles/globals.css';
+import { Providers } from '@/providers/Providers';
 
 export const metadata: Metadata = {
   title: 'Mercapp',
@@ -34,7 +34,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="font-montserrat">
-        <NextUIProvider>{children}</NextUIProvider>
+        <Providers>{children}</Providers>
       </body>
     </html>
   );
