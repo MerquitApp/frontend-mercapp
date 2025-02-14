@@ -7,3 +7,8 @@ export interface ProductCard {
   imageSrc: string;
   description: string;
 }
+
+export interface Message {
+  message: string;
+  isLocal: boolean;
+}

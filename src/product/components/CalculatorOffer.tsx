@@ -7,7 +7,16 @@ interface CalculatorOfferProps {
 
 export const CalculatorOffer = ({ onInputChange }: CalculatorOfferProps) => {
   const handleButtonClick = (value: string) => {
-    onInputChange((prev: string) => prev + value);
+    onInputChange((prev: string) => {
+      // Dot can only be included once and must have a value before it
+      if (
+        (value === '.' && prev.includes('.')) ||
+        (value === '.' && prev.trim().length <= 0)
+      )
+        return prev;
+
+      return prev + value;
+    });
   };
 
   const handleDeleteCliick = () => {
