@@ -88,8 +88,6 @@ export default function Header() {
             </Link>
           )}
         </NavbarItem>
-
-        {/* Sell Button */}
         <NavbarItem>
           {isLoggedIn && (
             <Link href="/upload-product">

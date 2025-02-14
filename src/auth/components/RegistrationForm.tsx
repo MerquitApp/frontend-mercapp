@@ -8,6 +8,7 @@ import AuthLayout from '../layouts/AuthLayout';
 import PrimaryButton from '@/ui/components/PrimaryButton';
 import Input from '@ui/Input';
 import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
 
 type Inputs = {
   name: string;
@@ -60,6 +61,7 @@ function RegistrationForm() {
             }
           } catch (error) {
             console.log(error);
+            toast.error('Error al registrarte');
           }
         })}>
         <Input

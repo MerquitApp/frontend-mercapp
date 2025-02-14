@@ -1,4 +1,5 @@
 'use client';
+
 import Head from '@/home/components/Header';
 import Footer from '@/ui/components/Footer';
 import React from 'react';
