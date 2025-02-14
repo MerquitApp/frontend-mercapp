@@ -17,7 +17,7 @@ const AccountOption = ({
         <span className="p-2 rounded-lg bg-primaryPalette/10 text-primaryPalette">
           {accountIcon}
         </span>
-        <p className="text-primaryPalette font-semibold text-xl">
+        <p className="text-primaryPalette font-semibold text-xs sm:text-sm md:text-base">
           {accountName}
         </p>
       </div>
