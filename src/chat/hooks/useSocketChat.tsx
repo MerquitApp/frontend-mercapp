@@ -9,7 +9,7 @@ export const useSocketChat = () => {
   const { peerConnection } = useWebrtcStore();
 
   const connectSocketChat = useCallback(() => {
-    const socketTmp = io('http://localhost:3000', {
+    const socketTmp = io('http://localhost:3001', {
       withCredentials: true,
       transports: ['websocket'],
       autoConnect: true,
