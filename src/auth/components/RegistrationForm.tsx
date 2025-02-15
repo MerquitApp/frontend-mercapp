@@ -59,6 +59,7 @@ function RegistrationForm() {
             if (response.ok) {
               push('/login');
             }
+            toast.success('Revisa tu correo para confirmar tu cuenta');
           } catch (error) {
             console.log(error);
             toast.error('Error al registrarte');
