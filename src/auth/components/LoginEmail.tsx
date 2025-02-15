@@ -1,10 +1,52 @@
+'use client';
+
 import Image from 'next/image';
 import Link from 'next/link';
 import AuthLayout from '../layouts/AuthLayout';
 import Input from '@ui/Input';
 import PrimaryButton from '@/ui/components/PrimaryButton';
+import { useAuthStore } from '@/store/auth';
+import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
+import { BACKEND_URL } from '@/constants';
 
 export default function LoginEmail() {
+  const setName = useAuthStore((state) => state.setName);
+  const setEmail = useAuthStore((state) => state.setEmail);
+  const setProfilePicture = useAuthStore((state) => state.setProfilePicture);
+  const setIsLoggedIn = useAuthStore((state) => state.setIsLoggedIn);
+  const { push } = useRouter();
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const formData = new FormData(e.currentTarget);
+
+    try {
+      const result = await fetch(`${BACKEND_URL}/auth/login`, {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(Object.fromEntries(formData))
+      });
+
+      const data = await result.json();
+
+      if (result.ok) {
+        setName(data.name);
+        setEmail(data.email);
+        setProfilePicture(data.profilePicture);
+        setIsLoggedIn(true);
+        push('/');
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error('Las credenciales no son válidas');
+    }
+  };
+
   return (
     <AuthLayout>
       <div className="flex justify-center mb-4">
@@ -17,7 +59,10 @@ export default function LoginEmail() {
         Consigue los mejores precios y vende lo que ya no usas.
       </p>
       <div className="space-y-4">
-        <form className="flex justify-center flex-col">
+        <form
+          id="login-form"
+          className="flex justify-center flex-col"
+          onSubmit={handleSubmit}>
           <Input
             label="E-mail"
             name="email"
@@ -32,7 +77,9 @@ export default function LoginEmail() {
             type="password"
           />
         </form>
-        <PrimaryButton type="submit">Iniciar sesión</PrimaryButton>
+        <PrimaryButton type="submit" form="login-form">
+          Iniciar sesión
+        </PrimaryButton>
       </div>
       <div className="flex flex-col gap-2 mt-4">
         <p className="text-center text-sm text-gray-600">

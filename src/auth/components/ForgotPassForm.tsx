@@ -1,40 +1,54 @@
 'use client';
+
 import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { Button } from '@nextui-org/react';
 import { FaArrowLeft } from 'react-icons/fa';
 import { GoXCircle } from 'react-icons/go';
-import { useRouter } from 'next/navigation';
 import Input from '@ui/Input';
 import Link from 'next/link';
 import AuthLayout from '../layouts/AuthLayout';
+import { toast } from 'sonner';
 
 type FormValues = {
   email: string;
 };
 
 export default function ForgotPassForm() {
-  const router = useRouter();
   const [loading, setLoading] = useState(false);
   const {
     register,
     handleSubmit,
-    formState: { errors }
+    formState: { errors },
+    reset
   } = useForm<FormValues>();
 
-  const onSubmit: SubmitHandler<FormValues> = (data) => {
+  const onSubmit: SubmitHandler<FormValues> = async (data) => {
+    reset();
     setLoading(true);
 
-    // Simular una acción de recuperación de contraseña
-    console.log('Correo electrónico para recuperar contraseña:', data.email);
+    const resp = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/password-reset-request`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          email: data.email
+        })
+      }
+    );
 
-    // Simular un retardo para imitar una llamada a la API
-    setTimeout(() => {
-      setLoading(false);
-      // Opcional: Mostrar un mensaje de éxito o redirigir al usuario
-      // Por ejemplo, redirigir a la página de inicio de sesión:
-      router.push('/login');
-    }, 2000);
+    if (resp.ok) {
+      toast.success(
+        'Se ha enviado un correo con un enlace para restablecer tu contraseña'
+      );
+    } else {
+      toast.error('Ha ocurrido un error al enviar el correo');
+    }
+
+    setLoading(false);
   };
 
   return (

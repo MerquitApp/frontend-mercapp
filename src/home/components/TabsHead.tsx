@@ -6,9 +6,9 @@ import {
   DropdownItem
 } from '@nextui-org/dropdown';
 
-export default function App() {
+export default function TabsHead() {
   return (
-    <div className="flex flex-row items-center justify-center gap-2 text-blackPalette pt-4">
+    <div className="flex flex-row items-center justify-between gap-2 text-blackPalette pt-4 max-w-4xl w-full mx-auto">
       <Dropdown>
         <DropdownTrigger>
           <Button variant="bordered">Todas las categorias</Button>

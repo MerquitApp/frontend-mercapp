@@ -1,4 +1,5 @@
 'use client';
+
 import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -6,6 +7,9 @@ import { userSchema } from '@/validations/userSchema';
 import AuthLayout from '../layouts/AuthLayout';
 import PrimaryButton from '@/ui/components/PrimaryButton';
 import Input from '@ui/Input';
+import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
+import { BACKEND_URL } from '@/constants';
 
 type Inputs = {
   name: string;
@@ -23,6 +27,7 @@ function RegistrationForm() {
   } = useForm<Inputs>({
     resolver: zodResolver(userSchema)
   });
+  const { push } = useRouter();
 
   return (
     <AuthLayout>
@@ -38,10 +43,25 @@ function RegistrationForm() {
       </div>
       <form
         className="flex flex-col gap-4"
-        onSubmit={handleSubmit((data) => {
-          // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-          data;
-          // TODO: Implement form submission logic
+        onSubmit={handleSubmit(async (formData) => {
+          try {
+            const response = await fetch(`${BACKEND_URL}/auth/register`, {
+              method: 'POST',
+              credentials: 'include',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(formData)
+            });
+
+            if (response.ok) {
+              push('/login');
+            }
+            toast.success('Revisa tu correo para confirmar tu cuenta');
+          } catch (error) {
+            console.log(error);
+            toast.error('Error al registrarte');
+          }
         })}>
         <Input
           label="Nombre"

@@ -2,11 +2,7 @@ import RegistrationForm from '@/auth/components/RegistrationForm';
 import React from 'react';
 
 function Page() {
-  return (
-    <div>
-      <RegistrationForm />
-    </div>
-  );
+  return <RegistrationForm />;
 }
 
 export default Page;
