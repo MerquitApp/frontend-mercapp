@@ -1,3 +1,5 @@
+'use client';
+
 import { Avatar } from '@nextui-org/react';
 import { IoSettingsOutline } from 'react-icons/io5';
 import { MdOutlineNotificationsActive } from 'react-icons/md';
@@ -7,6 +9,8 @@ import { CiLogout } from 'react-icons/ci';
 import { IoLockClosedOutline } from 'react-icons/io5';
 
 import AccountOption from './AccountOption';
+import { toast } from 'sonner';
+import { BACKEND_URL } from '@/constants';
 
 interface Props {
   userName: string;
@@ -15,6 +19,22 @@ interface Props {
 }
 
 const ProfileSection = ({ userName, userEmail, userAvatar }: Props) => {
+  const handleLogout = async () => {
+    try {
+      const resp = await fetch(`${BACKEND_URL}/auth/logout`, {
+        method: 'POST',
+        credentials: 'include'
+      });
+
+      if (resp.ok) {
+        window.location.reload();
+      }
+    } catch (error) {
+      toast.error('Error al cerrar sesión');
+      console.log(error);
+    }
+  };
+
   return (
     <div className="flex flex-col justify-center items-center p-10 gap-8">
       <div className="flex flex-col items-center justify-center">
@@ -26,47 +46,48 @@ const ProfileSection = ({ userName, userEmail, userAvatar }: Props) => {
         <h2 className="font-semibold text-xl md:text-2xl">{userName}</h2>
         <h3 className="text-sm">{userEmail}</h3>
       </div>
-      <div className="bg-greyPalette/5 w-fit flex flex-col gap-4 p-8 rounded-lg shadow-md items-center">
-        <div className="flex flex-col gap-8 justify-center items-center max-w-sm">
+      <div className="bg-greyPalette/5 w-[90%] max-w-xl flex flex-col gap-4 p-8 rounded-lg shadow-md items-center">
+        <div className="flex flex-col gap-8 justify-center items-center w-full">
           <AccountOption
             accountIcon={<IoSettingsOutline />}
             accountName="Configuración"
-            accountSetting="setting"
+            href="/profile/setting"
           />
           <AccountOption
             accountIcon={<IoSettingsOutline />}
             accountName="Productos Subidos"
-            accountSetting="products"
+            href="/profile/products"
           />
           <AccountOption
             accountIcon={<IoSettingsOutline />}
             accountName="Favoritos"
-            accountSetting="likes"
+            href="/profile/likes"
           />
           <AccountOption
             accountIcon={<MdOutlineNotificationsActive />}
             accountName="Notificaciones"
-            accountSetting="notifications"
+            href="/profile/notifications"
           />
           <AccountOption
             accountIcon={<FaRegClock />}
             accountName="Historial de compras"
-            accountSetting="history"
+            href="/profile/history"
           />
           <AccountOption
             accountIcon={<IoLockClosedOutline />}
             accountName="Politica de privacidad"
-            accountSetting="privacy"
+            href="/profile/privacy"
           />
           <AccountOption
             accountIcon={<IoAlertCircleOutline />}
             accountName="Terminos y condiciones"
-            accountSetting="terms"
+            href="/profile/terms"
           />
           <AccountOption
             accountIcon={<CiLogout />}
             accountName="Cerrar sesión"
-            accountSetting="/"
+            as={'button'}
+            onClick={handleLogout}
           />
         </div>
       </div>

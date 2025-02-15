@@ -1,5 +1,6 @@
 'use client';
 
+import { BACKEND_URL } from '@/constants';
 import { useAuthStore } from '@/store/auth';
 import { useEffect } from 'react';
 
@@ -16,12 +17,9 @@ function AuthProvider({ children }: Props) {
   useEffect(() => {
     const init = async () => {
       try {
-        const result = await fetch(
-          `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/verify`,
-          {
-            credentials: 'include'
-          }
-        );
+        const result = await fetch(`${BACKEND_URL}/auth/verify`, {
+          credentials: 'include'
+        });
         const data = await result.json();
 
         if (result.ok) {

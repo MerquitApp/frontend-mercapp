@@ -2,8 +2,7 @@ import { FaGoogle, FaGithub } from 'react-icons/fa';
 import Link from 'next/link';
 import Image from 'next/image';
 import AuthLayout from '../layouts/AuthLayout';
-
-const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+import { BACKEND_URL } from '@/constants';
 
 export default function Login() {
   return (
@@ -24,13 +23,13 @@ export default function Login() {
           Iniciar sesión con email
         </Link>
         <a
-          href={`${backendUrl}/auth/google`}
+          href={`${BACKEND_URL}/auth/google`}
           className="flex w-full items-center justify-center space-x-2 rounded-md border bg-white py-2 text-gray-600 shadow-sm hover:bg-gray-50">
           <FaGoogle />
           <span>Continuar con Google</span>
         </a>
         <a
-          href={`${backendUrl}/auth/github`}
+          href={`${BACKEND_URL}/auth/github`}
           className="flex w-full items-center justify-center space-x-2 rounded-md bg-zinc-600 py-2 text-white shadow-sm hover:bg-zinc-700">
           <FaGithub />
           <span>Continuar con Github</span>

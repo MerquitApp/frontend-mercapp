@@ -8,6 +8,7 @@ import PrimaryButton from '@/ui/components/PrimaryButton';
 import { useAuthStore } from '@/store/auth';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
+import { BACKEND_URL } from '@/constants';
 
 export default function LoginEmail() {
   const setName = useAuthStore((state) => state.setName);
@@ -22,17 +23,14 @@ export default function LoginEmail() {
     const formData = new FormData(e.currentTarget);
 
     try {
-      const result = await fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/login`,
-        {
-          method: 'POST',
-          credentials: 'include',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(Object.fromEntries(formData))
-        }
-      );
+      const result = await fetch(`${BACKEND_URL}/auth/login`, {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(Object.fromEntries(formData))
+      });
 
       const data = await result.json();
 

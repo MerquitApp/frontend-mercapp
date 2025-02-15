@@ -12,6 +12,7 @@ import {
 import { PiMagnifyingGlassBold } from 'react-icons/pi';
 import { IoAddCircleOutline } from 'react-icons/io5';
 import { useAuthStore } from '@/store/auth';
+import { FaUser } from 'react-icons/fa';
 
 export default function Header() {
   const isLoggedIn = useAuthStore((state) => state.isLoggedIn);
@@ -54,7 +55,7 @@ export default function Header() {
                 <Button
                   className="text-primaryPalette bg-default-400/20 border-primaryPalette"
                   variant="bordered">
-                  Perfil
+                  <FaUser size={24} />
                 </Button>
               </Link>
             ) : (
@@ -73,7 +74,7 @@ export default function Header() {
                 <Button
                   className="bg-primaryPalette text-whitePalette"
                   color="primary"
-                  startContent={<IoAddCircleOutline size={30} />}
+                  startContent={<IoAddCircleOutline size={24} />}
                   variant="flat">
                   Vender
                 </Button>

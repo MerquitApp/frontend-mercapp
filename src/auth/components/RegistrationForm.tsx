@@ -9,6 +9,7 @@ import PrimaryButton from '@/ui/components/PrimaryButton';
 import Input from '@ui/Input';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
+import { BACKEND_URL } from '@/constants';
 
 type Inputs = {
   name: string;
@@ -44,17 +45,14 @@ function RegistrationForm() {
         className="flex flex-col gap-4"
         onSubmit={handleSubmit(async (formData) => {
           try {
-            const response = await fetch(
-              `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/register`,
-              {
-                method: 'POST',
-                credentials: 'include',
-                headers: {
-                  'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(formData)
-              }
-            );
+            const response = await fetch(`${BACKEND_URL}/auth/register`, {
+              method: 'POST',
+              credentials: 'include',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(formData)
+            });
 
             if (response.ok) {
               push('/login');
