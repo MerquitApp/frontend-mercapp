@@ -1,14 +1,62 @@
+'use client';
+
 import Link from 'next/link';
 import AuthLayout from '../layouts/AuthLayout';
 import Input from '@ui/Input';
 import PrimaryButton from '@/ui/components/PrimaryButton';
-export default function RecoverPassword() {
+import { toast } from 'sonner';
+
+interface Props {
+  token: string;
+}
+
+export default function RecoverPassword({ token }: Props) {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const target = e.target as HTMLFormElement;
+
+    const formData = new FormData(e.currentTarget);
+
+    try {
+      const result = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/password-reset`,
+        {
+          method: 'POST',
+          credentials: 'include',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            token,
+            ...Object.fromEntries(formData)
+          })
+        }
+      );
+
+      if (result.ok) {
+        toast.success('Se ha actualizado tu contraseña');
+
+        setTimeout(() => {
+          window.location.href = '/login';
+        }, 1000);
+      } else {
+        toast.error('Ha ocurrido un error al actualizar la contraseña');
+      }
+    } catch (error) {
+      toast.error('Ha ocurrido un error al actualizar la contraseña');
+      console.log(error);
+    } finally {
+      target.reset()!;
+    }
+  };
+
   return (
     <AuthLayout>
       <h1 className="text-blackPalette text-3xl font-bold">
         Cambiar contraseña
       </h1>
-      <form className="flex flex-col gap-4 mt-2">
+      <form className="flex flex-col gap-4 mt-2" onSubmit={handleSubmit}>
         <Input
           label="Contraseña"
           name="password"
@@ -18,7 +66,7 @@ export default function RecoverPassword() {
         />
         <Input
           label="Repetir Contraseña"
-          name="password-repeat"
+          name="confirmPassword"
           placeholder="********"
           type="password"
           required
