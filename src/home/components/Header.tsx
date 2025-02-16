@@ -13,9 +13,39 @@ import { PiMagnifyingGlassBold } from 'react-icons/pi';
 import { IoAddCircleOutline } from 'react-icons/io5';
 import { useAuthStore } from '@/store/auth';
 import { FaUser } from 'react-icons/fa';
+import { useEffect, useState } from 'react';
+import { useDebounce } from 'use-debounce';
+import Image from 'next/image';
+import { BACKEND_URL } from '@/constants';
+import { ProductResponse } from '@/types';
 
 export default function Header() {
+  const [search, setSearch] = useState('');
+  const [items, setItems] = useState<null | ProductResponse[]>(null);
+  const [debouncedSearch] = useDebounce(search, 500);
   const isLoggedIn = useAuthStore((state) => state.isLoggedIn);
+
+  useEffect(() => {
+    if (debouncedSearch.trim().length === 0) {
+      setItems(null);
+      return;
+    }
+
+    const searchItems = async () => {
+      try {
+        const result = await fetch(
+          `${BACKEND_URL}/products?q=${debouncedSearch}`
+        );
+        const response = await result.json();
+
+        setItems(response);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    searchItems();
+  }, [debouncedSearch]);
 
   return (
     <Navbar isBordered className="flex flex-wrap px-4 sm:px-6 h-36 sm:h-20">
@@ -34,7 +64,7 @@ export default function Header() {
         <NavbarContent
           as="div"
           className="flex justify-center max-w-lg w-full mx-1 mb-4 sm:mb-0">
-          <NavbarItem className="flex-1">
+          <NavbarItem className="flex-1 relative">
             <Input
               classNames={{
                 base: 'max-w-full sm:max-w-96 h-12',
@@ -43,11 +73,41 @@ export default function Header() {
                 inputWrapper:
                   'h-full font-normal text-default-500 bg-default-400/20 dark:bg-default-500/20'
               }}
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
               placeholder="Busca tu producto"
               size="sm"
-              startContent={<PiMagnifyingGlassBold size={18} />}
-              type="search"
+              startContent={<PiMagnifyingGlassBold size={18} fill="#416954" />}
+              type="text"
             />
+            <ul
+              className={`bg-whitePalette border border-gray-300 rounded-md w-full absolute p-2 mt-2 flex flex-col gap-4 ${items ? 'block' : 'hidden'}`}>
+              {items?.length === 0 ? (
+                <li>
+                  <p className="italic">Sin resultados</p>
+                </li>
+              ) : (
+                items?.map((item) => (
+                  <li key={item.id}>
+                    <a
+                      href={`/product/${item.id}`}
+                      className="flex items-center gap-4">
+                      <Image
+                        width={120}
+                        height={100}
+                        alt="Imagen de producto"
+                        className="rounded-lg object-cover"
+                        src={item.cover_image.image}
+                      />
+                      <div className="flex flex-col gap-1 items-center flex-1">
+                        <h4 className="font-medium">{item.name}</h4>
+                        <p className="text-sm">{item.price}€</p>
+                      </div>
+                    </a>
+                  </li>
+                ))
+              )}
+            </ul>
           </NavbarItem>
           <NavbarItem className="flex items-center">
             {isLoggedIn ? (

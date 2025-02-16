@@ -7,14 +7,14 @@ import Link from 'next/link';
 
 function Footer() {
   return (
-    <div className="flex flex-col p-4 gap-4">
+    <div className="flex flex-col p-4 gap-4 mt-16">
       <span className="border-small border-greyPalette"></span>
       <div className="flex flex-col md:flex-row md:justify-between items-center text-center md:text-start gap-4 px-6">
         <div className="flex-col justify-between gap-2">
           <Link href={'/'} className="w-10 h-10">
             <Image
-              width={45}
-              height={3}
+              width={70}
+              height={35}
               src="/logo-mercapp.png"
               alt="Icono MercApp"
             />

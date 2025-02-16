@@ -9,6 +9,7 @@ import Input from '@ui/Input';
 import Link from 'next/link';
 import AuthLayout from '../layouts/AuthLayout';
 import { toast } from 'sonner';
+import { BACKEND_URL } from '@/constants';
 
 type FormValues = {
   email: string;
@@ -27,18 +28,15 @@ export default function ForgotPassForm() {
     reset();
     setLoading(true);
 
-    const resp = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/password-reset-request`,
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          email: data.email
-        })
-      }
-    );
+    const resp = await fetch(`${BACKEND_URL}/auth/password-reset-request`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        email: data.email
+      })
+    });
 
     if (resp.ok) {
       toast.success(

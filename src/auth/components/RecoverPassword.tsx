@@ -5,6 +5,7 @@ import AuthLayout from '../layouts/AuthLayout';
 import Input from '@ui/Input';
 import PrimaryButton from '@/ui/components/PrimaryButton';
 import { toast } from 'sonner';
+import { BACKEND_URL } from '@/constants';
 
 interface Props {
   token: string;
@@ -19,20 +20,17 @@ export default function RecoverPassword({ token }: Props) {
     const formData = new FormData(e.currentTarget);
 
     try {
-      const result = await fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/password-reset`,
-        {
-          method: 'POST',
-          credentials: 'include',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            token,
-            ...Object.fromEntries(formData)
-          })
-        }
-      );
+      const result = await fetch(`${BACKEND_URL}/auth/password-reset`, {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          token,
+          ...Object.fromEntries(formData)
+        })
+      });
 
       if (result.ok) {
         toast.success('Se ha actualizado tu contraseña');

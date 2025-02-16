@@ -1,7 +1,8 @@
+import { BACKEND_URL } from '@/constants';
 import { LuCircleCheckBig } from 'react-icons/lu';
 
 export default async function Page({ params }: { params: { id: string } }) {
-  await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/verify-account`, {
+  await fetch(`${BACKEND_URL}/auth/verify-account`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
