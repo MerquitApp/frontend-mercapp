@@ -1,22 +1,19 @@
-import Image from 'next/image';
-import { useState } from 'react';
-import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
+'use client';
 
-const productos = Array.from({ length: 15 }, (_, i) => ({
-  titulo: `Navaja multiusos ${i}`,
-  precio: '10€',
-  imagenUrl: '/navaja.png'
-}));
+import { BACKEND_URL } from '@/constants';
+import { ProductResponse } from '@/types';
+import Image from 'next/image';
+import { useEffect, useState } from 'react';
+import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 
 const ITEM_WIDTH = 200;
 const ITEM_GAP = 32;
-const ITEMS_PER_VIEW = 2;
+const ITEMS_PER_VIEW = 1;
 
 const SliderHome = () => {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
-
-  //Calcular el máximo índice para evitar productos partidos
-  const maxIndex = productos.length - ITEMS_PER_VIEW;
+  const [maxIndex, setMaxIndex] = useState(0);
+  const [products, setProducts] = useState<ProductResponse[]>([]);
 
   const handlePrev = () => {
     if (currentIndex > 0) {
@@ -33,6 +30,22 @@ const SliderHome = () => {
   const isNextButtonDisabled = currentIndex >= maxIndex;
   const isPrevButtonDisabled = currentIndex <= 0;
 
+  useEffect(() => {
+    setMaxIndex(products.length - ITEMS_PER_VIEW);
+  }, [products]);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      const result = await fetch(`${BACKEND_URL}/products?limit=15`);
+      const response = await result.json();
+
+      console.log(response);
+      setProducts(response);
+    };
+
+    fetchProducts();
+  }, []);
+
   return (
     <div className="max-w-4xl mt-12 mx-auto p-4">
       <h2 className="text-2xl font-bold mb-4">Más valorados</h2>
@@ -44,25 +57,27 @@ const SliderHome = () => {
             style={{
               transform: `translateX(-${(currentIndex / ITEMS_PER_VIEW) * ((ITEM_WIDTH + ITEM_GAP) * ITEMS_PER_VIEW)}px)`
             }}>
-            {productos.map((producto, index) => (
-              <div key={index} className={`flex-shrink-0 w-[${ITEM_WIDTH}px]`}>
-                <div className="p-4 border rounded-lg bg-white shadow-md w-full">
+            {products.map((p) => (
+              <div key={p.id} className={`flex-shrink-0 w-[${ITEM_WIDTH}px]`}>
+                <a
+                  href={`/product/${p.id}`}
+                  className="p-4 border rounded-lg bg-white shadow-md w-full block">
                   <Image
                     width={150}
                     height={125}
-                    src={producto.imagenUrl}
-                    alt={producto.titulo}
-                    className="w-full object-cover rounded-lg"
+                    src={p.cover_image.image}
+                    alt={p.name}
+                    className="w-full object-cover rounded-lg h-56"
                   />
                   <div className="mt-4 text-center flex flex-col items-center">
                     <h3 className="font-semibold text-xs md:text-lg">
-                      {producto.titulo}
+                      {p.name}
                     </h3>
                     <p className="text-sm md:text-xl font-bold mt-2">
-                      {producto.precio}
+                      {p.price}€
                     </p>
                   </div>
-                </div>
+                </a>
               </div>
             ))}
           </div>

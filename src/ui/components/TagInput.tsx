@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { KeyboardEvent, useEffect, useRef, useState } from 'react';
 import { LuX } from 'react-icons/lu';
 
 interface Tag {
@@ -38,29 +38,21 @@ export const TagInput = ({ tags, onChange, ...rest }: Props) => {
     setCurrentTags((prev) => prev.slice(0, -1));
   };
 
-  useEffect(() => {
-    function handleKeyDown(e: KeyboardEvent) {
-      const tag = textInput.current?.value;
-      if (e.key === 'Enter') {
-        if (tag?.trim()) {
-          handleAddTag(tag);
-          textInput.current!.value = '';
-        }
-      } else if (
-        e.key === 'Backspace' &&
-        currentTags.length > 0 &&
-        tag?.length === 0
-      ) {
-        handleRemoveLastTag();
+  function handleKeyDown(e: KeyboardEvent<HTMLInputElement>) {
+    const tag = textInput.current?.value;
+    if (e.key === 'Enter') {
+      if (tag?.trim()) {
+        handleAddTag(tag);
+        textInput.current!.value = '';
       }
+    } else if (
+      e.key === 'Backspace' &&
+      currentTags.length > 0 &&
+      tag?.length === 0
+    ) {
+      handleRemoveLastTag();
     }
-
-    document.addEventListener('keydown', handleKeyDown);
-
-    return () => {
-      document.removeEventListener('keydown', handleKeyDown);
-    };
-  }, [currentTags]);
+  }
 
   useEffect(() => {
     onChange?.(currentTags.map((tag) => tag.content));
@@ -96,6 +88,7 @@ export const TagInput = ({ tags, onChange, ...rest }: Props) => {
         </ul>
         <input
           {...rest}
+          onKeyDown={(e) => handleKeyDown(e)}
           ref={textInput}
           type="text"
           className="w-full text-gray-700 rounded-md p-2 outline-none flex-1 min-w-32"

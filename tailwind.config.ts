@@ -24,6 +24,7 @@ const config: Config = {
       }
     }
   },
+  important: true,
   darkMode: 'class',
   plugins: [nextui()]
 };

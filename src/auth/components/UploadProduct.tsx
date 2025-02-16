@@ -2,10 +2,13 @@
 
 import { BACKEND_URL } from '@/constants';
 import { TagInput } from '@/ui/components/TagInput';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { toast } from 'sonner';
 
 function UploadProduct() {
+  const { push } = useRouter();
+  const [isSending, setIsSending] = useState(false);
   const [tags, setTags] = useState<string[]>([]);
   const [categories, setCategories] = useState<string[]>([]);
 
@@ -20,25 +23,38 @@ function UploadProduct() {
 
     const formData = new FormData(e.currentTarget);
 
+    const target = e.currentTarget;
+
     formData.append('tags', JSON.stringify(tags));
     formData.append('categories', JSON.stringify(categories));
+    setIsSending(true);
 
-    try {
-      const result = await fetch(`${BACKEND_URL}/products`, {
+    toast.promise(
+      fetch(`${BACKEND_URL}/products`, {
         method: 'POST',
         body: formData,
         credentials: 'include'
-      });
-
-      if (result.ok) {
-        toast.success('Producto subido correctamente');
-      } else {
-        toast.error('Ha ocurrido un error al subir el producto');
+      }),
+      {
+        loading: 'Enviando...',
+        success: async (result) => {
+          const response = await result.json();
+          if (result.ok) {
+            push(`/product/${response.id}`);
+            return 'Producto subido correctamente';
+          } else {
+            return 'Ha ocurrido un error al subir el producto';
+          }
+        },
+        error: 'Ha ocurrido un error al subir el producto',
+        finally: () => {
+          target.reset();
+          setTags([]);
+          setCategories([]);
+          setIsSending(false);
+        }
       }
-    } catch (error) {
-      toast.error('Ha ocurrido un error al subir el producto');
-      console.log(error);
-    }
+    );
   }
 
   return (
@@ -119,7 +135,8 @@ function UploadProduct() {
           <input
             type="submit"
             value="Subir Producto"
-            className="bg-primaryPalette text-white px-6 py-3 rounded-md hover:brightness-75 transition duration-300 w-full"
+            className="bg-primaryPalette text-white px-6 py-3 rounded-md hover:brightness-75 transition duration-300 w-full cursor-pointer"
+            disabled={isSending}
           />
         </div>
       </form>
