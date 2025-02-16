@@ -25,6 +25,7 @@ function SectionHome() {
           height={448}
           className="object-cover max-h-96 w-full lg:max-w-[470px]"
           alt="Imagen de E-commerce"
+          unoptimized
         />
       </div>
     </div>

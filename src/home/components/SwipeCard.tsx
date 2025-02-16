@@ -4,6 +4,7 @@ import { Avatar } from '@nextui-org/react';
 import { useRef } from 'react';
 import { PiStarFill } from 'react-icons/pi';
 import Link from 'next/link';
+import Image from 'next/image';
 
 const DECISION_THRESHOLD = 75;
 const MAX_DRAG_DISTANCE = 200;
@@ -90,7 +91,9 @@ export default function SwipeCard({
       onMouseDown={(ev) => startDrag(ev.pageX)}
       onTouchStart={(ev) => startDrag(ev.touches[0].pageX)}
       className="p-3 bg-whitePalette shadow-md rounded-xl max-w-md cursor-grab z-20 select-none">
-      <img
+      <Image
+        width={448}
+        height={448}
         draggable={false}
         src={imageSrc}
         className="w-full h-72 object-cover rounded-md"

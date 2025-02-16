@@ -2,6 +2,7 @@
 
 import Head from '@/home/components/Header';
 import Footer from '@/ui/components/Footer';
+import Image from 'next/image';
 import React from 'react';
 
 function Setting() {
@@ -58,7 +59,9 @@ function Setting() {
         <h2 className="font-semibold text-2xl">Configuración de Cuenta</h2>
         <div className="w-full max-w-md bg-white shadow-md rounded p-6">
           <div className="flex flex-col items-center mb-6">
-            <img
+            <Image
+              width={120}
+              height={120}
               className="w-24 h-24 rounded-full object-cover"
               src={user.avatar}
               alt="Avatar del usuario"

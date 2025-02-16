@@ -3,7 +3,7 @@ import { BACKEND_URL } from './constants';
 
 const AUTH_COOKIE_NAME = 'mercapp-auth';
 const publicRoutes = ['/login', '/register', '/password-reset', ''];
-const protectedRoutes = ['/profile'];
+const protectedRoutes = ['/profile', '/upload-product'];
 
 export async function middleware(req: NextRequest) {
   const path = req.nextUrl.pathname;

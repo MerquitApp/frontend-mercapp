@@ -1,7 +1,8 @@
+import Image from 'next/image';
 import { useState } from 'react';
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 
-const productos = Array.from({ length: 10 }, (_, i) => ({
+const productos = Array.from({ length: 15 }, (_, i) => ({
   titulo: `Navaja multiusos ${i}`,
   precio: '10€',
   imagenUrl: '/navaja.png'
@@ -29,6 +30,9 @@ const SliderHome = () => {
     }
   };
 
+  const isNextButtonDisabled = currentIndex >= maxIndex;
+  const isPrevButtonDisabled = currentIndex <= 0;
+
   return (
     <div className="max-w-4xl mt-12 mx-auto p-4">
       <h2 className="text-2xl font-bold mb-4">Más valorados</h2>
@@ -41,9 +45,11 @@ const SliderHome = () => {
               transform: `translateX(-${(currentIndex / ITEMS_PER_VIEW) * ((ITEM_WIDTH + ITEM_GAP) * ITEMS_PER_VIEW)}px)`
             }}>
             {productos.map((producto, index) => (
-              <div key={index} className={`w-[${ITEM_WIDTH}px] flex-shrink-0 `}>
+              <div key={index} className={`flex-shrink-0 w-[${ITEM_WIDTH}px]`}>
                 <div className="p-4 border rounded-lg bg-white shadow-md w-full">
-                  <img
+                  <Image
+                    width={150}
+                    height={125}
                     src={producto.imagenUrl}
                     alt={producto.titulo}
                     className="w-full object-cover rounded-lg"
@@ -66,17 +72,17 @@ const SliderHome = () => {
         <div className="flex justify-center items-center gap-16 lg:block mt-8">
           <button
             onClick={handlePrev}
-            disabled={currentIndex === 0}
+            disabled={isPrevButtonDisabled}
             className={`lg:absolute lg:top-1/2 lg:-left-12 lg:transform lg:-translate-y-1/2 bg-white shadow-lg p-2 rounded-full text-gray-800 hover:bg-gray-100 ${
-              currentIndex === 0 ? 'opacity-50 cursor-not-allowed' : ''
+              isPrevButtonDisabled ? 'opacity-50 cursor-not-allowed' : ''
             }`}>
             <IoIosArrowBack />
           </button>
           <button
             onClick={handleNext}
-            disabled={currentIndex === maxIndex}
+            disabled={isNextButtonDisabled}
             className={`lg:absolute lg:top-1/2 lg:-right-12 lg:transform lg:-translate-y-1/2 bg-white shadow-lg p-2 rounded-full text-gray-800 hover:bg-gray-100 ${
-              currentIndex === maxIndex ? 'opacity-50 cursor-not-allowed' : ''
+              isNextButtonDisabled ? 'opacity-50 cursor-not-allowed' : ''
             }`}>
             <IoIosArrowForward />
           </button>

@@ -13,8 +13,8 @@ function Footer() {
         <div className="flex-col justify-between gap-2">
           <Link href={'/'} className="w-10 h-10">
             <Image
-              width={45}
-              height={3}
+              width={70}
+              height={35}
               src="/logo-mercapp.png"
               alt="Icono MercApp"
             />
