@@ -33,6 +33,7 @@ export default async function ProductPage({
         productName={product.name}
         coverImage={product.cover_image.image}
         images={product.images.map(({ image }: { image: string }) => image)}
+        userId={product.user.user_id}
       />
       <Footer />
     </>

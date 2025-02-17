@@ -13,6 +13,7 @@ function AuthProvider({ children }: Props) {
   const setEmail = useAuthStore((state) => state.setEmail);
   const setProfilePicture = useAuthStore((state) => state.setProfilePicture);
   const setIsLoggedIn = useAuthStore((state) => state.setIsLoggedIn);
+  const setUserId = useAuthStore((state) => state.setUserId);
 
   useEffect(() => {
     const init = async () => {
@@ -25,7 +26,8 @@ function AuthProvider({ children }: Props) {
         if (result.ok) {
           setName(data.name);
           setEmail(data.email);
-          setProfilePicture(data.profilePicture);
+          setProfilePicture(data.profile_picture ?? '/profile-default.jpg');
+          setUserId(data.user_id);
           setIsLoggedIn(true);
         }
       } catch (error) {

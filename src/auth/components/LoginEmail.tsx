@@ -37,7 +37,7 @@ export default function LoginEmail() {
       if (result.ok) {
         setName(data.name);
         setEmail(data.email);
-        setProfilePicture(data.profilePicture);
+        setProfilePicture(data.profilePicture ?? '/profile-default.png');
         setIsLoggedIn(true);
         push('/');
       }

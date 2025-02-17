@@ -5,20 +5,12 @@ import { useChatStore } from '@/store/chat';
 import { useSocketChat } from '@/chat/hooks/useSocketChat';
 import Chat from '@/chat/components/Chat';
 
-let isSocketConnected = false;
-
-function Page() {
-  const { connectSocketChat, sendMessage } = useSocketChat();
+function Page({}: { params: { id: string } }) {
+  const { sendMessage } = useSocketChat();
   const messages = useChatStore((state) => state.messages);
   const [input, setInput] = useState('');
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
   const addMessage = useChatStore((state) => state.addMessage);
-
-  useEffect(() => {
-    if (isSocketConnected) return;
-    connectSocketChat();
-    isSocketConnected = true;
-  }, [connectSocketChat]);
 
   useEffect(() => {
     if (messagesEndRef.current) {

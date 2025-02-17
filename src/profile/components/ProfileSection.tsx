@@ -7,7 +7,6 @@ import { FaRegClock } from 'react-icons/fa6';
 import { IoAlertCircleOutline } from 'react-icons/io5';
 import { CiLogout } from 'react-icons/ci';
 import { IoLockClosedOutline } from 'react-icons/io5';
-
 import AccountOption from './AccountOption';
 import { toast } from 'sonner';
 import { BACKEND_URL } from '@/constants';
@@ -39,9 +38,13 @@ const ProfileSection = ({ userName, userEmail, userAvatar }: Props) => {
     <div className="flex flex-col justify-center items-center p-10 gap-8">
       <div className="flex flex-col items-center justify-center">
         <Avatar
-          className="w-16 h-16 md:w-20 md:h-20 rounded-full"
-          name="John Doe"
+          className="w-16 h-16 md:w-20 md:h-20 rounded-full opacity-100"
           src={userAvatar}
+          name={userName}
+          showFallback={false}
+          classNames={{
+            img: 'opacity-100'
+          }}
         />
         <h2 className="font-semibold text-xl md:text-2xl">{userName}</h2>
         <h3 className="text-sm">{userEmail}</h3>

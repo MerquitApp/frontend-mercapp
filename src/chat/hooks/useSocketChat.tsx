@@ -42,6 +42,10 @@ export const useSocketChat = () => {
     socket?.emit('ice-answer', JSON.stringify({ callId, candidate }));
   };
 
+  const sendFindOrCreateChat = (userId: string) => {
+    socket?.emit('find-or-create-chat', JSON.stringify({ userId }));
+  };
+
   useEffect(() => {
     socket?.on('message', (message: string) => {
       addMessage({
@@ -108,6 +112,7 @@ export const useSocketChat = () => {
     sendIceCandidateOffer,
     sendIceCandidateAnswer,
     sendAnswer,
-    sendJoinCall
+    sendJoinCall,
+    sendFindOrCreateChat
   };
 };
