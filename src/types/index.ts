@@ -1,3 +1,9 @@
+export enum Environment {
+  Development = 'development',
+  Production = 'production',
+  Test = 'test'
+}
+
 export interface ProductCard {
   id: string;
   title: string;
@@ -6,11 +12,6 @@ export interface ProductCard {
   userName: string;
   imageSrc: string;
   description: string;
-}
-
-export interface Message {
-  message: string;
-  isLocal: boolean;
 }
 
 export interface ProductResponse {
@@ -42,5 +43,34 @@ export interface User {
   verification_state: boolean;
   password: null;
   profile_picture: string;
+  created_at: Date;
+}
+
+export interface Chat {
+  id: number;
+  createdAt: Date;
+  messages: Message[];
+  users: User[];
+}
+
+export interface Message {
+  id: number;
+  content: string;
+  chatId: number;
+  userId: number;
+  createdAt: Date;
+}
+
+export interface User {
+  user_id: number;
+  name: string;
+  email: string;
+  phone_number: null;
+  role: string;
+  verification_state: boolean;
+  password: null;
+  profile_picture: string;
+  github_id: null | string;
+  google_id: null | string;
   created_at: Date;
 }

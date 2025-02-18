@@ -1,5 +1,5 @@
 import { BACKEND_URL } from '@/constants';
-import Head from '@/home/components/Header';
+import Header from '@/home/components/Header';
 import ProductSection from '@/product/components/ProductSection';
 import Footer from '@/ui/components/Footer';
 import { redirect } from 'next/navigation';
@@ -23,7 +23,7 @@ export default async function ProductPage({
 
   return (
     <>
-      <Head />
+      <Header />
       <ProductSection
         id={product.id}
         userName={product.user.name}

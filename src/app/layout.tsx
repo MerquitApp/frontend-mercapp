@@ -2,6 +2,10 @@ import type { Metadata } from 'next';
 import '../ui/styles/globals.css';
 import { Providers } from '@/providers/Providers';
 import { Toaster } from 'sonner';
+import { Environment } from '@/types';
+import Script from 'next/script';
+
+const isDev = process.env.NODE_ENV === Environment.Development;
 
 export const metadata: Metadata = {
   title: 'Mercapp',
@@ -38,6 +42,13 @@ export default function RootLayout({
         <Providers>{children}</Providers>
         <Toaster />
       </body>
+      {!isDev && (
+        <Script
+          defer
+          src="https://analytics.hgo.one/script.js"
+          data-website-id="8f4cc5ff-8db5-4a5f-8dd0-64b8b6cff403"
+        />
+      )}
     </html>
   );
 }

@@ -7,6 +7,9 @@ import { Modal } from './Modal';
 import { LuHeart, LuShare2, LuStar } from 'react-icons/lu';
 import Image from 'next/image';
 import { useAuthStore } from '@/store/auth';
+import { toast } from 'sonner';
+import { BACKEND_URL } from '@/constants';
+import { useRouter } from 'next/navigation';
 
 interface Props {
   id: string;
@@ -31,6 +34,8 @@ function ProductSection({
   id,
   userId
 }: Props) {
+  const { push } = useRouter();
+  const isLoggedIn = useAuthStore((state) => state.isLoggedIn);
   const authUserId = useAuthStore((state) => state.userId);
   const [activeImage, setActiveImage] = useState(0);
   const [shareUrl, setShareUrl] = useState('');
@@ -44,6 +49,58 @@ function ProductSection({
 
   const handleOffer = () => {
     setOffer(!offer);
+  };
+
+  const handleCreateChat = async () => {
+    if (!isLoggedIn) {
+      push('/login');
+      return;
+    }
+
+    try {
+      const result = await fetch(`${BACKEND_URL}/chat`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        credentials: 'include',
+        body: JSON.stringify({
+          user_id: userId
+        })
+      });
+
+      const data = await result.json();
+
+      if (result.ok) {
+        window.location.href = `/chat/${data.id}`;
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error('Error al crear el chat');
+    }
+  };
+
+  const handlePayProduct = async () => {
+    if (!isLoggedIn) {
+      push('/login');
+      return;
+    }
+
+    try {
+      const result = await fetch(`${BACKEND_URL}/payments/${id}`, {
+        method: 'POST',
+        credentials: 'include'
+      });
+
+      const data = await result.json();
+
+      if (result.ok) {
+        window.location.href = data.url;
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error('Error al realizar la compra');
+    }
   };
 
   useEffect(() => {
@@ -115,6 +172,7 @@ function ProductSection({
               </div>
             </div>
             <button
+              onClick={handleCreateChat}
               disabled={isOwner}
               className="border-2 border-primaryPalette rounded-full px-4 py-1 font-bold disabled:opacity-80 disabled:cursor-not-allowed">
               Chat
@@ -154,7 +212,10 @@ function ProductSection({
                 disabled={isOwner}>
                 Realizar Oferta
               </PrimaryButton>
-              <PrimaryButton className="p-2" disabled={isOwner}>
+              <PrimaryButton
+                className="p-2"
+                disabled={isOwner}
+                onClick={handlePayProduct}>
                 Compra Ahora
               </PrimaryButton>
             </div>

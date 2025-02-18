@@ -10,6 +10,7 @@ import { IoLockClosedOutline } from 'react-icons/io5';
 import AccountOption from './AccountOption';
 import { toast } from 'sonner';
 import { BACKEND_URL } from '@/constants';
+import { LuHeart, LuUpload } from 'react-icons/lu';
 
 interface Props {
   userName: string;
@@ -57,12 +58,12 @@ const ProfileSection = ({ userName, userEmail, userAvatar }: Props) => {
             href="/profile/setting"
           />
           <AccountOption
-            accountIcon={<IoSettingsOutline />}
+            accountIcon={<LuUpload />}
             accountName="Productos Subidos"
             href="/profile/products"
           />
           <AccountOption
-            accountIcon={<IoSettingsOutline />}
+            accountIcon={<LuHeart />}
             accountName="Favoritos"
             href="/profile/likes"
           />

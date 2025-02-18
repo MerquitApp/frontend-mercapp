@@ -1,32 +1,17 @@
-'use client';
-
-import { useState, useEffect, useRef } from 'react';
-import { useChatStore } from '@/store/chat';
-import { useSocketChat } from '@/chat/hooks/useSocketChat';
 import Chat from '@/chat/components/Chat';
+import { AUTH_COOKIE_NAME, BACKEND_URL } from '@/constants';
+import { cookies } from 'next/headers';
 
-function Page({}: { params: { id: string } }) {
-  const { sendMessage } = useSocketChat();
-  const messages = useChatStore((state) => state.messages);
-  const [input, setInput] = useState('');
-  const messagesEndRef = useRef<HTMLDivElement | null>(null);
-  const addMessage = useChatStore((state) => state.addMessage);
-
-  useEffect(() => {
-    if (messagesEndRef.current) {
-      messagesEndRef.current.scrollIntoView();
+async function Page({ params }: { params: { id: string } }) {
+  const cookiesStore = cookies();
+  const res = await fetch(`${BACKEND_URL}/chat/${params.id}`, {
+    credentials: 'include',
+    headers: {
+      Authorization: `Bearer ${cookiesStore.get(AUTH_COOKIE_NAME)?.value}`
     }
-  }, [messages]);
+  });
+  const data = await res.json();
 
-  const handleSendMessage = () => {
-    addMessage({
-      isLocal: true,
-      message: input
-    });
-    setInput('');
-    sendMessage(input);
-  };
-
-  return <Chat messages={messages} onSendMessage={handleSendMessage} />;
+  return <Chat messages={data.messages} chatId={+params.id} />;
 }
 export default Page;

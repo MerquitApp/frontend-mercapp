@@ -16,16 +16,20 @@ export const Primary: Story = {
   args: {
     messages: [
       {
-        message: 'Hola',
-        isLocal: true
+        chatId: 1,
+        id: 1,
+        content: 'Hola, ¿cómo estás?',
+        userId: 1,
+        createdAt: new Date()
       },
       {
-        message: 'Hola',
-        isLocal: false
+        chatId: 1,
+        id: 2,
+        content: 'Estoy bien, gracias por visitar',
+        userId: 2,
+        createdAt: new Date()
       }
     ],
-    onSendMessage: (message: string) => {
-      console.log(message);
-    }
+    chatId: 1
   }
 };
