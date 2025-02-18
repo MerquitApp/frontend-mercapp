@@ -5,7 +5,6 @@ import {
   NavbarBrand,
   NavbarContent,
   NavbarItem,
-  Link,
   Button,
   Input
 } from '@nextui-org/react';
@@ -18,6 +17,7 @@ import { useDebounce } from 'use-debounce';
 import Image from 'next/image';
 import { BACKEND_URL } from '@/constants';
 import { ProductResponse } from '@/types';
+import Link from 'next/link';
 
 export default function Header() {
   const [search, setSearch] = useState('');
@@ -48,7 +48,9 @@ export default function Header() {
   }, [debouncedSearch]);
 
   return (
-    <Navbar isBordered className="flex flex-wrap px-4 sm:px-6 h-36 sm:h-20">
+    <Navbar
+      isBordered
+      className="flex flex-wrap px-4 sm:px-6 h-36 sm:h-20 mb-16">
       {/* Contenedor principal que cambia en pantallas pequeñas */}
       <div className="flex flex-col sm:gap-8 sm:flex-row w-full justify-between items-center">
         {/* Brand Logo */}
@@ -89,7 +91,7 @@ export default function Header() {
               ) : (
                 items?.map((item) => (
                   <li key={item.id}>
-                    <a
+                    <Link
                       href={`/product/${item.id}`}
                       className="flex items-center gap-4">
                       <Image
@@ -103,7 +105,7 @@ export default function Header() {
                         <h4 className="font-medium">{item.name}</h4>
                         <p className="text-sm">{item.price}€</p>
                       </div>
-                    </a>
+                    </Link>
                   </li>
                 ))
               )}
@@ -111,13 +113,13 @@ export default function Header() {
           </NavbarItem>
           <NavbarItem className="flex items-center">
             {isLoggedIn ? (
-              <Link href="/profile">
-                <Button
-                  className="text-primaryPalette bg-default-400/20 border-primaryPalette"
-                  variant="bordered">
-                  <FaUser size={24} />
-                </Button>
-              </Link>
+              <Button
+                as={Link}
+                href="/profile"
+                className="text-primaryPalette bg-default-400/20 border-primaryPalette"
+                variant="bordered">
+                <FaUser size={24} />
+              </Button>
             ) : (
               <Link href="/login">
                 <Button
@@ -130,15 +132,15 @@ export default function Header() {
           </NavbarItem>
           <NavbarItem>
             {isLoggedIn && (
-              <Link href="/upload-product">
-                <Button
-                  className="bg-primaryPalette text-whitePalette"
-                  color="primary"
-                  startContent={<IoAddCircleOutline size={24} />}
-                  variant="flat">
-                  Vender
-                </Button>
-              </Link>
+              <Button
+                as={Link}
+                href="/upload-product"
+                className="bg-primaryPalette text-whitePalette"
+                color="primary"
+                startContent={<IoAddCircleOutline size={24} />}
+                variant="flat">
+                Vender
+              </Button>
             )}
           </NavbarItem>
         </NavbarContent>

@@ -1,19 +1,23 @@
 'use client';
 
 import Head from '@/home/components/Header';
+import { useAuthStore } from '@/store/auth';
 import Footer from '@/ui/components/Footer';
 import Image from 'next/image';
-import React from 'react';
+import { useState } from 'react';
 
 function Setting() {
-  const [editMode, setEditMode] = React.useState(false);
-  const [user, setUser] = React.useState({
-    name: 'John Doe',
-    email: 'johndoe@example.com',
+  const { name, email, profilePicture, userId } = useAuthStore(
+    (state) => state
+  )!;
+  const [editMode, setEditMode] = useState(false);
+  const [user, setUser] = useState({
+    name,
+    email,
     location: 'Madrid, España',
-    avatar: 'https://avatars.githubusercontent.com/u/10594771?v=4',
+    avatar: profilePicture,
     description: 'Vendedor de artículos de segunda mano con experiencia.',
-    id: 1 // Add a default id value
+    id: userId // Add a default id value
   });
 
   const handleChange = (

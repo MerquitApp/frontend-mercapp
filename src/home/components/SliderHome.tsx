@@ -3,6 +3,7 @@
 import { BACKEND_URL } from '@/constants';
 import { ProductResponse } from '@/types';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 
@@ -39,12 +40,15 @@ const SliderHome = () => {
       const result = await fetch(`${BACKEND_URL}/products?limit=15`);
       const response = await result.json();
 
-      console.log(response);
       setProducts(response);
     };
 
     fetchProducts();
   }, []);
+
+  if (products.length === 0) {
+    return null;
+  }
 
   return (
     <div className="max-w-4xl mt-12 mx-auto p-4">
@@ -59,7 +63,7 @@ const SliderHome = () => {
             }}>
             {products.map((p) => (
               <div key={p.id} className={`flex-shrink-0 w-[${ITEM_WIDTH}px]`}>
-                <a
+                <Link
                   href={`/product/${p.id}`}
                   className="p-4 border rounded-lg bg-white shadow-md w-full block">
                   <Image
@@ -77,7 +81,7 @@ const SliderHome = () => {
                       {p.price}€
                     </p>
                   </div>
-                </a>
+                </Link>
               </div>
             ))}
           </div>

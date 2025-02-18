@@ -1,11 +1,12 @@
 import { useChatStore } from '@/store/chat';
 import { useWebrtcStore } from '@/store/webrtc';
-import { useCallback, useEffect, useState } from 'react';
-import { io, Socket } from 'socket.io-client';
+import { useCallback, useEffect } from 'react';
+import { io } from 'socket.io-client';
 
 export const useSocketChat = () => {
-  const [socket, setSocket] = useState<Socket | null>(null);
-  const addMessage = useChatStore((state) => state.addMessage);
+  const socket = useChatStore((state) => state.socket);
+  const setSocket = useChatStore((state) => state.setSocket);
+  const addChatMessage = useChatStore((state) => state.addChatMessage);
   const { peerConnection } = useWebrtcStore();
 
   const connectSocketChat = useCallback(() => {
@@ -18,8 +19,8 @@ export const useSocketChat = () => {
     setSocket(socketTmp);
   }, [setSocket]);
 
-  const sendMessage = (message: string) => {
-    socket?.emit('message', message);
+  const sendMessage = (chat_id: number, content: string) => {
+    socket?.emit('message', { chat_id, content });
   };
 
   const sendJoinCall = (callId: string) => {
@@ -43,11 +44,8 @@ export const useSocketChat = () => {
   };
 
   useEffect(() => {
-    socket?.on('message', (message: string) => {
-      addMessage({
-        isLocal: false,
-        message
-      });
+    socket?.on('message', (data: { chat_id: number; message: string }) => {
+      addChatMessage(data.chat_id, { message: data.message, isLocal: false });
     });
 
     socket?.on('join-call', async (callId: string, offer: string) => {
@@ -98,7 +96,13 @@ export const useSocketChat = () => {
     return () => {
       socket?.removeAllListeners();
     };
-  }, [socket, addMessage, peerConnection]);
+  }, [
+    socket,
+    peerConnection,
+    addChatMessage,
+    sendAnswer,
+    sendIceCandidateAnswer
+  ]);
 
   return {
     socket,

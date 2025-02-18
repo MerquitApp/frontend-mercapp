@@ -16,16 +16,48 @@ export const Primary: Story = {
   args: {
     messages: [
       {
-        message: 'Hola',
-        isLocal: true
+        chatId: 1,
+        id: 1,
+        content: 'Hola, ¿cómo estás?',
+        userId: 1,
+        createdAt: new Date()
       },
       {
-        message: 'Hola',
-        isLocal: false
+        chatId: 1,
+        id: 2,
+        content: 'Estoy bien, gracias por visitar',
+        userId: 2,
+        createdAt: new Date()
       }
     ],
-    onSendMessage: (message: string) => {
-      console.log(message);
-    }
+    users: [
+      {
+        user_id: 1,
+        name: 'Juan',
+        profile_picture: '/profile-default.png',
+        email: 'juan@gmail.com',
+        created_at: new Date(),
+        github_id: null,
+        google_id: null,
+        password: null,
+        phone_number: null,
+        role: 'user',
+        verification_state: true
+      },
+      {
+        user_id: 2,
+        name: 'Pedro',
+        profile_picture: '/profile-default.png',
+        email: 'pedro@gmail.com',
+        created_at: new Date(),
+        github_id: null,
+        google_id: null,
+        password: null,
+        phone_number: null,
+        role: 'user',
+        verification_state: true
+      }
+    ],
+    chatId: 1
   }
 };

@@ -1,14 +1,25 @@
 import { NextResponse, type NextRequest } from 'next/server';
-import { BACKEND_URL } from './constants';
+import { AUTH_COOKIE_NAME, BACKEND_URL } from './constants';
 
-const AUTH_COOKIE_NAME = 'mercapp-auth';
-const publicRoutes = ['/login', '/register', '/password-reset', ''];
-const protectedRoutes = ['/profile', '/upload-product'];
+const publicRoutes = ['/login', '/register', '/password-reset'];
+const protectedRoutes = ['/profile', '/upload-product', '/chat'];
 
 export async function middleware(req: NextRequest) {
   const path = req.nextUrl.pathname;
-  const isProtectedRoute = protectedRoutes.includes(path);
-  const isPublicRoute = publicRoutes.includes(path);
+  let isProtectedRoute = false;
+  let isPublicRoute = false;
+
+  protectedRoutes.forEach((route) => {
+    if (path.includes(route)) {
+      isProtectedRoute = true;
+    }
+  });
+
+  publicRoutes.forEach((route) => {
+    if (path.includes(route)) {
+      isPublicRoute = true;
+    }
+  });
 
   const authCookie = req.cookies.get(AUTH_COOKIE_NAME);
 

@@ -1,17 +1,21 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import Link from 'next/link';
 import { Avatar } from '@nextui-org/react';
 import PrimaryButton from '@/ui/components/PrimaryButton';
 import { Modal } from './Modal';
 import { LuHeart, LuShare2, LuStar } from 'react-icons/lu';
 import Image from 'next/image';
+import { useAuthStore } from '@/store/auth';
+import { toast } from 'sonner';
+import { BACKEND_URL } from '@/constants';
+import { useRouter } from 'next/navigation';
 
 interface Props {
   id: string;
   productDescription: string;
   productName: string;
+  userId: string;
   userName: string;
   userReview: number;
   productCost: number;
@@ -27,8 +31,12 @@ function ProductSection({
   productDescription,
   coverImage,
   images,
-  id
+  id,
+  userId
 }: Props) {
+  const { push } = useRouter();
+  const isLoggedIn = useAuthStore((state) => state.isLoggedIn);
+  const authUserId = useAuthStore((state) => state.userId);
   const [activeImage, setActiveImage] = useState(0);
   const [shareUrl, setShareUrl] = useState('');
   const [offer, setOffer] = useState(false);
@@ -36,10 +44,65 @@ function ProductSection({
   const [offset, setOffset] = useState(0);
   const [offerValue, setOfferValue] = useState<string | null>(null);
 
+  const isOwner = authUserId === userId;
   const allImages = [coverImage, ...images];
 
   const handleOffer = () => {
     setOffer(!offer);
+  };
+
+  const handleCreateChat = async () => {
+    if (!isLoggedIn) {
+      push('/login');
+      return;
+    }
+
+    try {
+      const result = await fetch(`${BACKEND_URL}/chat`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        credentials: 'include',
+        body: JSON.stringify({
+          user_id: userId
+        })
+      });
+
+      const data = await result.json();
+
+      if (result.ok) {
+        window.location.href = `/chat/${data.id}`;
+      } else {
+        push('/login');
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error('Error al crear el chat');
+    }
+  };
+
+  const handlePayProduct = async () => {
+    if (!isLoggedIn) {
+      push('/login');
+      return;
+    }
+
+    try {
+      const result = await fetch(`${BACKEND_URL}/payments/${id}`, {
+        method: 'POST',
+        credentials: 'include'
+      });
+
+      const data = await result.json();
+
+      if (result.ok) {
+        window.location.href = data.url;
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error('Error al realizar la compra');
+    }
   };
 
   useEffect(() => {
@@ -110,13 +173,12 @@ function ProductSection({
                 </div>
               </div>
             </div>
-            <div>
-              <Link
-                href="/chat"
-                className="border-2 border-primaryPalette rounded-full px-4 py-1 font-bold">
-                Chat
-              </Link>
-            </div>
+            <button
+              onClick={handleCreateChat}
+              disabled={isOwner}
+              className="border-2 border-primaryPalette rounded-full px-4 py-1 font-bold disabled:opacity-80 disabled:cursor-not-allowed">
+              Chat
+            </button>
           </div>
           <span className="border-small border-greyPalette mb-4 w-full"></span>
           <div className="flex justify-between w-full">
@@ -146,10 +208,18 @@ function ProductSection({
               )}
             </div>
             <div className="flex gap-2 w-2/4">
-              <PrimaryButton onClick={handleOffer} className="p-2">
+              <PrimaryButton
+                onClick={handleOffer}
+                className="p-2"
+                disabled={isOwner}>
                 Realizar Oferta
               </PrimaryButton>
-              <PrimaryButton className="p-2">Compra Ahora</PrimaryButton>
+              <PrimaryButton
+                className="p-2"
+                disabled={isOwner}
+                onClick={handlePayProduct}>
+                Compra Ahora
+              </PrimaryButton>
             </div>
           </div>
         </div>
