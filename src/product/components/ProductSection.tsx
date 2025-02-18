@@ -73,6 +73,8 @@ function ProductSection({
 
       if (result.ok) {
         window.location.href = `/chat/${data.id}`;
+      } else {
+        push('/login');
       }
     } catch (error) {
       console.log(error);

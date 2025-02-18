@@ -48,7 +48,9 @@ export default function Header() {
   }, [debouncedSearch]);
 
   return (
-    <Navbar isBordered className="flex flex-wrap px-4 sm:px-6 h-36 sm:h-20">
+    <Navbar
+      isBordered
+      className="flex flex-wrap px-4 sm:px-6 h-36 sm:h-20 mb-16">
       {/* Contenedor principal que cambia en pantallas pequeñas */}
       <div className="flex flex-col sm:gap-8 sm:flex-row w-full justify-between items-center">
         {/* Brand Logo */}

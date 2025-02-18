@@ -30,6 +30,34 @@ export const Primary: Story = {
         createdAt: new Date()
       }
     ],
+    users: [
+      {
+        user_id: 1,
+        name: 'Juan',
+        profile_picture: '/profile-default.png',
+        email: 'juan@gmail.com',
+        created_at: new Date(),
+        github_id: null,
+        google_id: null,
+        password: null,
+        phone_number: null,
+        role: 'user',
+        verification_state: true
+      },
+      {
+        user_id: 2,
+        name: 'Pedro',
+        profile_picture: '/profile-default.png',
+        email: 'pedro@gmail.com',
+        created_at: new Date(),
+        github_id: null,
+        google_id: null,
+        password: null,
+        phone_number: null,
+        role: 'user',
+        verification_state: true
+      }
+    ],
     chatId: 1
   }
 };

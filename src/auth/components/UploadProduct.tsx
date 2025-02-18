@@ -58,7 +58,7 @@ function UploadProduct() {
   }
 
   return (
-    <div className="max-w-4xl mx-auto bg-white shadow-lg rounded-xl p-6 mt-16">
+    <div className="max-w-4xl mx-auto bg-white shadow-lg rounded-xl p-6">
       <h2 className="text-3xl font-bold mb-6 text-center text-primaryPalette">
         Subir Producto
       </h2>

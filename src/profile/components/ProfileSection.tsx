@@ -36,7 +36,7 @@ const ProfileSection = ({ userName, userEmail, userAvatar }: Props) => {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center p-10 gap-8">
+    <div className="flex flex-col justify-center items-center gap-8">
       <div className="flex flex-col items-center justify-center">
         <Avatar
           className="w-16 h-16 md:w-20 md:h-20 rounded-full opacity-100"

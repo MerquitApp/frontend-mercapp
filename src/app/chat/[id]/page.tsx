@@ -1,5 +1,7 @@
 import Chat from '@/chat/components/Chat';
 import { AUTH_COOKIE_NAME, BACKEND_URL } from '@/constants';
+import Header from '@/home/components/Header';
+import Footer from '@/ui/components/Footer';
 import { cookies } from 'next/headers';
 
 async function Page({ params }: { params: { id: string } }) {
@@ -12,6 +14,12 @@ async function Page({ params }: { params: { id: string } }) {
   });
   const data = await res.json();
 
-  return <Chat messages={data.messages} chatId={+params.id} />;
+  return (
+    <>
+      <Header />
+      <Chat messages={data.messages} chatId={+params.id} users={data.users} />
+      <Footer />
+    </>
+  );
 }
 export default Page;

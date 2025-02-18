@@ -1,30 +1,35 @@
 'use client';
 
-import { Message } from '@/types';
+import { Message, User } from '@/types';
 import { useEffect, useRef, useState } from 'react';
 import { useSocketChat } from '../hooks/useSocketChat';
 import { useAuthStore } from '@/store/auth';
 import { useChatStore } from '@/store/chat';
+import { Avatar } from '@nextui-org/react';
+import PrimaryButton from '@/ui/components/PrimaryButton';
+import { LuPhoneCall } from 'react-icons/lu';
 
 interface Props {
   messages: Message[];
   chatId: number;
+  users: User[];
 }
 
-function Chat({ messages: messagesProp, chatId }: Props) {
+function Chat({ messages: messagesProp, chatId, users }: Props) {
   const { sendMessage } = useSocketChat();
-  const authUserId = useAuthStore((state) => state.userId);
+  const authUserId = +useAuthStore((state) => state.userId);
   const addChatMessage = useChatStore((state) => state.addChatMessage);
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
   const [input, setInput] = useState('');
   const [messages, setMessages] = useState<Message[]>(messagesProp);
+  const otherUser = users.find((user) => user.user_id !== authUserId);
 
   const handleSendMessage = () => {
     const newMessage = {
       id: (messages[messages.length - 1]?.id ?? 0) + 1,
       content: input,
       chatId,
-      userId: +authUserId,
+      userId: authUserId,
       createdAt: new Date()
     };
 
@@ -45,8 +50,29 @@ function Chat({ messages: messagesProp, chatId }: Props) {
   }, [messagesProp]);
 
   return (
-    <div className="flex items-center justify-center h-screen bg-gray-100">
-      <div className="w-4/5 h-screen flex flex-col bg-white rounded-lg shadow-lg overflow-hidden">
+    <div className="flex flex-col items-center justify-center h-screen max-w-4xl w-full mx-auto">
+      <div className="flex items-center justify-between w-full p-4 bg-primaryPalette rounded-t-lg">
+        <div className="flex items-center gap-4">
+          <Avatar
+            className="w-16 h-16 md:w-20 md:h-20 rounded-full opacity-100 text-primaryPalette"
+            src={otherUser?.profile_picture}
+            name={otherUser?.name}
+            showFallback={false}
+            classNames={{
+              img: 'opacity-100'
+            }}
+          />
+          <h2 className="font-semibold text-xl md:text-2xl text-white">
+            {otherUser?.name}
+          </h2>
+        </div>
+        <div>
+          <PrimaryButton className="bg-whitePalette p-4 shadow-md">
+            <LuPhoneCall size={24} className="stroke-primaryPalette" />
+          </PrimaryButton>
+        </div>
+      </div>
+      <div className="h-screen w-full flex flex-col bg-white rounded-b-lg shadow-lg overflow-hidden">
         <div className="flex-1 p-4 overflow-y-auto">
           {messages.map((msg, index) => {
             const isLocal = msg.userId === +authUserId;
