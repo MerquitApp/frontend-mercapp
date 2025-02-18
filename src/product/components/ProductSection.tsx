@@ -21,6 +21,7 @@ interface Props {
   productCost: number;
   coverImage: string;
   images: string[];
+  isLiked: boolean;
 }
 
 function ProductSection({
@@ -32,9 +33,11 @@ function ProductSection({
   coverImage,
   images,
   id,
-  userId
+  userId,
+  isLiked: isLikedProp
 }: Props) {
   const { push } = useRouter();
+  const [isLiked, setIsLiked] = useState(isLikedProp);
   const isLoggedIn = useAuthStore((state) => state.isLoggedIn);
   const authUserId = useAuthStore((state) => state.userId);
   const [activeImage, setActiveImage] = useState(0);
@@ -49,6 +52,33 @@ function ProductSection({
 
   const handleOffer = () => {
     setOffer(!offer);
+  };
+
+  const handleLike = async () => {
+    if (!isLoggedIn) {
+      push('/login');
+      return;
+    }
+
+    try {
+      const result = await fetch(`${BACKEND_URL}/likes/${id}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        credentials: 'include'
+      });
+
+      if (result.ok) {
+        toast.success('¡Te gusta el producto!');
+        setIsLiked(true);
+      } else {
+        toast.error('Error al marcar como favorito');
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error('Error al marcar como favorito');
+    }
   };
 
   const handleCreateChat = async () => {
@@ -149,7 +179,12 @@ function ProductSection({
               />
             </div>
             <div className="flex gap-3 mt-4">
-              <LuHeart size={24} />
+              <button onClick={handleLike}>
+                <LuHeart
+                  size={24}
+                  className={isLiked ? 'fill-redPalette stroke-redPalette' : ''}
+                />
+              </button>
               <a href={shareUrl} target="_blank" rel="noreferrer">
                 <LuShare2 size={24} />
               </a>
