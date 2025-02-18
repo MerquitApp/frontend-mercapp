@@ -60,24 +60,46 @@ function ProductSection({
       return;
     }
 
-    try {
-      const result = await fetch(`${BACKEND_URL}/likes/${id}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        credentials: 'include'
-      });
+    if (isLiked) {
+      try {
+        const result = await fetch(`${BACKEND_URL}/likes/${id}`, {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          credentials: 'include'
+        });
 
-      if (result.ok) {
-        toast.success('¡Te gusta el producto!');
-        setIsLiked(true);
-      } else {
+        if (result.ok) {
+          toast.success('¡Ya no te gusta el producto!');
+          setIsLiked(false);
+        } else {
+          toast.error('Error al desmarcar como favorito');
+        }
+      } catch (error) {
+        console.log(error);
+        toast.error('Error al desmarcar como favorito');
+      }
+    } else {
+      try {
+        const result = await fetch(`${BACKEND_URL}/likes/${id}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          credentials: 'include'
+        });
+
+        if (result.ok) {
+          toast.success('¡Te gusta el producto!');
+          setIsLiked(true);
+        } else {
+          toast.error('Error al marcar como favorito');
+        }
+      } catch (error) {
+        console.log(error);
         toast.error('Error al marcar como favorito');
       }
-    } catch (error) {
-      console.log(error);
-      toast.error('Error al marcar como favorito');
     }
   };
 
