@@ -2,10 +2,9 @@
 
 import { BACKEND_URL } from '@/constants';
 import { ProductResponse } from '@/types';
-import Image from 'next/image';
-import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
+import ProductCard from '../../ui/components/ProductCard';
 
 const ITEM_WIDTH = 200;
 const ITEM_GAP = 32;
@@ -63,25 +62,7 @@ const SliderHome = () => {
             }}>
             {products.map((p) => (
               <div key={p.id} className={`flex-shrink-0 w-[${ITEM_WIDTH}px]`}>
-                <Link
-                  href={`/product/${p.id}`}
-                  className="p-4 border rounded-lg bg-white shadow-md w-full block">
-                  <Image
-                    width={150}
-                    height={125}
-                    src={p.cover_image.image}
-                    alt={p.name}
-                    className="w-full object-cover rounded-lg h-56"
-                  />
-                  <div className="mt-4 text-center flex flex-col items-center">
-                    <h3 className="font-semibold text-xs md:text-lg">
-                      {p.name}
-                    </h3>
-                    <p className="text-sm md:text-xl font-bold mt-2">
-                      {p.price}€
-                    </p>
-                  </div>
-                </Link>
+                <ProductCard product={p} />
               </div>
             ))}
           </div>
