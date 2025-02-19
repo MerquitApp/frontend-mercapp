@@ -2,7 +2,7 @@
 
 import { Avatar } from '@nextui-org/react';
 import { IoSettingsOutline } from 'react-icons/io5';
-import { MdOutlineNotificationsActive } from 'react-icons/md';
+import { MdDeleteOutline, MdOutlineNotificationsActive } from 'react-icons/md';
 import { FaRegClock } from 'react-icons/fa6';
 import { IoAlertCircleOutline } from 'react-icons/io5';
 import { CiLogout } from 'react-icons/ci';
@@ -92,6 +92,12 @@ const ProfileSection = ({ userName, userEmail, userAvatar }: Props) => {
             accountName="Cerrar sesión"
             as={'button'}
             onClick={handleLogout}
+          />
+          <AccountOption
+            accountIcon={<MdDeleteOutline />}
+            accountName="Eliminar cuenta"
+            as={'button'}
+            onClick={() => toast.error('Funcionalidad no disponible')}
           />
         </div>
       </div>
