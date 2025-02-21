@@ -53,6 +53,13 @@ export interface Chat {
   users: User[];
 }
 
+export interface UserLike {
+  id: number;
+  userId: number;
+  productId: number;
+  product: ProductResponse;
+}
+
 export interface Message {
   id: number;
   content: string;
