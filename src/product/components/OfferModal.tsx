@@ -1,43 +1,34 @@
 import InputOffer from '@/ui/components/InputOffer';
 import { CalculatorOffer } from './CalculatorOffer';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { offerSchema } from '@/validations/userSchema';
 import PrimaryButton from '@/ui/components/PrimaryButton';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { GoXCircle } from 'react-icons/go';
 
 type Props = {
   isOpen: boolean;
   children: React.ReactNode;
   onClose: () => void;
-  setOffset: React.Dispatch<React.SetStateAction<number>>;
-  setOfferValue: (value: string | null) => void;
+  onSetNewPrice: (newPrice: number) => void;
+  productPrice: number;
 };
 
-type InputProps = {
-  offer: string;
-};
-
-export const Modal = ({
+export const OfferModal = ({
   isOpen = false,
   onClose,
-  setOffset,
-  setOfferValue,
+  productPrice,
+  onSetNewPrice,
   children
 }: Props) => {
   const [isModalOpen, setIsModalOpen] = useState(isOpen);
-  const [inputValue, setInputValue] = useState('');
+  const [inputValue, setInputValue] = useState<number>(0);
 
-  const { register } = useForm<InputProps>({
-    resolver: zodResolver(offerSchema)
-  });
-
-  const handleIconClick = () => {
-    setOffset((prevOffset) => prevOffset + 1);
+  const handleClose = () => {
     onClose();
   };
 
+  useEffect(() => {
+    setIsModalOpen(isOpen);
+  }, [isOpen]);
 
   return (
     <div
@@ -56,7 +47,7 @@ export const Modal = ({
           <button
             type="button"
             className="absolute top-4 right-4 text-gray-600 hover:text-gray-800 focus:outline-none"
-            onClick={handleIconClick}>
+            onClick={handleClose}>
             <GoXCircle size={24} />
           </button>
         </div>
@@ -65,17 +56,20 @@ export const Modal = ({
             onSubmit={(e) => {
               e.preventDefault();
               setIsModalOpen(false);
-              setOfferValue(inputValue);
+              onSetNewPrice(inputValue);
               onClose();
             }}>
             <InputOffer
               type="text"
+              name="offer"
               placeholder="Nuevo precio"
               value={inputValue ? `${inputValue}€` : ''}
-              {...register('offer')}
               required
             />
-            <CalculatorOffer onInputChange={setInputValue} />
+            <CalculatorOffer
+              productPrice={productPrice}
+              onInputChange={setInputValue}
+            />
             <PrimaryButton className="mt-4" type="submit">
               Ofertar
             </PrimaryButton>
