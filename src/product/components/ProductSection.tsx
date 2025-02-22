@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { Avatar } from '@nextui-org/react';
 import PrimaryButton from '@/ui/components/PrimaryButton';
-import { Modal } from './Modal';
+import { OfferModal } from './OfferModal';
 import { LuHeart, LuShare2, LuStar } from 'react-icons/lu';
 import Image from 'next/image';
 import { useAuthStore } from '@/store/auth';
@@ -42,16 +42,14 @@ function ProductSection({
   const authUserId = useAuthStore((state) => state.userId);
   const [activeImage, setActiveImage] = useState(0);
   const [shareUrl, setShareUrl] = useState('');
-  const [offer, setOffer] = useState(false);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [offset, setOffset] = useState(0);
-  const [offerValue, setOfferValue] = useState<string | null>(null);
+  const [isCreatingOffer, setIsCreatingOffer] = useState(false);
+  const [newPrice, setNewPrice] = useState<number>(0);
 
   const isOwner = authUserId === userId;
   const allImages = [coverImage, ...images];
 
   const handleOffer = () => {
-    setOffer(!offer);
+    setIsCreatingOffer(!isCreatingOffer);
   };
 
   const handleLike = async () => {
@@ -246,22 +244,20 @@ function ProductSection({
                 </h4>
                 <h4 className="text-2xl font-bold text-blackPalette">€</h4>
               </div>
-              {offerValue && (
-                <>
-                  <div className="flex items-center gap-2">
-                    <h3>
-                      <span className="text-sm font-bold uppercase text-primaryPalette">
-                        Nueva oferta
-                      </span>
-                    </h3>
-                    <div className="flex items-center gap-1">
-                      <h4 className="text-3xl font-bold text-redPalette">
-                        {`${offerValue}`}
-                      </h4>
-                      <h4 className="text-xl font-bold text-redPalette">€</h4>
-                    </div>
+              {newPrice !== 0 && (
+                <div className="flex items-center gap-2">
+                  <h3>
+                    <span className="text-sm font-bold uppercase text-primaryPalette">
+                      Nueva oferta
+                    </span>
+                  </h3>
+                  <div className="flex items-center gap-1">
+                    <h4 className="text-3xl font-bold text-redPalette">
+                      {newPrice}
+                    </h4>
+                    <h4 className="text-xl font-bold text-redPalette">€</h4>
                   </div>
-                </>
+                </div>
               )}
             </div>
             <div className="flex gap-2 w-2/4">
@@ -284,16 +280,16 @@ function ProductSection({
       <div className="flex flex-col">
         {/* <h3>Aquí pondremos las recomendaciones de otros productos</h3> */}
       </div>
-      {offer && (
-        <Modal
-          isOpen={offer}
-          onClose={() => setOffer(false)}
-          setOffset={setOffset}
-          setOfferValue={setOfferValue}>
+      {isCreatingOffer && (
+        <OfferModal
+          productPrice={productCost}
+          isOpen={isCreatingOffer}
+          onClose={() => setIsCreatingOffer(false)}
+          onSetNewPrice={setNewPrice}>
           <div className="flex justify-center items-center">
             <h2>¡Oferta un nuevo precio!</h2>
           </div>
-        </Modal>
+        </OfferModal>
       )}
     </div>
   );
