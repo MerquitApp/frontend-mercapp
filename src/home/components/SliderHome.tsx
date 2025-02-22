@@ -50,7 +50,7 @@ const SliderHome = () => {
   }
 
   return (
-    <div className="max-w-4xl mt-12 mx-auto p-4">
+    <div className="max-w-4xl w-[90%] mt-12 mx-auto p-4">
       <h2 className="text-2xl font-bold mb-4">Más valorados</h2>
       <div className="relative">
         {/* Contenedor del slider */}
