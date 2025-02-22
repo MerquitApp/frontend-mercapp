@@ -8,7 +8,7 @@ import {
 
 export default function TabsHead() {
   return (
-    <div className="flex flex-row items-center justify-center md:justify-between gap-2 text-blackPalette max-w-4xl w-full mx-auto">
+    <div className="flex flex-row items-center justify-center md:justify-between gap-2 text-blackPalette max-w-4xl w-[90%] mx-auto">
       <Dropdown>
         <DropdownTrigger>
           <Button variant="bordered">Todas las categorias</Button>
