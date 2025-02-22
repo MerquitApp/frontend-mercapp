@@ -48,8 +48,37 @@ function ProductSection({
   const isOwner = authUserId === userId;
   const allImages = [coverImage, ...images];
 
-  const handleOffer = () => {
+  const handleCreateOffer = () => {
     setIsCreatingOffer(!isCreatingOffer);
+  };
+
+  const handleOfferValue = async (value: number) => {
+    console.log(value);
+    try {
+      const result = await fetch(`${BACKEND_URL}/offer/${id}`, {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          price: value
+        })
+      });
+
+      if (result.ok) {
+        toast.success('¡Oferta creada correctamente!');
+        setIsCreatingOffer(false);
+      } else {
+        setNewPrice(0);
+        toast.error('Error al crear la oferta');
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error('Error al crear la oferta');
+    }
+
+    setNewPrice(value);
   };
 
   const handleLike = async () => {
@@ -262,7 +291,7 @@ function ProductSection({
             </div>
             <div className="flex gap-2 w-2/4">
               <PrimaryButton
-                onClick={handleOffer}
+                onClick={handleCreateOffer}
                 className="p-2"
                 disabled={isOwner}>
                 Realizar Oferta
@@ -285,7 +314,7 @@ function ProductSection({
           productPrice={productCost}
           isOpen={isCreatingOffer}
           onClose={() => setIsCreatingOffer(false)}
-          onSetNewPrice={setNewPrice}>
+          onSetNewPrice={handleOfferValue}>
           <div className="flex justify-center items-center">
             <h2>¡Oferta un nuevo precio!</h2>
           </div>

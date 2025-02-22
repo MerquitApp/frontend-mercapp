@@ -1,8 +1,5 @@
 import InputOffer from '@/ui/components/InputOffer';
 import { CalculatorOffer } from './CalculatorOffer';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { offerSchema } from '@/validations/userSchema';
 import PrimaryButton from '@/ui/components/PrimaryButton';
 import { useEffect, useState } from 'react';
 import { GoXCircle } from 'react-icons/go';
@@ -15,10 +12,6 @@ type Props = {
   productPrice: number;
 };
 
-type InputProps = {
-  offer: string;
-};
-
 export const OfferModal = ({
   isOpen = false,
   onClose,
@@ -28,10 +21,6 @@ export const OfferModal = ({
 }: Props) => {
   const [isModalOpen, setIsModalOpen] = useState(isOpen);
   const [inputValue, setInputValue] = useState<number>(0);
-
-  const { register } = useForm<InputProps>({
-    resolver: zodResolver(offerSchema)
-  });
 
   const handleClose = () => {
     onClose();
@@ -72,9 +61,9 @@ export const OfferModal = ({
             }}>
             <InputOffer
               type="text"
+              name="offer"
               placeholder="Nuevo precio"
               value={inputValue ? `${inputValue}€` : ''}
-              {...register('offer')}
               required
             />
             <CalculatorOffer
