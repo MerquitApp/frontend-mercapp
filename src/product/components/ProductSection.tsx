@@ -10,6 +10,7 @@ import { useAuthStore } from '@/store/auth';
 import { toast } from 'sonner';
 import { BACKEND_URL } from '@/constants';
 import { useRouter } from 'next/navigation';
+import { useChatStore } from '@/store/chat';
 
 interface Props {
   id: string;
@@ -44,6 +45,7 @@ function ProductSection({
   const [shareUrl, setShareUrl] = useState('');
   const [isCreatingOffer, setIsCreatingOffer] = useState(false);
   const [newPrice, setNewPrice] = useState<number>(0);
+  const setActiveChatId = useChatStore((state) => state.setActiveChatId);
 
   const isOwner = authUserId === userId;
   const allImages = [coverImage, ...images];
@@ -53,7 +55,6 @@ function ProductSection({
   };
 
   const handleOfferValue = async (value: number) => {
-    console.log(value);
     try {
       const result = await fetch(`${BACKEND_URL}/offer/${id}`, {
         method: 'POST',
@@ -151,7 +152,8 @@ function ProductSection({
       const data = await result.json();
 
       if (result.ok) {
-        window.location.href = `/chat/${data.id}`;
+        setActiveChatId(data.id);
+        push('/profile/conversations');
       } else {
         push('/login');
       }
