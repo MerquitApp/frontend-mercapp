@@ -10,7 +10,7 @@ import { IoLockClosedOutline } from 'react-icons/io5';
 import AccountOption from './AccountOption';
 import { toast } from 'sonner';
 import { BACKEND_URL } from '@/constants';
-import { LuHeart, LuUpload } from 'react-icons/lu';
+import { LuHeart, LuMessageCircle, LuUpload } from 'react-icons/lu';
 
 interface Props {
   userName: string;
@@ -31,6 +31,22 @@ const ProfileSection = ({ userName, userEmail, userAvatar }: Props) => {
       }
     } catch (error) {
       toast.error('Error al cerrar sesión');
+      console.log(error);
+    }
+  };
+
+  const handleDeleteAccount = async () => {
+    try {
+      const resp = await fetch(`${BACKEND_URL}/users`, {
+        method: 'DELETE',
+        credentials: 'include'
+      });
+
+      if (resp.ok) {
+        window.location.reload();
+      }
+    } catch (error) {
+      toast.error('Error al borrar cuenta');
       console.log(error);
     }
   };
@@ -73,6 +89,11 @@ const ProfileSection = ({ userName, userEmail, userAvatar }: Props) => {
             href="/profile/notifications"
           />
           <AccountOption
+            accountIcon={<LuMessageCircle />}
+            accountName="Conversaciones"
+            href="/profile/conversations"
+          />
+          <AccountOption
             accountIcon={<FaRegClock />}
             accountName="Historial de compras"
             href="/profile/history"
@@ -97,7 +118,7 @@ const ProfileSection = ({ userName, userEmail, userAvatar }: Props) => {
             accountIcon={<MdDeleteOutline />}
             accountName="Eliminar cuenta"
             as={'button'}
-            onClick={() => toast.error('Funcionalidad no disponible')}
+            onClick={handleDeleteAccount}
           />
         </div>
       </div>

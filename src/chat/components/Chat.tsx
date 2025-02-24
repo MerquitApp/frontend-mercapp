@@ -50,7 +50,7 @@ function Chat({ messages: messagesProp, chatId, users }: Props) {
   }, [messagesProp]);
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen max-w-4xl w-full mx-auto">
+    <div className="flex flex-col items-center justify-center h-screen max-w-4xl w-3/4 mx-auto">
       <div className="flex items-center justify-between w-full p-4 bg-primaryPalette rounded-t-lg">
         <div className="flex items-center gap-4">
           <Avatar

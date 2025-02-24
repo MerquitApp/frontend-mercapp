@@ -1,7 +1,7 @@
 import React from 'react';
 import UserProfile from '../../userProfile/UserProfile';
 
-function page() {
+function Page() {
   const user = {
     id: 1,
     name: 'John Doe',
@@ -10,4 +10,4 @@ function page() {
   return <UserProfile user={user} />;
 }
 
-export default page;
+export default Page;

@@ -46,7 +46,7 @@ export interface User {
   created_at: Date;
 }
 
-export interface Chat {
+export interface ChatDetails {
   id: number;
   createdAt: Date;
   messages: Message[];
