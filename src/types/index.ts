@@ -44,6 +44,7 @@ export interface User {
   password: null;
   profile_picture: string;
   created_at: Date;
+  updated_at: Date;
 }
 
 export interface Chat {
@@ -73,4 +74,12 @@ export interface User {
   github_id: null | string;
   google_id: null | string;
   created_at: Date;
+  updated_at: Date;
+}
+
+export interface FiltersType {
+  q?: string;
+  category?: string;
+  distance?: number;
+  userId?: number;
 }
