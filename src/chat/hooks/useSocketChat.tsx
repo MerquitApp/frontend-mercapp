@@ -1,5 +1,6 @@
 import { useChatStore } from '@/store/chat';
 import { useWebrtcStore } from '@/store/webrtc';
+import { Message } from '@/types';
 import { useCallback, useEffect } from 'react';
 import { io } from 'socket.io-client';
 
@@ -44,8 +45,8 @@ export const useSocketChat = () => {
   };
 
   useEffect(() => {
-    socket?.on('message', (data: { chat_id: number; message: string }) => {
-      addChatMessage(data.chat_id, { message: data.message, isLocal: false });
+    socket?.on('message', (data: { chat_id: number; message: Message }) => {
+      addChatMessage(data.chat_id, data.message);
     });
 
     socket?.on('join-call', async (callId: string, offer: string) => {
