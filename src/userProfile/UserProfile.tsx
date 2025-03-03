@@ -6,28 +6,37 @@ import UserActions from './components/UserActions';
 import Header from '../home/components/Header';
 import Footer from '@/ui/components/Footer';
 import RatingComponent from './components/RatingComponent';
+import { ProductResponse, Reputation } from '@/types';
 
-interface User {
+interface Props {
   id: number;
-  name: string;
+  products: ProductResponse[];
   avatar: string;
+  name: string;
+  numberOfSales: number;
+  numberOfOrders: number;
+  avg: number;
+  reputation: Reputation[];
 }
 
-const UserProfile: React.FC<{ user: User }> = ({ user }) => {
+const UserProfile: React.FC<Props> = ({
+  name,
+  avatar,
+  id,
+  reputation,
+  numberOfOrders,
+  numberOfSales,
+  products
+}) => {
   return (
     <>
       <Header />
       <div className="max-w-4xl mx-auto mt-8 p-4 bg-white rounded-lg shadow-md">
-        <UserActions profileUrl={`/users/${user.id}`} />
-        <UserHeader name={user.name} avatar={user.avatar} />
-        <UserStats
-          sales={100}
-          purchases={200}
-          totalSales={300}
-          totalPurchases={400}
-        />
-        <RatingComponent userId={user.id} hasRated={false} />
-        <UserProducts />
+        <UserActions profileUrl={`/users/${id}`} />
+        <UserHeader name={name} avatar={avatar} />
+        <UserStats sales={numberOfSales} purchases={numberOfOrders} />
+        <RatingComponent reputation={reputation} />
+        <UserProducts products={products} />
       </div>
       <Footer />
     </>

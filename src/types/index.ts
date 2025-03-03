@@ -27,6 +27,14 @@ export interface ProductResponse {
   user: User;
 }
 
+export interface Reputation {
+  id: number;
+  score: number;
+  comment: string;
+  fromUserId: number;
+  toUserId: number;
+}
+
 export interface Image {
   id: number;
   image: string;
