@@ -5,12 +5,12 @@ export enum Environment {
 }
 
 export interface ProductCard {
-  id: string;
+  id: number;
   title: string;
   price: number;
-  rate: number;
   userName: string;
   imageSrc: string;
+  avatar: string;
   description: string;
 }
 

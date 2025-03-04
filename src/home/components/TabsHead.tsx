@@ -5,6 +5,7 @@ import {
   DropdownMenu,
   DropdownItem
 } from '@nextui-org/dropdown';
+import Link from 'next/link';
 
 export default function TabsHead() {
   return (
@@ -23,7 +24,9 @@ export default function TabsHead() {
           <DropdownItem key="electrodomesticos">Electrodomésticos</DropdownItem>
           <DropdownItem key="niños">Niños y bebés</DropdownItem>
           <DropdownItem key="hogar">Hogar y jardín</DropdownItem>
-          <DropdownItem key="empleo">Empleo</DropdownItem>
+          <DropdownItem key="descubrir" as={Link} href="/discover">
+            Descubrir
+          </DropdownItem>
         </DropdownMenu>
       </Dropdown>
       {/* Contenido principal */}
@@ -33,7 +36,7 @@ export default function TabsHead() {
           <Tab key="motos" title="Motos" />
           <Tab key="motor" title="Motor y accesorios" />
           <Tab key="moda" title="Moda y accesorios" />
-          <Tab key="inmobiliaria" title="Inmobiliaria" />
+          <Tab key="descubrir" title="Descubrir" as={Link} href="/discover" />
         </Tabs>
       </div>
     </div>
