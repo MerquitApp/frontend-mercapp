@@ -68,7 +68,7 @@ export default function ForgotPassForm() {
       </div>
       <div className="flex flex-col items-center justify-center gap-3">
         <div className="text-center">
-          <h1 className="text-3xl font-bold tex-size">Recuperar contraseña</h1>
+          <h1 className="text-3xl font-bold">Recuperar contraseña</h1>
         </div>
         <div>
           <h2 className="intem-center text-center">
@@ -97,7 +97,7 @@ export default function ForgotPassForm() {
             )}
           </div>
           <Button
-            className="mt-4 w-full bg-primaryPalette text-white"
+            className="mt-4 w-full bg-primaryPalette text-white rounded-md"
             type="submit"
             isLoading={loading}
             disabled={loading}>
