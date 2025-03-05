@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import React from 'react';
 import PrimaryButton from '@/ui/components/PrimaryButton';
+import Link from 'next/link';
 
 function SectionHome() {
   return (
@@ -16,7 +17,9 @@ function SectionHome() {
             <span className="text-primaryPalette"> facilmente.</span>
           </h2>
           <div className="flex justify-center items-center mt-8">
-            <PrimaryButton>Compra ahora</PrimaryButton>
+            <PrimaryButton as={Link} href="/products">
+              Compra ahora
+            </PrimaryButton>
           </div>
         </div>
         <Image

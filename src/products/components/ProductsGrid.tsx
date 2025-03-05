@@ -7,7 +7,7 @@ interface ProductsGridProps {
 }
 const ProductsGrid: React.FC<ProductsGridProps> = ({ products }) => {
   return (
-    <div className="product-grid">
+    <div className="flex gap-16">
       {products.length > 0 ? (
         products.map((product) => (
           <ProductCard
@@ -23,16 +23,8 @@ const ProductsGrid: React.FC<ProductsGridProps> = ({ products }) => {
           />
         ))
       ) : (
-        <p>No se encontraron productos.</p>
+        <p className="text-2xl">No se encontraron productos.</p>
       )}
-
-      <style jsx>{`
-        .product-grid {
-          display: grid;
-          grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-          gap: 1.5rem;
-        }
-      `}</style>
     </div>
   );
 };

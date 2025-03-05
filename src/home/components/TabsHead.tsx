@@ -1,10 +1,27 @@
+'use client';
+
 import { Tabs, Tab, Button } from '@nextui-org/react';
+import Link from 'next/link';
 import {
   Dropdown,
   DropdownTrigger,
   DropdownMenu,
   DropdownItem
 } from '@nextui-org/dropdown';
+
+const TABS: string[] = [
+  'Ver todos',
+  'Coches',
+  'Motos',
+  'Motor y accesorios',
+  'Moda y accesorios',
+  'Inmobiliaria',
+  'Deporte',
+  'Electrodomésticos',
+  'Niños',
+  'Hogar',
+  'Empleo'
+];
 
 export default function TabsHead() {
   return (
@@ -14,26 +31,54 @@ export default function TabsHead() {
           <Button variant="bordered">Todas las categorias</Button>
         </DropdownTrigger>
         <DropdownMenu aria-label="Static Actions">
-          <DropdownItem key="ver">Ver todo</DropdownItem>
-          <DropdownItem key="coches">Coches</DropdownItem>
-          <DropdownItem key="motos">Motos</DropdownItem>
-          <DropdownItem key="motor">Motor y accesorios</DropdownItem>
-          <DropdownItem key="informatica">Informática</DropdownItem>
-          <DropdownItem key="deporte">Deporte y ocio</DropdownItem>
-          <DropdownItem key="electrodomesticos">Electrodomésticos</DropdownItem>
-          <DropdownItem key="niños">Niños y bebés</DropdownItem>
-          <DropdownItem key="hogar">Hogar y jardín</DropdownItem>
-          <DropdownItem key="empleo">Empleo</DropdownItem>
+          <DropdownItem key="ver" as={Link} href="/products">
+            Ver todos
+          </DropdownItem>
+          {
+            TABS.map((tab) => (
+              <DropdownItem
+                key={tab}
+                as={Link}
+                href={`/products?category=${tab.toLowerCase()}`}>
+                {tab}
+              </DropdownItem>
+            )) as any
+          }
         </DropdownMenu>
       </Dropdown>
       {/* Contenido principal */}
       <div className="hidden md:flex">
         <Tabs aria-label="Options" variant="underlined">
-          <Tab key="coches" title="Coches" />
-          <Tab key="motos" title="Motos" />
-          <Tab key="motor" title="Motor y accesorios" />
-          <Tab key="moda" title="Moda y accesorios" />
-          <Tab key="inmobiliaria" title="Inmobiliaria" />
+          <Tab
+            key="coches"
+            title="Coches"
+            as={Link}
+            href="/products?category=coches"
+          />
+          <Tab
+            key="motos"
+            title="Motos"
+            as={Link}
+            href="/products?category=motos"
+          />
+          <Tab
+            key="motor"
+            title="Motor y accesorios"
+            as={Link}
+            href="/products?category=motor"
+          />
+          <Tab
+            key="moda"
+            title="Moda y accesorios"
+            as={Link}
+            href="/products?category=moda"
+          />
+          <Tab
+            key="inmobiliaria"
+            title="Inmobiliaria"
+            as={Link}
+            href="/products?category=inmobiliaria"
+          />
         </Tabs>
       </div>
     </div>
