@@ -36,7 +36,9 @@ const SliderHome = () => {
 
   useEffect(() => {
     const fetchProducts = async () => {
-      const result = await fetch(`${BACKEND_URL}/products?limit=15`);
+      const result = await fetch(`${BACKEND_URL}/products?limit=15`, {
+        credentials: 'include'
+      });
       const response = await result.json();
 
       setProducts(response);

@@ -4,6 +4,12 @@ export enum Environment {
   Test = 'test'
 }
 
+export interface OfferResponse {
+  id: number;
+  price: number;
+  product: ProductResponse;
+}
+
 export interface ProductCard {
   id: number;
   title: string;
