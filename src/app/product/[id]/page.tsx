@@ -14,14 +14,20 @@ export default async function ProductPage({
   const cookiesStore = cookies();
   const { id } = params;
   let product;
+  let profile;
 
   try {
-    const result = await fetch(`${BACKEND_URL}/products/${id}`, {
+    const productResp = await fetch(`${BACKEND_URL}/products/${id}`, {
       headers: {
         Authorization: `Bearer ${cookiesStore.get(AUTH_COOKIE_NAME)?.value}`
       }
     });
-    product = await result.json();
+    product = await productResp.json();
+
+    const profileResp = await fetch(
+      `${BACKEND_URL}/users/profile/${product.user.user_id}`
+    );
+    profile = await profileResp.json();
   } catch (error) {
     console.log(error);
     redirect('/404');
@@ -32,14 +38,17 @@ export default async function ProductPage({
       <Header />
       <ProductSection
         id={product.id}
-        userName={product.user.name}
-        userReview={4.8}
+        seller={{
+          userName: product.user.name,
+          userReview: profile.avg,
+          userAvatar: product.user?.profile_picture,
+          userId: product.user.user_id
+        }}
         productCost={product.price}
         productDescription={product.description}
         productName={product.name}
         coverImage={product.cover_image.image}
         images={product.images.map(({ image }: { image: string }) => image)}
-        userId={product.user.user_id}
         isLiked={product.isLiked}
       />
       <Footer />

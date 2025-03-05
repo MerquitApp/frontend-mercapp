@@ -5,12 +5,12 @@ export enum Environment {
 }
 
 export interface ProductCard {
-  id: string;
+  id: number;
   title: string;
   price: number;
-  rate: number;
   userName: string;
   imageSrc: string;
+  avatar: string;
   description: string;
 }
 
@@ -25,6 +25,14 @@ export interface ProductResponse {
   images: Image[];
   cover_image: Image;
   user: User;
+}
+
+export interface Reputation {
+  id: number;
+  score: number;
+  comment: string;
+  fromUserId: number;
+  toUserId: number;
 }
 
 export interface Image {
@@ -47,11 +55,18 @@ export interface User {
   updated_at: Date;
 }
 
-export interface Chat {
+export interface ChatDetails {
   id: number;
   createdAt: Date;
   messages: Message[];
   users: User[];
+}
+
+export interface UserLike {
+  id: number;
+  userId: number;
+  productId: number;
+  product: ProductResponse;
 }
 
 export interface Message {

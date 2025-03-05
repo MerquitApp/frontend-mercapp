@@ -61,7 +61,7 @@ export default function LoginEmail() {
       <div className="space-y-4">
         <form
           id="login-form"
-          className="flex justify-center flex-col"
+          className="flex justify-center flex-col gap-2"
           onSubmit={handleSubmit}>
           <Input
             label="E-mail"

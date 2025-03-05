@@ -1,31 +1,42 @@
+'use client';
+
 import CalculatorButton from '@/ui/components/CalculatorButton';
+import { useState } from 'react';
 import { RiDeleteBack2Line } from 'react-icons/ri';
 
 interface CalculatorOfferProps {
-  onInputChange: (update: (prev: string) => string) => void;
+  productPrice: number;
+  onInputChange: (newValue: number) => void;
 }
 
-export const CalculatorOffer = ({ onInputChange }: CalculatorOfferProps) => {
-  const handleButtonClick = (value: string) => {
-    onInputChange((prev: string) => {
-      // Dot can only be included once and must have a value before it
-      if (
-        (value === '.' && prev.includes('.')) ||
-        (value === '.' && prev.trim().length <= 0)
-      )
-        return prev;
+export const CalculatorOffer = ({
+  onInputChange,
+  productPrice
+}: CalculatorOfferProps) => {
+  const [inputValue, setInputValue] = useState('');
 
-      return prev + value;
-    });
+  const handleButtonClick = (value: string) => {
+    // Dot can only be included once and must have a value before i
+    if (
+      (value === '.' && inputValue.includes('.')) ||
+      (value === '.' && inputValue.trim().length <= 0)
+    )
+      return;
+
+    const newValue = inputValue + value;
+    if (+newValue >= productPrice) {
+      return;
+    }
+
+    setInputValue(newValue);
+    onInputChange(+newValue);
   };
 
   const handleDeleteCliick = () => {
-    onInputChange((prev) => {
-      if (typeof prev === 'string' && prev.length > 0) {
-        return prev.slice(0, -1);
-      }
-      return ''; // Si no hay nada, devuelve una cadena vacía
-    });
+    const newValue = inputValue.slice(0, -1);
+
+    setInputValue(newValue);
+    onInputChange(+newValue);
   };
 
   return (

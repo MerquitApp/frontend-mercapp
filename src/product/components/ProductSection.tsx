@@ -1,23 +1,28 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Avatar } from '@nextui-org/react';
 import PrimaryButton from '@/ui/components/PrimaryButton';
-import { Modal } from './Modal';
+import { OfferModal } from './OfferModal';
 import { LuHeart, LuShare2, LuStar } from 'react-icons/lu';
 import Image from 'next/image';
 import { useAuthStore } from '@/store/auth';
 import { toast } from 'sonner';
 import { BACKEND_URL } from '@/constants';
 import { useRouter } from 'next/navigation';
+import { useChatStore } from '@/store/chat';
+import Link from 'next/link';
 
 interface Props {
   id: string;
   productDescription: string;
   productName: string;
-  userId: string;
-  userName: string;
-  userReview: number;
+  seller: {
+    userAvatar: string;
+    userId: string;
+    userName: string;
+    userReview: number;
+  };
   productCost: number;
   coverImage: string;
   images: string[];
@@ -25,15 +30,13 @@ interface Props {
 }
 
 function ProductSection({
-  userName,
-  userReview,
   productCost,
   productName,
   productDescription,
   coverImage,
   images,
   id,
-  userId,
+  seller: { userId, userAvatar, userName, userReview },
   isLiked: isLikedProp
 }: Props) {
   const { push } = useRouter();
@@ -41,17 +44,43 @@ function ProductSection({
   const isLoggedIn = useAuthStore((state) => state.isLoggedIn);
   const authUserId = useAuthStore((state) => state.userId);
   const [activeImage, setActiveImage] = useState(0);
-  const [shareUrl, setShareUrl] = useState('');
-  const [offer, setOffer] = useState(false);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [offset, setOffset] = useState(0);
-  const [offerValue, setOfferValue] = useState<string | null>(null);
+  const [isCreatingOffer, setIsCreatingOffer] = useState(false);
+  const [newPrice, setNewPrice] = useState<number>(0);
+  const setActiveChatId = useChatStore((state) => state.setActiveChatId);
 
   const isOwner = authUserId === userId;
   const allImages = [coverImage, ...images];
 
-  const handleOffer = () => {
-    setOffer(!offer);
+  const handleCreateOffer = () => {
+    setIsCreatingOffer(!isCreatingOffer);
+  };
+
+  const handleOfferValue = async (value: number) => {
+    try {
+      const result = await fetch(`${BACKEND_URL}/offer/${id}`, {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          price: value
+        })
+      });
+
+      if (result.ok) {
+        toast.success('¡Oferta creada correctamente!');
+        setIsCreatingOffer(false);
+      } else {
+        setNewPrice(0);
+        toast.error('Error al crear la oferta');
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error('Error al crear la oferta');
+    }
+
+    setNewPrice(value);
   };
 
   const handleLike = async () => {
@@ -124,7 +153,8 @@ function ProductSection({
       const data = await result.json();
 
       if (result.ok) {
-        window.location.href = `/chat/${data.id}`;
+        setActiveChatId(data.id);
+        push('/profile/conversations');
       } else {
         push('/login');
       }
@@ -157,13 +187,30 @@ function ProductSection({
     }
   };
 
-  useEffect(() => {
-    if (typeof window === 'undefined') return;
-
-    setShareUrl(
-      `https://x.com/intent/tweet?text=Mira%20este%20producto%20de%20Mercapp%20https%3A%2F%2F${window?.location?.host}%2Fproduct%2F${id}%0A%23Mercapp%20%23Ecomerce`
-    );
-  }, [id]);
+  const handleShare = async () => {
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: 'Producto de Mercapp',
+          text: '¡Mira este producto de Mercapp!',
+          url: `${window?.location?.origin}/product/${id}`
+        });
+      } catch (error) {
+        console.error('Error al compartir:', error);
+        toast.error('Error al compartir');
+      }
+    } else {
+      try {
+        await navigator.clipboard.writeText(
+          `${window?.location?.origin}/product/${id}`
+        );
+        toast.success('Texto copiado al portapapeles');
+      } catch (error) {
+        console.error('Error al copiar la URL:', error);
+        toast.error('Error al copiar la URL');
+      }
+    }
+  };
 
   return (
     <div className="flex justify-center pt-5 px-4 max-w-7xl mx-auto">
@@ -207,9 +254,9 @@ function ProductSection({
                   className={isLiked ? 'fill-redPalette stroke-redPalette' : ''}
                 />
               </button>
-              <a href={shareUrl} target="_blank" rel="noreferrer">
+              <button onClick={handleShare}>
                 <LuShare2 size={24} />
-              </a>
+              </button>
             </div>
           </div>
           <h3 className="font-bold text-xl text-primaryPalette">
@@ -220,8 +267,17 @@ function ProductSection({
           </p>
           <span className="border-small border-greyPalette mt-4 w-full"></span>
           <div className="flex justify-between items-center p-4 w-full">
-            <div className="flex justify-center items-center gap-4">
-              <Avatar size="lg" name={userName} />
+            <Link
+              href={`/user/${userId}`}
+              className="flex justify-center items-center gap-4 cursor-pointer">
+              <Avatar
+                size="lg"
+                name={userName}
+                src={userAvatar}
+                classNames={{
+                  img: 'opacity-100'
+                }}
+              />
               <div className="flex flex-col gap-1">
                 <h4 className="text-s">{userName}</h4>
                 <div className="flex justify-around text-center items-center py-1  rounded-full bg-yellow-200">
@@ -229,7 +285,7 @@ function ProductSection({
                   <h4 className="text-yellow-400 font-bold">{userReview}</h4>
                 </div>
               </div>
-            </div>
+            </Link>
             <button
               onClick={handleCreateChat}
               disabled={isOwner}
@@ -246,27 +302,25 @@ function ProductSection({
                 </h4>
                 <h4 className="text-2xl font-bold text-blackPalette">€</h4>
               </div>
-              {offerValue && (
-                <>
-                  <div className="flex items-center gap-2">
-                    <h3>
-                      <span className="text-sm font-bold uppercase text-primaryPalette">
-                        Nueva oferta
-                      </span>
-                    </h3>
-                    <div className="flex items-center gap-1">
-                      <h4 className="text-3xl font-bold text-redPalette">
-                        {`${offerValue}`}
-                      </h4>
-                      <h4 className="text-xl font-bold text-redPalette">€</h4>
-                    </div>
+              {newPrice !== 0 && (
+                <div className="flex items-center gap-2">
+                  <h3>
+                    <span className="text-sm font-bold uppercase text-primaryPalette">
+                      Nueva oferta
+                    </span>
+                  </h3>
+                  <div className="flex items-center gap-1">
+                    <h4 className="text-3xl font-bold text-redPalette">
+                      {newPrice}
+                    </h4>
+                    <h4 className="text-xl font-bold text-redPalette">€</h4>
                   </div>
-                </>
+                </div>
               )}
             </div>
             <div className="flex gap-2 w-2/4">
               <PrimaryButton
-                onClick={handleOffer}
+                onClick={handleCreateOffer}
                 className="p-2"
                 disabled={isOwner}>
                 Realizar Oferta
@@ -284,16 +338,16 @@ function ProductSection({
       <div className="flex flex-col">
         {/* <h3>Aquí pondremos las recomendaciones de otros productos</h3> */}
       </div>
-      {offer && (
-        <Modal
-          isOpen={offer}
-          onClose={() => setOffer(false)}
-          setOffset={setOffset}
-          setOfferValue={setOfferValue}>
+      {isCreatingOffer && (
+        <OfferModal
+          productPrice={productCost}
+          isOpen={isCreatingOffer}
+          onClose={() => setIsCreatingOffer(false)}
+          onSetNewPrice={handleOfferValue}>
           <div className="flex justify-center items-center">
             <h2>¡Oferta un nuevo precio!</h2>
           </div>
-        </Modal>
+        </OfferModal>
       )}
     </div>
   );

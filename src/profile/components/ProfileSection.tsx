@@ -2,7 +2,7 @@
 
 import { Avatar } from '@nextui-org/react';
 import { IoSettingsOutline } from 'react-icons/io5';
-import { MdOutlineNotificationsActive } from 'react-icons/md';
+import { MdDeleteOutline, MdOutlineNotificationsActive } from 'react-icons/md';
 import { FaRegClock } from 'react-icons/fa6';
 import { IoAlertCircleOutline } from 'react-icons/io5';
 import { CiLogout } from 'react-icons/ci';
@@ -10,7 +10,7 @@ import { IoLockClosedOutline } from 'react-icons/io5';
 import AccountOption from './AccountOption';
 import { toast } from 'sonner';
 import { BACKEND_URL } from '@/constants';
-import { LuHeart, LuUpload } from 'react-icons/lu';
+import { LuHeart, LuMessageCircle, LuUpload } from 'react-icons/lu';
 
 interface Props {
   userName: string;
@@ -31,6 +31,22 @@ const ProfileSection = ({ userName, userEmail, userAvatar }: Props) => {
       }
     } catch (error) {
       toast.error('Error al cerrar sesión');
+      console.log(error);
+    }
+  };
+
+  const handleDeleteAccount = async () => {
+    try {
+      const resp = await fetch(`${BACKEND_URL}/users`, {
+        method: 'DELETE',
+        credentials: 'include'
+      });
+
+      if (resp.ok) {
+        window.location.reload();
+      }
+    } catch (error) {
+      toast.error('Error al borrar cuenta');
       console.log(error);
     }
   };
@@ -73,6 +89,11 @@ const ProfileSection = ({ userName, userEmail, userAvatar }: Props) => {
             href="/profile/notifications"
           />
           <AccountOption
+            accountIcon={<LuMessageCircle />}
+            accountName="Conversaciones"
+            href="/profile/conversations"
+          />
+          <AccountOption
             accountIcon={<FaRegClock />}
             accountName="Historial de compras"
             href="/profile/history"
@@ -92,6 +113,12 @@ const ProfileSection = ({ userName, userEmail, userAvatar }: Props) => {
             accountName="Cerrar sesión"
             as={'button'}
             onClick={handleLogout}
+          />
+          <AccountOption
+            accountIcon={<MdDeleteOutline />}
+            accountName="Eliminar cuenta"
+            as={'button'}
+            onClick={handleDeleteAccount}
           />
         </div>
       </div>
