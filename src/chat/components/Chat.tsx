@@ -8,6 +8,7 @@ import { useChatStore } from '@/store/chat';
 import { Avatar } from '@nextui-org/react';
 import PrimaryButton from '@/ui/components/PrimaryButton';
 import { LuPhoneCall } from 'react-icons/lu';
+import Link from 'next/link';
 
 interface Props {
   messages: Message[];
@@ -50,9 +51,11 @@ function Chat({ messages: messagesProp, chatId, users }: Props) {
   }, [messagesProp]);
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen max-w-4xl w-full mx-auto">
+    <div className="flex flex-col items-center justify-center h-screen max-w-4xl w-3/4 mx-auto">
       <div className="flex items-center justify-between w-full p-4 bg-primaryPalette rounded-t-lg">
-        <div className="flex items-center gap-4">
+        <Link
+          href={`/user/${otherUser?.user_id}`}
+          className="flex items-center gap-4 cursor-pointer">
           <Avatar
             className="w-16 h-16 md:w-20 md:h-20 rounded-full opacity-100 text-primaryPalette"
             src={otherUser?.profile_picture}
@@ -65,7 +68,7 @@ function Chat({ messages: messagesProp, chatId, users }: Props) {
           <h2 className="font-semibold text-xl md:text-2xl text-white">
             {otherUser?.name}
           </h2>
-        </div>
+        </Link>
         <div>
           <PrimaryButton className="bg-whitePalette p-4 shadow-md">
             <LuPhoneCall size={24} className="stroke-primaryPalette" />

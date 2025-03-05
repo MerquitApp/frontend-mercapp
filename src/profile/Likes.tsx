@@ -17,7 +17,6 @@ function Likes() {
         });
         const data = await result.json();
 
-        console.log(data);
         if (result.ok) {
           setLikes(data);
         }

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Avatar } from '@nextui-org/react';
 import PrimaryButton from '@/ui/components/PrimaryButton';
 import { OfferModal } from './OfferModal';
@@ -10,14 +10,19 @@ import { useAuthStore } from '@/store/auth';
 import { toast } from 'sonner';
 import { BACKEND_URL } from '@/constants';
 import { useRouter } from 'next/navigation';
+import { useChatStore } from '@/store/chat';
+import Link from 'next/link';
 
 interface Props {
   id: string;
   productDescription: string;
   productName: string;
-  userId: string;
-  userName: string;
-  userReview: number;
+  seller: {
+    userAvatar: string;
+    userId: string;
+    userName: string;
+    userReview: number;
+  };
   productCost: number;
   coverImage: string;
   images: string[];
@@ -25,15 +30,13 @@ interface Props {
 }
 
 function ProductSection({
-  userName,
-  userReview,
   productCost,
   productName,
   productDescription,
   coverImage,
   images,
   id,
-  userId,
+  seller: { userId, userAvatar, userName, userReview },
   isLiked: isLikedProp
 }: Props) {
   const { push } = useRouter();
@@ -41,9 +44,9 @@ function ProductSection({
   const isLoggedIn = useAuthStore((state) => state.isLoggedIn);
   const authUserId = useAuthStore((state) => state.userId);
   const [activeImage, setActiveImage] = useState(0);
-  const [shareUrl, setShareUrl] = useState('');
   const [isCreatingOffer, setIsCreatingOffer] = useState(false);
   const [newPrice, setNewPrice] = useState<number>(0);
+  const setActiveChatId = useChatStore((state) => state.setActiveChatId);
 
   const isOwner = authUserId === userId;
   const allImages = [coverImage, ...images];
@@ -53,7 +56,6 @@ function ProductSection({
   };
 
   const handleOfferValue = async (value: number) => {
-    console.log(value);
     try {
       const result = await fetch(`${BACKEND_URL}/offer/${id}`, {
         method: 'POST',
@@ -151,7 +153,8 @@ function ProductSection({
       const data = await result.json();
 
       if (result.ok) {
-        window.location.href = `/chat/${data.id}`;
+        setActiveChatId(data.id);
+        push('/profile/conversations');
       } else {
         push('/login');
       }
@@ -184,13 +187,30 @@ function ProductSection({
     }
   };
 
-  useEffect(() => {
-    if (typeof window === 'undefined') return;
-
-    setShareUrl(
-      `https://x.com/intent/tweet?text=Mira%20este%20producto%20de%20Mercapp%20https%3A%2F%2F${window?.location?.host}%2Fproduct%2F${id}%0A%23Mercapp%20%23Ecomerce`
-    );
-  }, [id]);
+  const handleShare = async () => {
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: 'Producto de Mercapp',
+          text: '¡Mira este producto de Mercapp!',
+          url: `${window?.location?.origin}/product/${id}`
+        });
+      } catch (error) {
+        console.error('Error al compartir:', error);
+        toast.error('Error al compartir');
+      }
+    } else {
+      try {
+        await navigator.clipboard.writeText(
+          `${window?.location?.origin}/product/${id}`
+        );
+        toast.success('Texto copiado al portapapeles');
+      } catch (error) {
+        console.error('Error al copiar la URL:', error);
+        toast.error('Error al copiar la URL');
+      }
+    }
+  };
 
   return (
     <div className="flex justify-center pt-5 px-4 max-w-7xl mx-auto">
@@ -234,9 +254,9 @@ function ProductSection({
                   className={isLiked ? 'fill-redPalette stroke-redPalette' : ''}
                 />
               </button>
-              <a href={shareUrl} target="_blank" rel="noreferrer">
+              <button onClick={handleShare}>
                 <LuShare2 size={24} />
-              </a>
+              </button>
             </div>
           </div>
           <h3 className="font-bold text-xl text-primaryPalette">
@@ -247,8 +267,17 @@ function ProductSection({
           </p>
           <span className="border-small border-greyPalette mt-4 w-full"></span>
           <div className="flex justify-between items-center p-4 w-full">
-            <div className="flex justify-center items-center gap-4">
-              <Avatar size="lg" name={userName} />
+            <Link
+              href={`/user/${userId}`}
+              className="flex justify-center items-center gap-4 cursor-pointer">
+              <Avatar
+                size="lg"
+                name={userName}
+                src={userAvatar}
+                classNames={{
+                  img: 'opacity-100'
+                }}
+              />
               <div className="flex flex-col gap-1">
                 <h4 className="text-s">{userName}</h4>
                 <div className="flex justify-around text-center items-center py-1  rounded-full bg-yellow-200">
@@ -256,7 +285,7 @@ function ProductSection({
                   <h4 className="text-yellow-400 font-bold">{userReview}</h4>
                 </div>
               </div>
-            </div>
+            </Link>
             <button
               onClick={handleCreateChat}
               disabled={isOwner}

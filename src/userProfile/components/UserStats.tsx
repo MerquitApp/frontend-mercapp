@@ -1,13 +1,11 @@
 import React from 'react';
 
-interface UserStatsProps {
+interface Props {
   sales: number;
   purchases: number;
-  totalSales: number;
-  totalPurchases: number;
 }
 
-function UserStats({ sales, purchases }: UserStatsProps) {
+function UserStats({ sales, purchases }: Props) {
   return (
     <div className="flex justify-around mt-4">
       <div className="text-center">

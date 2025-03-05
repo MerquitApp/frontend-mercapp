@@ -1,9 +1,9 @@
 import type { Metadata } from 'next';
-import '../ui/styles/globals.css';
 import { Providers } from '@/providers/Providers';
 import { Toaster } from 'sonner';
 import { Environment } from '@/types';
 import Script from 'next/script';
+import '../ui/styles/globals.css';
 
 const isDev = process.env.NODE_ENV === Environment.Development;
 

@@ -2,30 +2,25 @@
 
 import { Avatar } from '@nextui-org/react';
 import { useRef } from 'react';
-import { PiStarFill } from 'react-icons/pi';
 import Link from 'next/link';
 import Image from 'next/image';
+import { ProductCard } from '@/types';
 
 const DECISION_THRESHOLD = 75;
 const MAX_DRAG_DISTANCE = 200;
 
-interface Props {
-  title: string;
-  price: number;
-  rate: number;
-  userName: string;
-  imageSrc: string;
-  description: string;
-  onDecisionMade: (isGoingRight: boolean) => void;
+interface Props extends ProductCard {
+  onDecisionMade: (isLiking: boolean, id: number) => void;
 }
 
 export default function SwipeCard({
+  id,
   title,
   price,
   description,
   imageSrc,
-  rate,
   userName,
+  avatar,
   onDecisionMade
 }: Props) {
   const cardRef = useRef<HTMLDivElement>(null);
@@ -77,7 +72,7 @@ export default function SwipeCard({
       if (decisionMade) {
         cardRef.current.classList.add(goRight ? 'go-right' : 'go-left');
         cardRef.current.addEventListener('transitionend', () => {
-          onDecisionMade(goRight);
+          onDecisionMade(goRight, id);
         });
       } else {
         cardRef.current.style.transform = 'translateX(0px) rotate(0deg)';
@@ -110,13 +105,9 @@ export default function SwipeCard({
       </div>
       <hr className="mt-4 border-gray-300" />
       <div className="mt-4 flex items-center gap-4">
-        <Avatar size="md" name="John Doe" />
+        <Avatar size="md" name={userName} src={avatar} />
         <div className="flex flex-col gap-1 items-center">
           <h3>{userName}</h3>
-          <div className="flex gap-1 items-center text-gray-500 bg-yellow-200 py-1 px-2 rounded-full">
-            <PiStarFill className="text-yellow-500" />
-            {rate}
-          </div>
         </div>
       </div>
     </div>

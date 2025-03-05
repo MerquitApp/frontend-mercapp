@@ -123,12 +123,16 @@ function UploadProduct() {
 
         <div>
           <label className="text-gray-700 font-medium mb-2">Categorías</label>
-          <TagInput placeholder="Coche" onChange={setCategories} />
+          <TagInput
+            placeholder="Coche"
+            onChange={setCategories}
+            tags={categories}
+          />
         </div>
 
         <div>
           <label className="text-gray-700 font-medium mb-2">Etiquetas</label>
-          <TagInput placeholder="Como Nuevo" onChange={setTags} />
+          <TagInput placeholder="Como Nuevo" onChange={setTags} tags={tags} />
         </div>
 
         <div className="text-center">

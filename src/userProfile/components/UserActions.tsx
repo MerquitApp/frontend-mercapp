@@ -1,7 +1,6 @@
 'use client';
 import React from 'react';
 import { GoShareAndroid } from 'react-icons/go';
-import { CiHeart } from 'react-icons/ci';
 import { toast } from 'sonner';
 
 interface UserActionsProps {
@@ -9,10 +8,6 @@ interface UserActionsProps {
 }
 
 const UserActions: React.FC<UserActionsProps> = ({ profileUrl }) => {
-  const handleFavorite = () => {
-    //logica para guardar en base de datos
-  };
-
   const handleShare = async () => {
     if (navigator.share) {
       try {
@@ -36,11 +31,6 @@ const UserActions: React.FC<UserActionsProps> = ({ profileUrl }) => {
   };
   return (
     <div className="mt-6 flex space-x-4 flex-wrap flex-start justify-end">
-      <CiHeart
-        onClick={handleFavorite}
-        className="cursor-pointer size-6 fill-current hover:stroke-primaryPalette"
-      />
-
       <GoShareAndroid
         onClick={handleShare}
         className="cursor-pointer size-6 stroke-current hover:stroke-primaryPalette"
