@@ -8,7 +8,6 @@ import {
   DropdownMenu,
   DropdownItem
 } from '@nextui-org/dropdown';
-import Link from 'next/link';
 
 const TABS: string[] = [
   'Ver todos',
