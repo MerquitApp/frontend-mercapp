@@ -17,7 +17,6 @@ function Likes() {
         });
         const data = await result.json();
 
-        console.log(data);
         if (result.ok) {
           setLikes(data);
         }
@@ -31,13 +30,16 @@ function Likes() {
   }, []);
 
   return (
-    <ul className="flex max-w-4xl flex-wrap gap-4 mx-auto">
-      {likes.map((like) => (
-        <li key={like.id}>
-          <ProductCard product={like.product} />
-        </li>
-      ))}
-    </ul>
+    <div className="flex flex-col items-center w-full h-screen gap-8">
+      <h2 className="text-4xl font-bold text-primaryPalette">Favoritos</h2>
+      <ul className="flex max-w-4xl flex-wrap gap-4 mx-auto">
+        {likes.map((like) => (
+          <li key={like.id}>
+            <ProductCard product={like.product} />
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 }
 

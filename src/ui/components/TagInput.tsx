@@ -21,21 +21,24 @@ export const TagInput = ({ tags, onChange, ...rest }: Props) => {
   );
 
   const handleAddTag = (tag: string) => {
-    setCurrentTags((prev) => {
-      if (prev.some((t) => t.content === tag)) {
-        return prev;
-      }
+    const tagExists = currentTags.some((t) => t.content === tag);
+    if (tagExists) return;
 
-      return [...prev, { content: tag, id: crypto.randomUUID() }];
-    });
+    const newTags = [...currentTags, { content: tag, id: crypto.randomUUID() }];
+    setCurrentTags(newTags);
+    onChange?.(newTags.map((tag) => tag.content));
   };
 
   const handleRemoveTag = (tagId: string) => {
-    setCurrentTags(currentTags.filter((t) => t.id !== tagId));
+    const newTags = currentTags.filter((t) => t.id !== tagId);
+    setCurrentTags(newTags);
+    onChange?.(newTags.map((tag) => tag.content));
   };
 
   const handleRemoveLastTag = () => {
-    setCurrentTags((prev) => prev.slice(0, -1));
+    const newTags = currentTags.slice(0, -1);
+    setCurrentTags(newTags);
+    onChange?.(newTags.map((tag) => tag.content));
   };
 
   function handleKeyDown(e: KeyboardEvent<HTMLInputElement>) {
@@ -54,9 +57,7 @@ export const TagInput = ({ tags, onChange, ...rest }: Props) => {
     }
   }
 
-  useEffect(() => {
-    onChange?.(currentTags.map((tag) => tag.content));
-  }, [currentTags, onChange]);
+  useEffect(() => {}, [currentTags, onChange]);
 
   useEffect(() => {
     if (!tags) return;
