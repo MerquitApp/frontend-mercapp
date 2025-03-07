@@ -1,11 +1,8 @@
-import Head from '@/home/components/Header';
-import Footer from '@/ui/components/Footer';
 import React from 'react';
 
 function Privacy() {
   return (
     <>
-      <Head />
       <div className="flex flex-col justify-center items-center p-4 md:p-10 gap-8">
         <div className="flex flex-col items-center justify-center max-w-4xl w-full">
           <h1 className="font-semibold text-3xl md:text-4xl mb-6 text-center">
@@ -89,7 +86,6 @@ function Privacy() {
           </section>
         </div>
       </div>
-      <Footer />
     </>
   );
 }

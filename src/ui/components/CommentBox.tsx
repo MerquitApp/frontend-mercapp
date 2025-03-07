@@ -3,10 +3,21 @@
 import { useState } from 'react';
 import { LuStar } from 'react-icons/lu';
 
-const CommentBox = () => {
+interface CommentBoxProps {
+  productId: number;
+  onSubmit: (productId: number, rating: number, comment: string) => void;
+}
+
+const CommentBox: React.FC<CommentBoxProps> = ({ productId, onSubmit }) => {
   const [rating, setRating] = useState(0);
   const [hover, setHover] = useState(0);
   const [comment, setComment] = useState('');
+
+  const handleSubmit = () => {
+    onSubmit(productId, rating, comment);
+    setRating(0);
+    setComment('');
+  };
 
   return (
     <div className="max-w-md mx-auto p-4 border rounded-lg shadow-lg bg-white">
@@ -33,7 +44,7 @@ const CommentBox = () => {
       />
       <button
         className="mt-4 w-full bg-primaryPalette text-white p-2 rounded-md transition-opacity hover:opacity-90"
-        onClick={() => alert(`Valoración: ${rating}\nComentario: ${comment}`)}>
+        onClick={handleSubmit}>
         Enviar
       </button>
     </div>

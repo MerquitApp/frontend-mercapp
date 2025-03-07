@@ -31,6 +31,7 @@ export interface ProductResponse {
   images: Image[];
   cover_image: Image;
   user: User;
+  isActive: boolean;
 }
 
 export interface Reputation {
