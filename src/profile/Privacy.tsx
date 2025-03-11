@@ -79,7 +79,7 @@ function Privacy() {
               Si tienes alguna pregunta sobre nuestra política de privacidad,
               puedes contactarnos a través de{' '}
               <a href="mailto:privacidad@mercapp.com" className="text-blue-500">
-                privacidad@wallapop.com
+                privacidad@mercapp.com
               </a>
               .
             </p>

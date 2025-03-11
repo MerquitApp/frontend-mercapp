@@ -27,6 +27,7 @@ interface Props {
   coverImage: string;
   images: string[];
   isLiked: boolean;
+  isActive: boolean;
 }
 
 function ProductSection({
@@ -36,6 +37,7 @@ function ProductSection({
   coverImage,
   images,
   id,
+  isActive,
   seller: { userId, userAvatar, userName, userReview },
   isLiked: isLikedProp
 }: Props) {
@@ -213,7 +215,7 @@ function ProductSection({
   };
 
   return (
-    <div className="flex justify-center pt-5 px-4 max-w-7xl mx-auto">
+    <div className="flex justify-center pt-5 px-4 max-w-2xl mx-auto">
       <div className="flex items-start gap-10">
         <div className="flex flex-col justify-between">
           <div className="mb-4">
@@ -288,7 +290,7 @@ function ProductSection({
             </Link>
             <button
               onClick={handleCreateChat}
-              disabled={isOwner}
+              disabled={isOwner || !isActive}
               className="border-2 border-primaryPalette rounded-full px-4 py-1 font-bold disabled:opacity-80 disabled:cursor-not-allowed">
               Chat
             </button>
@@ -322,12 +324,12 @@ function ProductSection({
               <PrimaryButton
                 onClick={handleCreateOffer}
                 className="p-2"
-                disabled={isOwner}>
+                disabled={isOwner || !isActive}>
                 Realizar Oferta
               </PrimaryButton>
               <PrimaryButton
                 className="p-2"
-                disabled={isOwner}
+                disabled={isOwner || !isActive}
                 onClick={handlePayProduct}>
                 Compra Ahora
               </PrimaryButton>

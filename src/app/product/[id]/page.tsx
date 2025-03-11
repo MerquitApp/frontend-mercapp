@@ -44,6 +44,7 @@ export default async function ProductPage({
           userAvatar: product.user?.profile_picture,
           userId: product.user.user_id
         }}
+        isActive={product.isActive}
         productCost={product.price}
         productDescription={product.description}
         productName={product.name}

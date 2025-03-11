@@ -7,7 +7,7 @@ interface ProductsGridProps {
 }
 const ProductsGrid: React.FC<ProductsGridProps> = ({ products }) => {
   return (
-    <div className="flex gap-16">
+    <div className="flex gap-4 max-w-4xl flex-wrap justify-center md:justify-normal">
       {products.length > 0 ? (
         products.map((product) => (
           <ProductCard
