@@ -106,7 +106,7 @@ function Terms() {
               Si tienes alguna pregunta sobre estos términos y condiciones,
               puedes contactarnos a través de{' '}
               <a href="mailto:soporte@mercapp.com" className="text-blue-500">
-                soporte@wallapop.com
+                soporte@mercapp.com
               </a>
               .
             </p>

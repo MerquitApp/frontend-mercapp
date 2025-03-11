@@ -10,7 +10,6 @@ import {
 } from '@nextui-org/dropdown';
 
 const TABS: string[] = [
-  'Ver todos',
   'Coches',
   'Motos',
   'Motor y accesorios',
@@ -73,12 +72,7 @@ export default function TabsHead() {
             as={Link}
             href="/products?category=moda"
           />
-          <Tab
-            key="inmobiliaria"
-            title="Inmobiliaria"
-            as={Link}
-            href="/products?category=inmobiliaria"
-          />
+          <Tab key="discover" title="Descubrir" as={Link} href="/discover" />
         </Tabs>
       </div>
     </div>

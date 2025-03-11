@@ -7,9 +7,8 @@ interface Props {
 
 function UserProducts({ products }: Props) {
   return (
-    <div className="mt-6">
-      <h3 className="text-2xl font-bold mb-3">Productos</h3>
-      <ul className="flex justify-between">
+    <div className="mt-6 max-w-4xl mx-auto">
+      <ul className="flex justify-evenly mt-12 flex-wrap gap-2">
         {products.map((product) => (
           <li key={product.id}>
             <ProductCard product={product} />

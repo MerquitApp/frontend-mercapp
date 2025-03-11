@@ -73,7 +73,7 @@ function UploadProduct() {
           <input
             type="file"
             name="cover_image"
-            accept=".png,.jpg,.jpeg"
+            accept=".png,.jpg,.jpeg,.webp"
             className="mt-1 w-full text-gray-700 border border-gray-300 rounded-md p-2 cursor-pointer"
           />
         </div>
@@ -85,7 +85,7 @@ function UploadProduct() {
           <input
             type="file"
             name="images"
-            accept=".png,.jpg,.jpeg"
+            accept=".png,.jpg,.jpeg,.webp"
             multiple
             className="mt-1 w-full text-gray-700 border border-gray-300 rounded-md p-2 cursor-pointer"
           />

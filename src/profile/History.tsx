@@ -6,6 +6,7 @@ import { BACKEND_URL } from '@/constants';
 import { ProductResponse } from '@/types';
 import ProductCard from '@/ui/components/ProductCard';
 import CommentBox from '@/ui/components/CommentBox';
+import { toast } from 'sonner';
 
 enum TABS {
   COMPRAS = 'compras',
@@ -16,36 +17,37 @@ function History() {
   const [loading, setLoading] = useState(false);
   const [activeTab, setActiveTab] = useState<TABS>(TABS.COMPRAS);
   const [products, setProducts] = useState<ProductResponse[]>([]);
-  const currentUserId = 1; // ID del usuario actual (esto debería provenir del sistema de autenticación)
   const [showCommentBox, setShowCommentBox] = useState<number | null>(null);
 
   const handleCommentSubmit = async (
-    productId: number,
     rating: number,
-    comment: string
+    comment: string,
+    toUserId: number
   ) => {
     const createReputationDto = {
       score: rating,
       comment,
-      productId,
-      userId: currentUserId
+      toUserId
     };
 
-    const resp = await fetch(`${BACKEND_URL}/reputation`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(createReputationDto),
-      credentials: 'include'
-    });
-
-    if (resp.ok) {
-      alert('Comentario enviado');
-      setShowCommentBox(null);
-    } else {
-      alert('Error al enviar el comentario');
-    }
+    toast.promise(
+      fetch(`${BACKEND_URL}/reputation`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(createReputationDto),
+        credentials: 'include'
+      }),
+      {
+        loading: 'Enviando...',
+        success: 'Comentario enviado',
+        error: 'Error al enviar el comentario',
+        finally: () => {
+          setShowCommentBox(null);
+        }
+      }
+    );
   };
 
   useEffect(() => {
@@ -132,7 +134,9 @@ function History() {
                   {showCommentBox === product.id && (
                     <CommentBox
                       productId={product.id}
-                      onSubmit={handleCommentSubmit}
+                      onSubmit={(_, rating, comment) =>
+                        handleCommentSubmit(rating, comment, product.userId)
+                      }
                     />
                   )}
                 </>

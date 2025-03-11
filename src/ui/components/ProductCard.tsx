@@ -11,7 +11,7 @@ interface ProductCardProps {
 
 const ProductCard = ({ product, children }: ProductCardProps) => {
   return (
-    <div className="p-4 border rounded-lg bg-white shadow-md w-full">
+    <div className="p-4 border rounded-lg bg-white shadow-md w-full min-w-72 max-w-72">
       <Link href={`/product/${product.id}`} legacyBehavior>
         <a className="block">
           <Image
