@@ -2,7 +2,6 @@
 
 import { Message, User } from '@/types';
 import { useEffect, useRef, useState } from 'react';
-import { useSocketChat } from '../hooks/useSocketChat';
 import { useAuthStore } from '@/store/auth';
 import { useChatStore } from '@/store/chat';
 import { Avatar, Modal, ModalContent } from '@nextui-org/react';
@@ -10,6 +9,7 @@ import PrimaryButton from '@/ui/components/PrimaryButton';
 import { LuPhoneCall } from 'react-icons/lu';
 import Link from 'next/link';
 import { useWebrtcStore } from '@/store/webrtc';
+import { useSocketChatEvents } from '../hooks/useSocketChatEvents';
 
 const servers = {
   iceServers: [
@@ -27,7 +27,15 @@ interface Props {
 }
 
 function Chat({ messages: messagesProp, chatId, users }: Props) {
-  const { sendMessage } = useSocketChat();
+  const {
+    sendMessage,
+    sendAcceptCall,
+    sendCallRequest,
+    sendHangupCall,
+    sendIceCandidateOffer,
+    sendJoinCall,
+    sendOffer
+  } = useSocketChatEvents();
   const authUserId = +useAuthStore((state) => state.userId);
   const addChatMessage = useChatStore((state) => state.addChatMessage);
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
@@ -42,14 +50,6 @@ function Chat({ messages: messagesProp, chatId, users }: Props) {
   const setRequestingCallId = useWebrtcStore(
     (state) => state.setRequestingCallId
   );
-  const {
-    sendOffer,
-    sendJoinCall,
-    sendIceCandidateOffer,
-    sendCallRequest,
-    sendAcceptCall,
-    sendHangupCall
-  } = useSocketChat();
   const { setLocalStream, setPeerConnection, peerConnection } =
     useWebrtcStore();
 
@@ -142,10 +142,6 @@ function Chat({ messages: messagesProp, chatId, users }: Props) {
   const handleRejectCall = () => {
     setRequestingCallId(null);
   };
-
-  useEffect(() => {
-    setMessages(messagesProp);
-  }, [messagesProp]);
 
   useEffect(() => {
     if (!isOnCall) return;
